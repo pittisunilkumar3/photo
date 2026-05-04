@@ -5,6 +5,7 @@ import {
   InteractivePhotoStack,
 } from "@/components/ui/photo-stack";
 import { CircularGallery, GalleryItem } from "@/components/ui/circular-gallery";
+import { InfiniteScroll } from "@/components/ui/infinite-scroll";
 import { ImageGallery } from "@/components/ui/image-gallery";
 
 const photos = [
@@ -281,6 +282,16 @@ export default function Home() {
             />
           </div>
         </div>
+      </section>
+
+      {/* ==================== INFINITE SCROLL ==================== */}
+      <section style={{ background: "#0a0a0a" }}>
+        <div style={{ textAlign: "center", paddingTop: 60, paddingBottom: 20 }}>
+          <div className="section-label" style={{ color: "#c9a55c" }}>Showcase</div>
+          <h2 className="section-title" style={{ color: "#fff" }}>Nature <span>Gallery</span></h2>
+          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }}>Hover to pause the scroll</p>
+        </div>
+        <InfiniteScroll />
       </section>
 
       {/* ==================== PHOTO DIVIDER ==================== */}
