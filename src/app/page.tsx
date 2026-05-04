@@ -4,7 +4,8 @@ import { useState } from "react";
 import {
   InteractivePhotoStack,
 } from "@/components/ui/photo-stack";
-import { CircularGallery, GalleryItem } from "@/components/ui/circular-gallery";
+import { MasonryGallery } from "@/components/ui/masonry-gallery";
+import { CircularGallery } from "@/components/ui/circular-gallery";
 import { InfiniteScroll } from "@/components/ui/infinite-scroll";
 import { ImageGallery } from "@/components/ui/image-gallery";
 
@@ -38,16 +39,10 @@ const testimonials = [
 ];
 
 export default function Home() {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", service: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const filteredPhotos = activeFilter === "All" ? photos : photos.filter(p => p.category === activeFilter);
-  const currentPhoto = selectedPhoto !== null ? filteredPhotos.find(p => p.id === selectedPhoto) : null;
-  const photoIndex = selectedPhoto !== null ? filteredPhotos.findIndex(p => p.id === selectedPhoto) : -1;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -215,25 +210,7 @@ export default function Home() {
           <h2 className="section-title">Selected <span>Works</span></h2>
           <p className="section-desc">A curated collection of my finest work across various genres of photography</p>
         </div>
-        <div className="gallery-filters">
-          {categories.map(c => (
-            <button key={c} className={`gallery-filter ${activeFilter === c ? "active" : ""}`} onClick={() => setActiveFilter(c)}>{c}</button>
-          ))}
-        </div>
-        <div className="gallery-grid">
-          {filteredPhotos.map(p => (
-            <div key={p.id} className={`gallery-item ${p.tall ? "tall" : ""}`} onClick={() => setSelectedPhoto(p.id)}>
-              <img src={p.src} alt={p.title} loading="lazy" />
-              <div className="gallery-overlay">
-                <div className="gallery-overlay-cat">{p.category}</div>
-                <div className="gallery-overlay-title">{p.title}</div>
-              </div>
-              <div className="gallery-zoom">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
-              </div>
-            </div>
-          ))}
-        </div>
+        <MasonryGallery />
       </section>
 
       {/* ==================== INTERACTIVE PHOTO STACK ==================== */}
@@ -462,21 +439,6 @@ export default function Home() {
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m18 15-6-6-6 6" /></svg>
       </button>
 
-      {/* LIGHTBOX */}
-      {selectedPhoto !== null && currentPhoto && (
-        <div className="lightbox" onClick={() => setSelectedPhoto(null)}>
-          <button className="lightbox-close" onClick={() => setSelectedPhoto(null)}>×</button>
-          {photoIndex > 0 && <button className="lightbox-nav lightbox-prev" onClick={e => { e.stopPropagation(); setSelectedPhoto(filteredPhotos[photoIndex - 1].id); }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6" /></svg></button>}
-          {photoIndex < filteredPhotos.length - 1 && <button className="lightbox-nav lightbox-next" onClick={e => { e.stopPropagation(); setSelectedPhoto(filteredPhotos[photoIndex + 1].id); }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg></button>}
-          <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <img src={currentPhoto.src} alt={currentPhoto.title} />
-          </div>
-          <div className="lightbox-info">
-            <h3>{currentPhoto.title}</h3>
-            <p>{currentPhoto.category} · {photoIndex + 1} of {filteredPhotos.length}</p>
-          </div>
-        </div>
-      )}
     </>
   );
 }
