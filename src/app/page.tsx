@@ -204,8 +204,8 @@ export default function Home() {
       </section>
 
       {/* ==================== PORTFOLIO ==================== */}
-      <section id="portfolio" className="section" style={{ padding: "100px 0 0" }}>
-        <div className="section-header">
+      <section id="portfolio" style={{ padding: "80px 0 0" }}>
+        <div className="section-header" style={{ padding: "0 40px", marginBottom: 40 }}>
           <div className="section-label">Portfolio</div>
           <h2 className="section-title">Selected <span>Works</span></h2>
           <p className="section-desc">A curated collection of my finest work across various genres of photography</p>

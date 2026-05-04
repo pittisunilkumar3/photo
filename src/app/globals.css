@@ -57,7 +57,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  max-width: 1400px;
+  max-width: 1920px;
   margin: 0 auto;
   padding: 0 60px;
   gap: 60px;
@@ -128,7 +128,7 @@ body {
   font-size: 16px;
   line-height: 1.8;
   color: rgba(255,255,255,0.6);
-  max-width: 480px;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 40px;
@@ -285,7 +285,7 @@ body {
 
 /* ===== SECTIONS ===== */
 .section {
-  padding: 100px 40px;
+  padding: 100px 0;
 }
 .section-alt { background: var(--bg-alt); }
 
@@ -322,7 +322,7 @@ body {
 .section-desc {
   font-size: 15px;
   color: var(--secondary);
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   line-height: 1.7;
 }
@@ -355,7 +355,7 @@ body {
   color: white;
   font-style: italic;
   text-align: center;
-  max-width: 700px;
+  max-width: 900px;
   padding: 0 40px;
   line-height: 1.5;
 }
@@ -406,7 +406,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  max-width: 1400px;
+  max-width: 1920px;
   margin: 0 auto;
 }
 
@@ -491,7 +491,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
-  max-width: 1200px;
+  max-width: 1920px;
   margin: 0 auto;
   align-items: center;
 }
@@ -565,7 +565,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  max-width: 1200px;
+  max-width: 1920px;
   margin: 0 auto;
 }
 
@@ -702,7 +702,7 @@ body {
 /* ===== CONTACT ===== */
 .contact-grid {
   display: grid; grid-template-columns: 1fr 1.5fr;
-  gap: 48px; max-width: 1200px; margin: 0 auto;
+  gap: 48px; max-width: 1920px; margin: 0 auto;
 }
 
 .contact-info-card {
@@ -774,7 +774,7 @@ body {
 
 .footer-grid {
   display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 48px; max-width: 1200px; margin: 0 auto 40px;
+  gap: 48px; max-width: 1920px; margin: 0 auto 40px;
 }
 
 .footer-brand p { font-size: 13px; line-height: 1.7; color: #999; margin: 12px 0 20px; }
@@ -799,7 +799,7 @@ body {
 .footer-links a:hover { color: var(--accent); padding-left: 4px; }
 
 .footer-bottom {
-  max-width: 1200px; margin: 0 auto; padding-top: 30px;
+  max-width: 1920px; margin: 0 auto; padding-top: 30px;
   border-top: 1px solid rgba(255,255,255,0.1);
   display: flex; justify-content: space-between;
 }
