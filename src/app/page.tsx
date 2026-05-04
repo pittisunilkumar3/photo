@@ -164,8 +164,7 @@ export default function Home() {
               Award-Winning Photography
             </div>
             <h1 className="hero-title">
-              <KineticText words={["Capturing", "Creating", "Crafting", "Freezing"]} interval={10000} tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit" }} />
-              <br /><KineticText words={["Timeless Beauty", "Eternal Moments", "Lasting Memories", "Pure Emotion"]} interval={10000} tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", color: "#c9a55c" }} />
+              Capturing<br /><span>Timeless Beauty</span>
             </h1>
             <p className="hero-desc">
               Every moment is a story waiting to be told. Through my lens, I transform
