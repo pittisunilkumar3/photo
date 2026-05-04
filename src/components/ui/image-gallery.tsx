@@ -20,7 +20,6 @@ const images = [
 
 const W = 1920;
 const H = 1080;
-const R_BIG = Math.ceil(Math.sqrt(W * W + H * H)) + 200;
 
 export function ImageGallery() {
   const [opened, setOpened] = useState(0);
@@ -73,12 +72,17 @@ export function ImageGallery() {
         style={{ width: "100%", height: "100%", display: "block" }}>
         <defs>
           {images.map((_, i) => (
-            <clipPath key={i} id={`cl_${i}`}>
-              <circle
-                ref={(el) => { circleRefs.current[i] = el; }}
-                cx={W / 2} cy={H / 2} r={0}
-              />
-            </clipPath>
+            <g key={i}>
+              <clipPath id={`cc_${i}`}>
+                <circle
+                  ref={(el) => { circleRefs.current[i] = el; }}
+                  cx={W / 2} cy={H / 2} r={0}
+                />
+              </clipPath>
+              <clipPath id={`rc_${i}`}>
+                <rect x={0} y={0} width={W} height={H} />
+              </clipPath>
+            </g>
           ))}
         </defs>
 
@@ -96,9 +100,10 @@ export function ImageGallery() {
           />
         ))}
 
-        {gsapReady && <TabDots images={images} onSelect={onClick} active={opened} />}
+        {gsapReady && <TabDots count={images.length} images={images} onSelect={onClick} active={opened} />}
       </svg>
 
+      {/* Nav buttons */}
       <button onClick={prev} disabled={disabled} aria-label="Previous" style={{
         position: "absolute", left: 24, top: "50%", zIndex: 10,
         transform: "translateY(-50%)", width: 52, height: 52,
@@ -125,6 +130,7 @@ export function ImageGallery() {
   );
 }
 
+/* ===== Gallery Layer ===== */
 function GalleryLayer({ id, circleEl, url, title, open, inPlace, onInPlace, total }: {
   id: number; circleEl: SVGCircleElement | null; url: string; title: string;
   open: boolean; inPlace: boolean; onInPlace: (i: number) => void; total: number;
@@ -135,14 +141,16 @@ function GalleryLayer({ id, circleEl, url, title, open, inPlace, onInPlace, tota
   const GAP = 30;
   const TAB_Y = H - 60;
   const DUR = 0.5;
+  // Big enough to cover viewport even when offset
+  const BIG = 3000;
 
   const small = () => ({
     cx: W / 2 - (total * (R * 2 + GAP) - GAP) / 2 + id * (R * 2 + GAP),
     cy: TAB_Y, r: R,
   });
-  const mid = () => ({ cx: W / 2, cy: H / 2, r: 80 });
-  const bigL = () => ({ cx: W / 2 - R_BIG, cy: H / 2, r: R_BIG });
-  const bigR = () => ({ cx: W / 2 + R_BIG, cy: H / 2, r: R_BIG });
+  const mid = () => ({ cx: W / 2, cy: H / 2, r: 100 });
+  const bigL = () => ({ cx: W / 2 - BIG, cy: H / 2, r: BIG });
+  const bigR = () => ({ cx: W / 2 + BIG, cy: H / 2, r: BIG });
   const above = () => ({
     cx: W / 2 - (total * (R * 2 + GAP) - GAP) / 2 + id * (R * 2 + GAP),
     cy: H / 2, r: R * 2,
@@ -172,9 +180,12 @@ function GalleryLayer({ id, circleEl, url, title, open, inPlace, onInPlace, tota
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, circleEl]);
 
+  // KEY FIX: use rect clipPath when inPlace (full image visible)
+  const clipId = inPlace ? `rc_${id}` : `cc_${id}`;
+
   return (
     <g style={{ zIndex: inPlace ? id : total + 1 }}>
-      <g clipPath={`url(#cl_${id})`}>
+      <g clipPath={`url(#${clipId})`}>
         <image width={W} height={H} href={url} preserveAspectRatio="xMidYMid slice" style={{ pointerEvents: "none" }} />
         <text x={W / 2} y={H - 140} textAnchor="middle" fill="white" fontSize="48" fontFamily="Georgia, serif" fontStyle="italic" opacity="0.8" style={{ pointerEvents: "none" }}>
           {title}
@@ -184,7 +195,8 @@ function GalleryLayer({ id, circleEl, url, title, open, inPlace, onInPlace, tota
   );
 }
 
-function TabDots({ images, onSelect, active }: { images: { title: string; url: string }[]; onSelect: (i: number) => void; active: number }) {
+/* ===== Tab Dots ===== */
+function TabDots({ count, images, onSelect, active }: { count: number; images: { title: string; url: string }[]; onSelect: (i: number) => void; active: number }) {
   const R = 20;
   const GAP = 30;
   const Y = H - 60;
@@ -192,7 +204,7 @@ function TabDots({ images, onSelect, active }: { images: { title: string; url: s
   return (
     <g style={{ pointerEvents: "auto" }}>
       {images.map((img, i) => {
-        const cx = W / 2 - (images.length * (R * 2 + GAP) - GAP) / 2 + i * (R * 2 + GAP);
+        const cx = W / 2 - (count * (R * 2 + GAP) - GAP) / 2 + i * (R * 2 + GAP);
         return (
           <g key={img.url}>
             <defs>
