@@ -9,9 +9,7 @@ declare global {
   }
 }
 
-interface ImageData { title: string; url: string; }
-
-const images: ImageData[] = [
+const images = [
   { title: "Golden Portrait", url: "/images/portrait1.jpg" },
   { title: "Mountain Serenity", url: "/images/landscape2.jpg" },
   { title: "Eternal Love", url: "/images/wedding1.jpg" },
@@ -20,16 +18,17 @@ const images: ImageData[] = [
   { title: "Modern Lines", url: "/images/arch1.jpg" },
 ];
 
-// Full HD viewBox for crisp rendering
 const W = 1920;
 const H = 1080;
+const R_BIG = Math.ceil(Math.sqrt(W * W + H * H)) + 200;
 
 export function ImageGallery() {
   const [opened, setOpened] = useState(0);
   const [inPlace, setInPlace] = useState(0);
   const [disabled, setDisabled] = useState(false);
   const [gsapReady, setGsapReady] = useState(false);
-  const autoplayTimer = useRef<number | null>(null);
+  const timer = useRef<number | null>(null);
+  const circleRefs = useRef<(SVGCircleElement | null)[]>([]);
 
   useEffect(() => {
     if (window.gsap && window.MotionPathPlugin) {
@@ -63,28 +62,33 @@ export function ImageGallery() {
 
   useEffect(() => {
     if (!gsapReady) return;
-    if (autoplayTimer.current) clearInterval(autoplayTimer.current);
-    autoplayTimer.current = window.setInterval(next, 4500);
-    return () => { if (autoplayTimer.current) clearInterval(autoplayTimer.current); };
+    if (timer.current) clearInterval(timer.current);
+    timer.current = window.setInterval(next, 4500);
+    return () => { if (timer.current) clearInterval(timer.current); };
   }, [opened, gsapReady, next]);
 
   return (
     <div style={{ position: "absolute", inset: 0 }}>
-      {/* SVG gallery fills entire container */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox={`0 0 ${W} ${H}`}
-        preserveAspectRatio="xMidYMid slice"
-        style={{ width: "100%", height: "100%", display: "block" }}
-      >
-        <defs />
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice"
+        style={{ width: "100%", height: "100%", display: "block" }}>
+        <defs>
+          {images.map((_, i) => (
+            <clipPath key={i} id={`cl_${i}`}>
+              <circle
+                ref={(el) => { circleRefs.current[i] = el; }}
+                cx={W / 2} cy={H / 2} r={0}
+              />
+            </clipPath>
+          ))}
+        </defs>
 
-        {gsapReady && images.map((image, i) => (
+        {gsapReady && images.map((img, i) => (
           <GalleryLayer
-            key={image.url}
+            key={img.url}
             id={i}
-            url={image.url}
-            title={image.title}
+            circleEl={circleRefs.current[i]}
+            url={img.url}
+            title={img.title}
             open={opened === i}
             inPlace={inPlace === i}
             onInPlace={onInPlace}
@@ -92,11 +96,9 @@ export function ImageGallery() {
           />
         ))}
 
-        {/* Tab dots at bottom */}
-        {gsapReady && <TabsRow images={images} onSelect={onClick} activeIndex={opened} />}
+        {gsapReady && <TabDots images={images} onSelect={onClick} active={opened} />}
       </svg>
 
-      {/* Nav arrows */}
       <button onClick={prev} disabled={disabled} aria-label="Previous" style={{
         position: "absolute", left: 24, top: "50%", zIndex: 10,
         transform: "translateY(-50%)", width: 52, height: 52,
@@ -123,87 +125,58 @@ export function ImageGallery() {
   );
 }
 
-/* ===== Single gallery layer ===== */
-function GalleryLayer({ id, url, title, open, inPlace, onInPlace, total }: {
-  id: number; url: string; title: string; open: boolean; inPlace: boolean;
-  onInPlace: (i: number) => void; total: number;
+function GalleryLayer({ id, circleEl, url, title, open, inPlace, onInPlace, total }: {
+  id: number; circleEl: SVGCircleElement | null; url: string; title: string;
+  open: boolean; inPlace: boolean; onInPlace: (i: number) => void; total: number;
 }) {
-  const clipRef = useRef<SVGCircleElement>(null);
-  const [firstLoad] = useState(id === 0); // first image visible immediately
+  const [firstLoad] = useState(id === 0);
 
-  const R_SMALL = 20;
-  const R_BIG = Math.max(W, H);
+  const R = 20;
   const GAP = 30;
   const TAB_Y = H - 60;
-  const DURATION = 0.5;
+  const DUR = 0.5;
 
-  const getSmall = () => ({
-    cx: W / 2 - (total * (R_SMALL * 2 + GAP) - GAP) / 2 + id * (R_SMALL * 2 + GAP),
-    cy: TAB_Y, r: R_SMALL,
+  const small = () => ({
+    cx: W / 2 - (total * (R * 2 + GAP) - GAP) / 2 + id * (R * 2 + GAP),
+    cy: TAB_Y, r: R,
   });
-  const getMid = () => ({ cx: W / 2, cy: H / 2, r: 80 });
-  const getBigLeft = () => ({ cx: W / 2 - R_BIG, cy: H / 2, r: R_BIG });
-  const getBigRight = () => ({ cx: W / 2 + R_BIG, cy: H / 2, r: R_BIG });
-  const getSmallAbove = () => ({
-    cx: W / 2 - (total * (R_SMALL * 2 + GAP) - GAP) / 2 + id * (R_SMALL * 2 + GAP),
-    cy: H / 2, r: R_SMALL * 2,
+  const mid = () => ({ cx: W / 2, cy: H / 2, r: 80 });
+  const bigL = () => ({ cx: W / 2 - R_BIG, cy: H / 2, r: R_BIG });
+  const bigR = () => ({ cx: W / 2 + R_BIG, cy: H / 2, r: R_BIG });
+  const above = () => ({
+    cx: W / 2 - (total * (R * 2 + GAP) - GAP) / 2 + id * (R * 2 + GAP),
+    cy: H / 2, r: R * 2,
   });
 
   useEffect(() => {
     const gsap = window.gsap;
-    if (!gsap || !clipRef.current) return;
+    if (!gsap || !circleEl) return;
 
-    const dur = firstLoad ? 0 : DURATION;
+    const dur = firstLoad ? 0 : DUR;
     const up = firstLoad ? 0 : 0.25;
     const bounce = firstLoad ? 0.01 : 1;
 
     if (open) {
       gsap.timeline()
-        .set(clipRef.current, { attr: getSmall() })
-        .to(clipRef.current, { attr: getMid(), duration: up, ease: "power3.inOut" })
-        .to(clipRef.current, {
-          attr: getBigLeft(), duration: dur, ease: "power4.in",
-          onComplete: () => onInPlace(id),
-        });
+        .set(circleEl, { attr: small() })
+        .to(circleEl, { attr: mid(), duration: up, ease: "power3.inOut" })
+        .to(circleEl, { attr: bigL(), duration: dur, ease: "power4.in", onComplete: () => onInPlace(id) });
     } else {
       const delay = firstLoad ? 0 : dur + up;
       gsap.timeline({ overwrite: true })
-        .set(clipRef.current, { attr: getBigRight() })
-        .to(clipRef.current, { attr: getMid(), delay, duration: dur, ease: "power4.out" })
-        .to(clipRef.current, {
-          attr: getSmallAbove(), duration: bounce * 0.4, ease: "power2.out",
-        })
-        .to(clipRef.current, {
-          attr: getSmall(), duration: bounce * 0.6, ease: "bounce.out",
-        });
+        .set(circleEl, { attr: bigR() })
+        .to(circleEl, { attr: mid(), delay, duration: dur, ease: "power4.out" })
+        .to(circleEl, { attr: above(), duration: bounce * 0.4, ease: "power2.out" })
+        .to(circleEl, { attr: small(), duration: bounce * 0.6, ease: "bounce.out" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, [open, circleEl]);
 
   return (
     <g style={{ zIndex: inPlace ? id : total + 1 }}>
-      <clipPath id={`clip_${id}`}>
-        <circle ref={clipRef} cx={W / 2} cy={H / 2} r={0} />
-      </clipPath>
-      <g clipPath={`url(#clip_${id})`}>
-        <image
-          width={W} height={H}
-          href={url}
-          preserveAspectRatio="xMidYMid slice"
-          style={{ pointerEvents: "none" }}
-        />
-        {/* Title overlay on image */}
-        <text
-          x={W / 2}
-          y={H - 140}
-          textAnchor="middle"
-          fill="white"
-          fontSize="48"
-          fontFamily="Georgia, serif"
-          fontStyle="italic"
-          opacity="0.8"
-          style={{ pointerEvents: "none" }}
-        >
+      <g clipPath={`url(#cl_${id})`}>
+        <image width={W} height={H} href={url} preserveAspectRatio="xMidYMid slice" style={{ pointerEvents: "none" }} />
+        <text x={W / 2} y={H - 140} textAnchor="middle" fill="white" fontSize="48" fontFamily="Georgia, serif" fontStyle="italic" opacity="0.8" style={{ pointerEvents: "none" }}>
           {title}
         </text>
       </g>
@@ -211,10 +184,7 @@ function GalleryLayer({ id, url, title, open, inPlace, onInPlace, total }: {
   );
 }
 
-/* ===== Bottom tab dots ===== */
-function TabsRow({ images, onSelect, activeIndex }: {
-  images: ImageData[]; onSelect: (i: number) => void; activeIndex: number;
-}) {
+function TabDots({ images, onSelect, active }: { images: { title: string; url: string }[]; onSelect: (i: number) => void; active: number }) {
   const R = 20;
   const GAP = 30;
   const Y = H - 60;
@@ -226,26 +196,12 @@ function TabsRow({ images, onSelect, activeIndex }: {
         return (
           <g key={img.url}>
             <defs>
-              <clipPath id={`tabclip_${i}`}>
+              <clipPath id={`tc_${i}`}>
                 <circle cx={cx} cy={Y} r={R} />
               </clipPath>
             </defs>
-            <image
-              x={cx - R} y={Y - R}
-              width={R * 2} height={R * 2}
-              href={img.url}
-              clipPath={`url(#tabclip_${i})`}
-              preserveAspectRatio="xMidYMid slice"
-              style={{ pointerEvents: "none" }}
-            />
-            <circle
-              cx={cx} cy={Y} r={R + 3}
-              fill="none"
-              stroke={activeIndex === i ? "rgba(201,165,92,0.9)" : "rgba(255,255,255,0.5)"}
-              strokeWidth={activeIndex === i ? 3 : 2}
-              style={{ cursor: "pointer", transition: "all 0.3s" }}
-              onClick={() => onSelect(i)}
-            />
+            <image x={cx - R} y={Y - R} width={R * 2} height={R * 2} href={img.url} clipPath={`url(#tc_${i})`} preserveAspectRatio="xMidYMid slice" style={{ pointerEvents: "none" }} />
+            <circle cx={cx} cy={Y} r={R + 3} fill="none" stroke={active === i ? "rgba(201,165,92,0.9)" : "rgba(255,255,255,0.5)"} strokeWidth={active === i ? 3 : 2} style={{ cursor: "pointer", transition: "all 0.3s" }} onClick={() => onSelect(i)} />
           </g>
         );
       })}
