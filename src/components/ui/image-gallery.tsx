@@ -40,25 +40,22 @@ export function ImageGallery() {
       const gsapScript = document.createElement("script");
       gsapScript.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js";
       gsapScript.onload = () => {
-        const motionPathScript = document.createElement("script");
-        motionPathScript.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js";
-        motionPathScript.onload = () => {
+        const mp = document.createElement("script");
+        mp.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js";
+        mp.onload = () => {
           if (window.gsap && window.MotionPathPlugin) {
             window.gsap.registerPlugin(window.MotionPathPlugin);
             setGsapReady(true);
           }
         };
-        document.body.appendChild(motionPathScript);
+        document.body.appendChild(mp);
       };
       document.body.appendChild(gsapScript);
     };
     loadScripts();
   }, []);
 
-  const onClick = (index: number) => {
-    if (!disabled) setOpened(index);
-  };
-
+  const onClick = (index: number) => { if (!disabled) setOpened(index); };
   const onInPlace = (index: number) => setInPlace(index);
 
   const next = useCallback(() => {
@@ -79,13 +76,32 @@ export function ImageGallery() {
     return () => { if (autoplayTimer.current) clearInterval(autoplayTimer.current); };
   }, [opened, gsapReady, next]);
 
+  const btnStyle = (side: "left" | "right"): React.CSSProperties => ({
+    position: "absolute",
+    [side]: 30,
+    top: "50%",
+    zIndex: 101,
+    display: "flex",
+    height: 48,
+    width: 48,
+    transform: "translateY(-50%)",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "50%",
+    border: "2px solid rgba(255,255,255,0.25)",
+    background: "rgba(0,0,0,0.35)",
+    backdropFilter: "blur(8px)",
+    color: "#fff",
+    cursor: disabled ? "not-allowed" : "pointer",
+    opacity: disabled ? 0.3 : 0.8,
+    outline: "none",
+    transition: "all 0.3s ease",
+  });
+
   return (
     <div
       style={{
         position: "relative",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         width: "100%",
         height: "100%",
       }}
@@ -93,14 +109,9 @@ export function ImageGallery() {
       <div
         style={{
           position: "relative",
-          height: "80vmin",
-          width: "80vmin",
-          maxHeight: 550,
-          maxWidth: 550,
+          height: "100%",
+          width: "100%",
           overflow: "hidden",
-          borderRadius: 20,
-          boxShadow:
-            "0 2.8px 2.2px rgba(0,0,0,0.02), 0 6.7px 5.3px rgba(0,0,0,0.028), 0 12.5px 10px rgba(0,0,0,0.035), 0 22.3px 17.9px rgba(0,0,0,0.042), 0 41.8px 33.4px rgba(0,0,0,0.05), 0 100px 80px rgba(0,0,0,0.07)",
         }}
       >
         {gsapReady &&
@@ -132,72 +143,22 @@ export function ImageGallery() {
         </div>
       </div>
 
-      {/* Prev Button */}
-      <button
-        onClick={prev}
-        disabled={disabled}
-        aria-label="Previous"
-        style={{
-          position: "absolute",
-          left: -60,
-          top: "50%",
-          zIndex: 101,
-          display: "flex",
-          height: 52,
-          width: 52,
-          transform: "translateY(-50%)",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: "50%",
-          border: "2px solid rgba(255,255,255,0.2)",
-          background: "rgba(255,255,255,0.95)",
-          backdropFilter: "blur(8px)",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-          cursor: disabled ? "not-allowed" : "pointer",
-          opacity: disabled ? 0.4 : 1,
-          outline: "none",
-          transition: "all 0.3s ease",
-        }}
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <button onClick={prev} disabled={disabled} aria-label="Previous" style={btnStyle("left")}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M15 18l-6-6 6-6" />
         </svg>
       </button>
 
-      {/* Next Button */}
-      <button
-        onClick={next}
-        disabled={disabled}
-        aria-label="Next"
-        style={{
-          position: "absolute",
-          right: -60,
-          top: "50%",
-          zIndex: 101,
-          display: "flex",
-          height: 52,
-          width: 52,
-          transform: "translateY(-50%)",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: "50%",
-          border: "2px solid rgba(255,255,255,0.2)",
-          background: "rgba(255,255,255,0.95)",
-          backdropFilter: "blur(8px)",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-          cursor: disabled ? "not-allowed" : "pointer",
-          opacity: disabled ? 0.4 : 1,
-          outline: "none",
-          transition: "all 0.3s ease",
-        }}
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <button onClick={next} disabled={disabled} aria-label="Next" style={btnStyle("right")}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M9 18l6-6-6-6" />
         </svg>
       </button>
     </div>
   );
 }
+
+/* ===== Gallery Image ===== */
 
 interface GalleryImageProps {
   url: string;
@@ -240,7 +201,6 @@ function GalleryImage({ url, title, open, inPlace, id, onInPlace, total }: Galle
   useEffect(() => {
     const gsap = window.gsap;
     if (!gsap) return;
-
     setLoaded(false);
     if (clip.current) {
       const flipDuration = firstLoad ? 0 : duration;
@@ -253,10 +213,7 @@ function GalleryImage({ url, title, open, inPlace, id, onInPlace, total }: Galle
           .set(clip.current, { ...defaults, ...getPosSmall() })
           .to(clip.current, { ...defaults, ...getPosCenter(), duration: upDuration, ease: "power3.inOut" })
           .to(clip.current, {
-            ...defaults,
-            ...getPosEnd(),
-            duration: flipDuration,
-            ease: "power4.in",
+            ...defaults, ...getPosEnd(), duration: flipDuration, ease: "power4.in",
             onComplete: () => onInPlace(id),
           });
       } else {
@@ -268,8 +225,7 @@ function GalleryImage({ url, title, open, inPlace, id, onInPlace, total }: Galle
           .to(clip.current, {
             ...defaults,
             motionPath: { path: [getPosSmallAbove(), getPosSmall()], curviness: 1 },
-            duration: bounceDuration,
-            ease: "bounce.out",
+            duration: bounceDuration, ease: "bounce.out",
           });
       }
     }
@@ -277,9 +233,7 @@ function GalleryImage({ url, title, open, inPlace, id, onInPlace, total }: Galle
   }, [open]);
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
+    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="xMidYMid slice"
       style={{ height: "100%", width: "100%" }}
@@ -299,6 +253,8 @@ function GalleryImage({ url, title, open, inPlace, id, onInPlace, total }: Galle
   );
 }
 
+/* ===== Tabs ===== */
+
 interface TabsProps {
   images: ImageData[];
   onSelect: (index: number) => void;
@@ -315,9 +271,7 @@ function Tabs({ images, onSelect }: TabsProps) {
   const getPosY = () => height - 30;
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
+    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="xMidYMid slice"
       style={{ height: "100%", width: "100%" }}

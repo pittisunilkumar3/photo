@@ -128,8 +128,33 @@ export default function Home() {
       <section className="hero">
         <div className="hero-overlay" />
 
-        <div className="hero-content">
-          <div className="hero-left">
+        {/* Full background gallery */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+          <ImageGallery />
+        </div>
+
+        {/* Text overlay on top */}
+        <div style={{
+          position: "relative",
+          zIndex: 3,
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          maxWidth: 650,
+          padding: "0 40px",
+          pointerEvents: "none",
+        }}
+        className="hero-text-overlay"
+        >
+          <div style={{ pointerEvents: "auto" }}>
             <div className="hero-badge">
               <span className="hero-badge-dot" />
               Award-Winning Photography
@@ -169,10 +194,6 @@ export default function Home() {
                 <div className="hero-stat-label">Awards</div>
               </div>
             </div>
-          </div>
-
-          <div className="hero-right">
-            <ImageGallery />
           </div>
         </div>
 
