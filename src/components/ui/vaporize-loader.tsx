@@ -38,11 +38,11 @@ export function VaporizeLoader({ onComplete }: { onComplete: () => void }) {
       color: "rgb(201, 165, 92)",
       font: {
         fontFamily: "var(--font-playfair), Georgia, serif",
-        fontSize: "clamp(48px, 10vw, 100px)",
-        fontWeight: 700,
+        fontSize: "clamp(80px, 18vw, 240px)",
+        fontWeight: 900,
       },
       animation: {
-        holdDuration: 2000,
+        holdDuration: 3000,
       },
       spread: 5,
       density: 5,
@@ -84,7 +84,7 @@ export function VaporizeLoader({ onComplete }: { onComplete: () => void }) {
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
       const particles: Particle[] = [];
-      const sampleRate = 3;
+      const sampleRate = 2;
 
       for (let y = 0; y < canvas.height; y += sampleRate) {
         for (let x = 0; x < canvas.width; x += sampleRate) {
