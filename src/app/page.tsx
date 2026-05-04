@@ -5,6 +5,7 @@ import {
   InteractivePhotoStack,
 } from "@/components/ui/photo-stack";
 import ImageStack from "@/components/ui/image-stack";
+import { ImageGallery } from "@/components/ui/image-gallery";
 
 const photos = [
   { id: 1, src: "/images/portrait1.jpg", title: "Golden Hour Portrait", category: "Portrait", tall: true },
@@ -171,19 +172,7 @@ export default function Home() {
           </div>
 
           <div className="hero-right">
-            <div className="hero-deco-1" />
-            <div className="hero-photo-main">
-              <img src="/images/hero1.jpg" alt="Featured photo" />
-            </div>
-            <div className="hero-photo-second">
-              <img src="/images/portrait1.jpg" alt="Portrait" />
-            </div>
-            <div className="hero-photo-third">
-              <img src="/images/landscape1.jpg" alt="Landscape" />
-            </div>
-            <div className="hero-deco-2">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>
-            </div>
+            <ImageGallery />
           </div>
         </div>
 
