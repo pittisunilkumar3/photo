@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/photo-stack";
 import { MasonryGallery } from "@/components/ui/masonry-gallery";
 import { CircularFlipGallery } from "@/components/ui/circular-flip-gallery";
+import { ExpandingGallery } from "@/components/ui/expanding-gallery";
 import { CircularGallery } from "@/components/ui/circular-gallery";
 import { InfiniteScroll } from "@/components/ui/infinite-scroll";
 import { ImageGallery } from "@/components/ui/image-gallery";
@@ -342,6 +343,16 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* ==================== EXPANDING GALLERY ==================== */}
+      <section className="section">
+        <div className="section-header">
+          <div className="section-label">Latest Work</div>
+          <h2 className="section-title">Our <span>Creations</span></h2>
+          <p className="section-desc">A visual collection of our most recent works – each piece crafted with intention, emotion, and style</p>
+        </div>
+        <ExpandingGallery />
       </section>
 
       {/* ==================== TESTIMONIALS ==================== */}
