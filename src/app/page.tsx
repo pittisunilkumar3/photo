@@ -13,6 +13,8 @@ import { InfiniteScroll } from "@/components/ui/infinite-scroll";
 import { ImageGallery } from "@/components/ui/image-gallery";
 import { KineticText, KineticOnce } from "@/components/ui/kinetic-text";
 import { VaporizeLoader } from "@/components/ui/vaporize-loader";
+import { AnimatedTestimonialGrid } from "@/components/ui/animated-testimonials";
+import { FooterSpinningLogos } from "@/components/ui/footer-spinning-logos";
 
 const photos = [
   { id: 1, src: "/images/portrait1.jpg", title: "Golden Hour Portrait", category: "Portrait", tall: true },
@@ -37,15 +39,8 @@ const services = [
   { icon: "✨", title: "Fine Art & Editorial", desc: "Conceptual photography for magazines and galleries.", price: "Custom Quote", features: ["Creative concepts", "Styling assistance", "Post-production", "Exhibition prints"] },
 ];
 
-const testimonials = [
-  { name: "Sarah & James", role: "Wedding Clients", image: "/images/avatar1.jpg", quote: "Alex captured our wedding day so beautifully that every time we look at our photos, we relive those magical moments. The attention to emotion and detail is unmatched." },
-  { name: "Michael Chen", role: "Corporate Client", image: "/images/avatar2.jpg", quote: "Working with Alex was an incredible experience. The brand photography was exactly what we needed — modern, professional, and full of character." },
-  { name: "Emma Rodriguez", role: "Magazine Editor", image: "/images/avatar3.jpg", quote: "Alex's editorial work is consistently outstanding. Creative vision and technical mastery combine to produce images that tell compelling stories." },
-];
-
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", service: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -257,8 +252,8 @@ export default function Home() {
       </div>
 
       {/* ==================== BENTO GALLERY ==================== */}
-      <section className="section">
-        <div className="section-header">
+      <section className="section" style={{ padding: "80px 0 0" }}>
+        <div className="section-header" style={{ padding: "0 40px", marginBottom: 40 }}>
           <KineticOnce text="Gallery" tag="div" className="section-label" />
           <h2 className="section-title"><KineticOnce text="Creative Bento" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
           <KineticOnce text="Drag to rearrange, click to view" tag="p" className="section-desc" style={{ fontFamily: "inherit", fontSize: "inherit" }} />
@@ -377,33 +372,30 @@ export default function Home() {
 
       {/* ==================== TESTIMONIALS ==================== */}
       <section id="testimonials" className="section section-alt">
-        <div className="section-header">
-          <KineticOnce text="Testimonials" tag="div" className="section-label" />
-          <h2 className="section-title"><KineticOnce text="Client Stories" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-        </div>
-        <div className="testimonial-card">
-          <div className="testimonial-quote-icon">&ldquo;</div>
-          <div className="testimonial-stars">{[1,2,3,4,5].map(i => <span key={i} className="testimonial-star">★</span>)}</div>
-          <p className="testimonial-text">&ldquo;{testimonials[currentTestimonial].quote}&rdquo;</p>
-          <div className="testimonial-author">
-            <img src={testimonials[currentTestimonial].image} alt="" className="testimonial-avatar" loading="lazy" />
-            <div>
-              <div className="testimonial-name">{testimonials[currentTestimonial].name}</div>
-              <div className="testimonial-role">{testimonials[currentTestimonial].role}</div>
-            </div>
-          </div>
-        </div>
-        <div className="testimonial-nav">
-          <button className="testimonial-btn" onClick={() => setCurrentTestimonial(p => (p - 1 + testimonials.length) % testimonials.length)}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6" /></svg>
-          </button>
-          <div className="testimonial-dots">
-            {testimonials.map((_, i) => <div key={i} className={`testimonial-dot ${i === currentTestimonial ? "active" : ""}`} onClick={() => setCurrentTestimonial(i)} />)}
-          </div>
-          <button className="testimonial-btn" onClick={() => setCurrentTestimonial(p => (p + 1) % testimonials.length)}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg>
-          </button>
-        </div>
+        <AnimatedTestimonialGrid
+          testimonials={[
+            { imgSrc: "/images/avatar1.jpg", alt: "Sarah & James" },
+            { imgSrc: "/images/avatar2.jpg", alt: "Michael Chen" },
+            { imgSrc: "/images/avatar3.jpg", alt: "Emma Rodriguez" },
+            { imgSrc: "/images/portrait1.jpg", alt: "Client" },
+            { imgSrc: "/images/portrait2.jpg", alt: "Client" },
+            { imgSrc: "/images/team1.jpg", alt: "Team" },
+            { imgSrc: "/images/team2.jpg", alt: "Team" },
+            { imgSrc: "/images/team3.jpg", alt: "Team" },
+            { imgSrc: "/images/team4.jpg", alt: "Team" },
+            { imgSrc: "/images/wedding1.jpg", alt: "Wedding" },
+            { imgSrc: "/images/wedding2.jpg", alt: "Wedding" },
+            { imgSrc: "/images/hero1.jpg", alt: "Studio" },
+            { imgSrc: "/images/landscape1.jpg", alt: "Landscape" },
+            { imgSrc: "/images/street1.jpg", alt: "Street" },
+            { imgSrc: "/images/arch1.jpg", alt: "Architecture" },
+          ]}
+          badgeText="Testimonials"
+          title={<>What Our Clients Say About <span style={{ color: "#c9a55c" }}>Lumière</span></>}
+          description={<>Don&apos;t just take our word for it. Here&apos;s what our clients have to say about their experience working with us.</>}
+          ctaText="Read More Stories"
+          ctaHref="#contact"
+        />
       </section>
 
       {/* ==================== CONTACT ==================== */}
@@ -451,11 +443,7 @@ export default function Home() {
         <div className="footer-grid">
           <div className="footer-brand">
             <p>Capturing life&apos;s most precious moments with artistry and passion. Based in New York, available worldwide.</p>
-            <div className="footer-social">
-              <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg></a>
-              <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a>
-              <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-            </div>
+            <FooterSpinningLogos />
           </div>
           <div>
             <h4 className="footer-title">Quick Links</h4>

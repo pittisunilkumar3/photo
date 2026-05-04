@@ -337,9 +337,7 @@ export function InteractiveBentoGallery() {
     <>
       <div
         style={{
-          maxWidth: "100%",
-          margin: "0 auto",
-          padding: "0 8px",
+          width: "100%",
         }}
       >
         <div
