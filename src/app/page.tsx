@@ -5,6 +5,7 @@ import {
   InteractivePhotoStack,
 } from "@/components/ui/photo-stack";
 import { MasonryGallery } from "@/components/ui/masonry-gallery";
+import { CircularFlipGallery } from "@/components/ui/circular-flip-gallery";
 import { CircularGallery } from "@/components/ui/circular-gallery";
 import { InfiniteScroll } from "@/components/ui/infinite-scroll";
 import { ImageGallery } from "@/components/ui/image-gallery";
@@ -211,6 +212,16 @@ export default function Home() {
           <p className="section-desc">A curated collection of my finest work across various genres of photography</p>
         </div>
         <MasonryGallery />
+      </section>
+
+      {/* ==================== CIRCULAR FLIP GALLERY ==================== */}
+      <section style={{ background: "#0a0a0a", padding: "60px 40px" }}>
+        <div className="section-header">
+          <div className="section-label" style={{ color: "#c9a55c" }}>Gallery</div>
+          <h2 className="section-title" style={{ color: "#fff" }}>Photo <span>Circle</span></h2>
+          <p className="section-desc" style={{ color: "rgba(255,255,255,0.5)" }}>Hover cards to flip and reveal details</p>
+        </div>
+        <CircularFlipGallery />
       </section>
 
       {/* ==================== INFINITE SCROLL ==================== */}
