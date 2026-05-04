@@ -16,6 +16,41 @@ export interface InteractivePhotoStackProps {
 const random = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
+const generateNonOverlappingTransforms = (count: number) => {
+  const positions: { x: number; y: number; r: number }[] = [];
+  const maxRetries = 100;
+
+  for (let i = 0; i < count; i++) {
+    let newPos;
+    let collision;
+    let retries = 0;
+
+    do {
+      collision = false;
+      const x = random(-45, 45);
+      const y = random(-25, 25);
+      const r = random(-25, 25);
+      newPos = { x, y, r };
+
+      for (const pos of positions) {
+        const dx = Math.abs(newPos.x - pos.x);
+        const dy = Math.abs(newPos.y - pos.y);
+        if (dx < 25 && dy < 45) {
+          collision = true;
+          break;
+        }
+      }
+      retries++;
+    } while (collision && retries < maxRetries);
+
+    positions.push(newPos);
+  }
+
+  return positions.map(
+    (pos) => `translate(${pos.x}vw, ${pos.y}vh) rotate(${pos.r}deg)`
+  );
+};
+
 const InteractivePhotoStack = React.forwardRef<
   HTMLDivElement,
   InteractivePhotoStackProps
@@ -23,61 +58,121 @@ const InteractivePhotoStack = React.forwardRef<
   const [topCardIndex, setTopCardIndex] = React.useState(0);
   const [isGroupHovered, setIsGroupHovered] = React.useState(false);
   const [clickedIndex, setClickedIndex] = React.useState<number | null>(null);
-  const [spreadPositions, setSpreadPositions] = React.useState<{ x: number; y: number; r: number }[]>([]);
-  const [hoveredCard, setHoveredCard] = React.useState<number | null>(null);
-  const [isMobile, setIsMobile] = React.useState(false);
+  const [spreadTransforms, setSpreadTransforms] = React.useState<string[]>([]);
+  const [isTouchDevice, setIsTouchDevice] = React.useState(false);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   const displayedItems = items.slice(0, 5);
-  const stackRotations = [0, -3, 4, -2, 5];
+  const baseRotations = [2, -2, 4, -4, 6];
 
   React.useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => setIsTouchDevice(window.innerWidth < 1024);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const generateSpread = () => {
-    const count = displayedItems.length;
-    const radius = isMobile ? 120 : 200;
-    const positions: { x: number; y: number; r: number }[] = [];
-    for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2;
-      const x = Math.cos(angle) * radius + random(-20, 20);
-      const y = Math.sin(angle) * (radius * 0.5) + random(-15, 15);
-      const r = random(-12, 12);
-      positions.push({ x, y, r });
-    }
-    return positions;
-  };
-
   const handleMouseEnter = () => {
-    if (isMobile) return;
-    setSpreadPositions(generateSpread());
+    if (isTouchDevice) return;
+    const newTransforms = generateNonOverlappingTransforms(displayedItems.length);
+    setSpreadTransforms(newTransforms);
     setIsGroupHovered(true);
   };
 
   const handleCardClick = (index: number) => {
-    if (isMobile) {
-      setTopCardIndex(index);
-      return;
-    }
+    if (isTouchDevice) return;
     if (isGroupHovered) {
       setClickedIndex(index);
       setTimeout(() => {
         setIsGroupHovered(false);
         setTopCardIndex(index);
         setClickedIndex(null);
-      }, 600);
+      }, 700);
     } else {
       setTopCardIndex(index);
     }
   };
 
-  const cardW = isMobile ? 200 : 260;
-  const cardH = isMobile ? 270 : 340;
-  const imgH = isMobile ? 190 : 240;
+  /* ===== MOBILE / TABLET: Horizontal Slider ===== */
+  if (isTouchDevice) {
+    return (
+      <div
+        ref={ref}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 32,
+          width: "100%",
+        }}
+        {...props}
+      >
+        <div
+          ref={scrollRef}
+          className="hide-scrollbar"
+          style={{
+            display: "flex",
+            gap: 16,
+            overflowX: "auto",
+            padding: "8px 24px 16px",
+            width: "100%",
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {displayedItems.map((item) => (
+            <div
+              key={item.name}
+              style={{
+                flexShrink: 0,
+                width: 200,
+                borderRadius: 12,
+                background: "#fff",
+                padding: 8,
+                boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+                scrollSnapAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div style={{ width: "100%", height: 220, overflow: "hidden", borderRadius: 8, background: "#222" }}>
+                <img
+                  src={item.src}
+                  alt={item.name}
+                  loading="lazy"
+                  draggable={false}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+              </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 44 }}>
+                <p style={{
+                  fontFamily: "Georgia, serif",
+                  fontSize: 16,
+                  fontStyle: "italic",
+                  color: "#1a1a1a",
+                  margin: 0,
+                }}>
+                  {item.name}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <h3 style={{ textAlign: "center", fontSize: 20, fontWeight: 700, color: "#fff" }}>
+          {title}
+        </h3>
+      </div>
+    );
+  }
 
+  /* ===== DESKTOP: Stacked / Spread ===== */
   return (
     <div
       ref={ref}
@@ -85,221 +180,133 @@ const InteractivePhotoStack = React.forwardRef<
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 24,
+        justifyContent: "center",
+        gap: 48,
       }}
       {...props}
     >
       <div
-        style={{
-          position: "relative",
-          height: isMobile ? 320 : 500,
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        style={{ position: "relative", height: 384, width: "100%" }}
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={() => {
-          if (!clickedIndex) {
-            setIsGroupHovered(false);
-            setHoveredCard(null);
-          }
-        }}
+        onMouseLeave={() => !clickedIndex && setIsGroupHovered(false)}
       >
-        {/* Mobile: horizontal scroll row */}
-        {isMobile ? (
-          <div style={{
-            display: "flex",
-            gap: 16,
-            overflowX: "auto",
-            padding: "0 16px 16px",
-            width: "100%",
-            scrollSnapType: "x mandatory",
-            WebkitOverflowScrolling: "touch",
-          }}>
-            {displayedItems.map((item, index) => (
-              <div
-                key={item.name}
-                onClick={() => handleCardClick(index)}
-                style={{
-                  flexShrink: 0,
-                  width: cardW,
-                  height: cardH,
-                  borderRadius: 14,
-                  background: "#fff",
-                  padding: 8,
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-                  border: index === topCardIndex ? "2px solid #c9a55c" : "2px solid transparent",
-                  scrollSnapAlign: "center",
-                  transition: "all 0.3s ease",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{
-                  height: imgH,
-                  width: "100%",
-                  overflow: "hidden",
-                  borderRadius: 10,
-                  background: "#222",
-                }}>
-                  <img
-                    src={item.src}
-                    alt={item.name}
-                    loading="lazy"
-                    draggable={false}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }}
-                  />
-                </div>
-                <div style={{
-                  flex: 1,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}>
-                  <p style={{
-                    fontFamily: "var(--font-playfair), Georgia, serif",
-                    fontSize: 15,
-                    fontStyle: "italic",
-                    color: "#1a1a1a",
-                    margin: 0,
-                    fontWeight: 500,
-                  }}>
-                    {item.name}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          /* Desktop: stacked/spread cards */
-          displayedItems.map((item, index) => {
+        <div
+          style={{
+            position: "relative",
+            left: "50%",
+            top: "50%",
+            height: 320,
+            width: 256,
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          {displayedItems.map((item, index) => {
             const isTopCard = index === topCardIndex;
             const numItems = displayedItems.length;
-            let stackPos = index - topCardIndex;
-            if (stackPos < 0) stackPos += numItems;
+            let stackPosition = index - topCardIndex;
+            if (stackPosition < 0) stackPosition += numItems;
             const isClicked = index === clickedIndex;
-            const isCardHovered = hoveredCard === index && isGroupHovered && !isClicked;
 
-            let transform: string;
-            let zIndex: number;
-            let boxShadow: string;
-            let borderColor: string;
+            const rotation = isGroupHovered
+              ? 0
+              : isTopCard
+              ? 0
+              : baseRotations[stackPosition] || 0;
 
-            if (isClicked) {
-              transform = "translate(-50%, -50%) scale(1.2)";
-              zIndex = 200;
-              boxShadow = "0 30px 60px rgba(201,165,92,0.5), 0 0 0 3px #c9a55c";
-              borderColor = "#c9a55c";
-            } else if (isGroupHovered && spreadPositions[index]) {
-              const pos = spreadPositions[index];
-              const hoverScale = isCardHovered ? 1.12 : 1;
-              transform = `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px)) scale(${hoverScale}) rotate(${pos.r}deg)`;
-              zIndex = 100 + index;
-              boxShadow = isCardHovered
-                ? "0 25px 50px rgba(0,0,0,0.3), 0 0 0 2px #c9a55c"
-                : "0 15px 35px rgba(0,0,0,0.2)";
-              borderColor = isCardHovered ? "#c9a55c" : "rgba(255,255,255,0.2)";
-            } else {
-              const offset = stackPos * 12;
-              const scale = 1 - stackPos * 0.04;
-              const rot = stackRotations[stackPos] || 0;
-              transform = `translate(calc(-50% + ${offset}px), calc(-50% + ${offset * 0.5}px)) scale(${scale}) rotate(${rot}deg)`;
-              zIndex = isTopCard ? numItems + 1 : numItems - stackPos;
-              boxShadow = isTopCard
-                ? "0 20px 40px rgba(0,0,0,0.3)"
-                : "0 8px 20px rgba(0,0,0,0.15)";
-              borderColor = "transparent";
-            }
+            const transform = isGroupHovered
+              ? spreadTransforms[index]
+              : `translateY(${stackPosition * 0.5}rem) scale(${1 - stackPosition * 0.05})`;
 
             return (
               <div
                 key={item.name}
                 onClick={() => handleCardClick(index)}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
                 style={{
                   position: "absolute",
-                  left: "50%",
-                  top: "50%",
-                  height: cardH,
-                  width: cardW,
+                  inset: 0,
+                  height: 320,
+                  width: 256,
                   cursor: "pointer",
-                  borderRadius: 16,
+                  borderRadius: 12,
                   background: "#fff",
-                  padding: 12,
-                  boxShadow,
-                  border: `2px solid ${borderColor}`,
-                  transform,
-                  zIndex,
-                  transition: isClicked
-                    ? "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)"
-                    : "all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                  willChange: "transform, box-shadow",
+                  padding: 8,
+                  boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+                  transition: "all 0.5s ease-in-out",
+                  transform: `${transform} rotate(${rotation}deg)`,
+                  zIndex: isClicked
+                    ? 200
+                    : isGroupHovered
+                    ? 100
+                    : isTopCard
+                    ? numItems
+                    : numItems - stackPosition,
+                }}
+                onMouseEnter={(e) => {
+                  if (isGroupHovered && !isClicked) {
+                    (e.currentTarget as HTMLDivElement).style.transform =
+                      spreadTransforms[index] + " scale(1.1)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (isGroupHovered && !isClicked) {
+                    (e.currentTarget as HTMLDivElement).style.transform =
+                      spreadTransforms[index] || transform;
+                  }
                 }}
               >
-                <div style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                  alignItems: "center",
-                }}>
-                  <div style={{
-                    height: imgH,
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
                     width: "100%",
-                    overflow: "hidden",
-                    borderRadius: 10,
-                    background: "#222",
-                  }}>
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <div style={{ height: 256, width: "100%" }}>
                     <img
                       src={item.src}
                       alt={item.name}
                       loading="lazy"
                       draggable={false}
                       style={{
-                        width: "100%",
                         height: "100%",
+                        width: "100%",
+                        borderRadius: 6,
                         objectFit: "cover",
                         display: "block",
                       }}
                     />
                   </div>
-                  <div style={{
-                    flex: 1,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}>
-                    <p style={{
-                      fontFamily: "var(--font-playfair), Georgia, serif",
-                      fontSize: 18,
-                      fontStyle: "italic",
-                      color: "#1a1a1a",
-                      margin: 0,
-                      fontWeight: 500,
-                    }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      height: 48,
+                      flex: "1 1 0%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontFamily: "Georgia, serif",
+                        fontSize: 20,
+                        fontStyle: "italic",
+                        color: "#1a1a1a",
+                        margin: 0,
+                      }}
+                    >
                       {item.name}
                     </p>
                   </div>
                 </div>
               </div>
             );
-          })
-        )}
+          })}
+        </div>
       </div>
-
-      <h3 style={{
-        textAlign: "center",
-        fontSize: isMobile ? 18 : 24,
-        fontWeight: 700,
-        color: "#fff",
-        fontFamily: "var(--font-playfair), Georgia, serif",
-      }}>
+      <h3 style={{ textAlign: "center", fontSize: 24, fontWeight: 700, color: "#fff" }}>
         {title}
       </h3>
     </div>
