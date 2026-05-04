@@ -8,52 +8,59 @@ interface Testimonial {
   alt: string;
 }
 
-interface AnimatedTestimonialGridProps {
-  testimonials: Testimonial[];
-  badgeText?: string;
-  title: React.ReactNode;
-  description: React.ReactNode;
-  ctaText: string;
-  ctaHref: string;
-}
-
 const imagePositions = [
-  { top: "5%", left: "15%", className: "hidden lg:block", w: 96, h: 96 },
-  { top: "15%", left: "35%", className: "hidden md:block", w: 80, h: 80 },
-  { top: "5%", left: "55%", className: "hidden md:block", w: 64, h: 64 },
-  { top: "10%", right: "15%", className: "hidden lg:block", w: 112, h: 112 },
-  { top: "25%", right: "5%", className: "hidden md:block", w: 80, h: 80 },
-  { top: "45%", right: "10%", className: "hidden lg:block", w: 96, h: 96 },
-  { top: "50%", left: "5%", className: "hidden md:block", w: 112, h: 112 },
-  { bottom: "5%", left: "20%", className: "hidden lg:block", w: 80, h: 80 },
-  { bottom: "15%", left: "45%", className: "hidden md:block", w: 64, h: 64 },
-  { bottom: "10%", right: "30%", className: "hidden md:block", w: 96, h: 96 },
-  { bottom: "2%", right: "15%", className: "hidden lg:block", w: 80, h: 80 },
-  { top: "10%", left: "5%", className: "block md:hidden", w: 64, h: 64 },
-  { top: "5%", right: "10%", className: "block md:hidden", w: 80, h: 80 },
-  { bottom: "5%", left: "10%", className: "block md:hidden", w: 80, h: 80 },
-  { bottom: "10%", right: "5%", className: "block md:hidden", w: 64, h: 64 },
+  // Row 1 — top
+  { top: "2%", left: "8%", w: 110, h: 110 },
+  { top: "0%", left: "28%", w: 90, h: 90 },
+  { top: "3%", left: "48%", w: 70, h: 70 },
+  { top: "1%", right: "22%", w: 100, h: 100 },
+  { top: "4%", right: "4%", w: 85, h: 85 },
+  // Row 2 — mid-top
+  { top: "22%", left: "2%", w: 100, h: 100 },
+  { top: "25%", right: "8%", w: 95, h: 95 },
+  // Row 3 — middle
+  { top: "42%", left: "5%", w: 85, h: 85 },
+  { top: "45%", right: "3%", w: 110, h: 110 },
+  // Row 4 — mid-bottom
+  { top: "62%", left: "10%", w: 90, h: 90 },
+  { top: "60%", right: "12%", w: 75, h: 75 },
+  // Row 5 — bottom
+  { bottom: "8%", left: "5%", w: 95, h: 95 },
+  { bottom: "5%", left: "25%", w: 70, h: 70 },
+  { bottom: "3%", left: "50%", w: 80, h: 80 },
+  { bottom: "6%", right: "20%", w: 100, h: 100 },
+  { bottom: "2%", right: "3%", w: 85, h: 85 },
+  // Extras
+  { top: "15%", left: "15%", w: 65, h: 65 },
+  { top: "35%", left: "20%", w: 60, h: 60 },
+  { bottom: "18%", left: "15%", w: 70, h: 70 },
+  { bottom: "20%", right: "8%", w: 65, h: 65 },
 ];
 
 const imageVariants: Variants = {
   initial: { opacity: 0, scale: 0.5 },
-  animate: {
+  animate: (i: number) => ({
     opacity: 1,
     scale: 1,
     transition: {
       type: "spring",
       stiffness: 260,
       damping: 20,
-      delay: Math.random() * 0.5,
+      delay: i * 0.08,
     },
-  },
+  }),
 };
 
-function floatingAnimation(): { y: number[]; transition: { duration: number; repeat: number; repeatType: "reverse"; ease: Easing } } {
+function floatingAnimation(seed: number): {
+  y: number[];
+  x: number[];
+  transition: { duration: number; repeat: number; repeatType: "reverse"; ease: Easing };
+} {
   return {
-    y: [0, Math.random() * -15 - 5, 0],
+    y: [0, (Math.sin(seed) * 12) + -8, 0],
+    x: [0, Math.cos(seed) * 5, 0],
     transition: {
-      duration: Math.random() * 4 + 5,
+      duration: 4 + (seed % 3),
       repeat: Infinity,
       repeatType: "reverse",
       ease: "easeInOut" as Easing,
@@ -68,7 +75,29 @@ export function AnimatedTestimonialGrid({
   description,
   ctaText,
   ctaHref,
-}: AnimatedTestimonialGridProps) {
+}: {
+  testimonials: Testimonial[];
+  badgeText?: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
+  ctaText: string;
+  ctaHref: string;
+}) {
+  const [windowWidth, setWindowWidth] = React.useState(0);
+
+  React.useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    const onResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const isMobile = windowWidth > 0 && windowWidth < 768;
+
+  // On mobile show fewer images, on desktop show all
+  const visibleCount = isMobile ? 8 : imagePositions.length;
+  const scale = isMobile ? 0.6 : 1;
+
   return (
     <section
       style={{
@@ -76,45 +105,50 @@ export function AnimatedTestimonialGrid({
         width: "100%",
         maxWidth: 1200,
         margin: "0 auto",
-        padding: "100px 16px 120px",
-        minHeight: 500,
+        padding: "80px 16px",
+        minHeight: isMobile ? 400 : 650,
+        overflow: "hidden",
       }}
     >
       {/* Floating images */}
-      {testimonials.slice(0, imagePositions.length).map((testimonial, index) => {
+      {testimonials.slice(0, visibleCount).map((testimonial, index) => {
         const pos = imagePositions[index];
+        const imgW = Math.round(pos.w * scale);
+        const imgH = Math.round(pos.h * scale);
+
         const style: React.CSSProperties = {
           position: "absolute",
           top: pos.top,
           left: pos.left,
           right: pos.right,
           bottom: pos.bottom,
-          width: pos.w,
-          height: pos.h,
+          width: imgW,
+          height: imgH,
           borderRadius: 16,
           overflow: "hidden",
           boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
+          border: "2px solid rgba(255,255,255,0.3)",
         };
 
         return (
           <motion.div
             key={index}
-            className={pos.className}
             style={style}
             variants={imageVariants}
+            custom={index}
             initial="initial"
             animate="animate"
-            whileHover={{ scale: 1.12, zIndex: 20 }}
+            whileHover={{ scale: 1.15, zIndex: 20 }}
           >
             <motion.img
               src={testimonial.imgSrc}
               alt={testimonial.alt}
-              animate={floatingAnimation()}
+              animate={floatingAnimation(index * 1.7)}
               style={{
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                borderRadius: 16,
+                borderRadius: 14,
               }}
             />
           </motion.div>
@@ -130,7 +164,7 @@ export function AnimatedTestimonialGrid({
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
-          padding: "60px 20px",
+          padding: isMobile ? "40px 10px" : "80px 20px",
         }}
       >
         {badgeText && (
@@ -154,7 +188,7 @@ export function AnimatedTestimonialGrid({
         <h2
           style={{
             fontFamily: "var(--font-playfair), Georgia, serif",
-            fontSize: "clamp(28px, 5vw, 52px)",
+            fontSize: "clamp(24px, 5vw, 48px)",
             fontWeight: 700,
             lineHeight: 1.15,
             color: "#1a1a1a",
@@ -166,9 +200,9 @@ export function AnimatedTestimonialGrid({
         </h2>
         <p
           style={{
-            fontSize: "clamp(15px, 2vw, 18px)",
+            fontSize: "clamp(14px, 2vw, 17px)",
             color: "#666",
-            maxWidth: 520,
+            maxWidth: 500,
             lineHeight: 1.7,
             marginBottom: 32,
           }}
