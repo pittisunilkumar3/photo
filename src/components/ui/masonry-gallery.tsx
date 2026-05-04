@@ -33,11 +33,11 @@ const columns: { src: string; alt: string; ratio: number; tall: boolean }[][] = 
 
 export function MasonryGallery() {
   return (
-    <div style={{ width: "100%", maxWidth: 1400, margin: "0 auto" }}>
+    <div style={{ width: "100%" }}>
       <div style={{
         display: "grid",
         gridTemplateColumns: "repeat(3, 1fr)",
-        gap: 20,
+        gap: 12,
       }}>
         {columns.map((col, colIndex) => (
           <div key={colIndex} style={{ display: "grid", gap: 20 }}>
@@ -68,10 +68,10 @@ function MasonryImage({ src, alt, ratio }: { src: string; alt: string; ratio: nu
         position: "relative",
         width: "100%",
         aspectRatio: `${ratio}`,
-        borderRadius: 12,
+        borderRadius: 4,
         overflow: "hidden",
         background: "#f0efe8",
-        border: "1px solid #e8e5df",
+        border: "none",
         cursor: "pointer",
       }}
     >

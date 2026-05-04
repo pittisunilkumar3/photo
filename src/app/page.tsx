@@ -204,7 +204,7 @@ export default function Home() {
       </section>
 
       {/* ==================== PORTFOLIO ==================== */}
-      <section id="portfolio" className="section">
+      <section id="portfolio" className="section" style={{ padding: "100px 0 0" }}>
         <div className="section-header">
           <div className="section-label">Portfolio</div>
           <h2 className="section-title">Selected <span>Works</span></h2>
