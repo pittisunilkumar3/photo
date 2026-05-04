@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   InteractivePhotoStack,
 } from "@/components/ui/photo-stack";
-import ImageStack from "@/components/ui/image-stack";
+import { CircularGallery, GalleryItem } from "@/components/ui/circular-gallery";
 import { ImageGallery } from "@/components/ui/image-gallery";
 
 const photos = [
@@ -254,14 +254,33 @@ export default function Home() {
         />
       </section>
 
-      {/* ==================== SCATTERED IMAGE STACK ==================== */}
-      <section className="section" style={{ background: "#fff" }}>
-        <div className="section-header">
-          <div className="section-label">Creative</div>
-          <h2 className="section-title">Scattered <span>Moments</span></h2>
-          <p className="section-desc">Click any card to reshuffle the layout</p>
+      {/* ==================== 3D CIRCULAR GALLERY ==================== */}
+      <section style={{ width: "100%", background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)" }}>
+        <div style={{ position: "sticky", top: 0, width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+          <div style={{ textAlign: "center", position: "absolute", top: 40, zIndex: 10 }}>
+            <div className="section-label" style={{ color: "#c9a55c" }}>Gallery</div>
+            <h2 className="section-title" style={{ color: "#fff" }}>3D <span>Carousel</span></h2>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }}>Scroll to rotate • Auto-rotates when idle</p>
+          </div>
+          <div style={{ width: "100%", height: "100%" }}>
+            <CircularGallery
+              items={[
+                { common: "Golden Portrait", binomial: "Portrait Photography", photo: { url: "/images/portrait1.jpg", text: "Golden hour portrait", by: "Alex Morgan" } },
+                { common: "Mountain Serenity", binomial: "Landscape Photography", photo: { url: "/images/landscape2.jpg", text: "Mountain landscape", pos: "50% 30%", by: "Alex Morgan" } },
+                { common: "Eternal Love", binomial: "Wedding Photography", photo: { url: "/images/wedding1.jpg", text: "Wedding couple", by: "Alex Morgan" } },
+                { common: "Urban Nights", binomial: "Street Photography", photo: { url: "/images/street1.jpg", text: "City at night", by: "Alex Morgan" } },
+                { common: "Natural Beauty", binomial: "Portrait Photography", photo: { url: "/images/portrait2.jpg", text: "Natural portrait", by: "Alex Morgan" } },
+                { common: "Modern Lines", binomial: "Architecture Photography", photo: { url: "/images/arch1.jpg", text: "Modern architecture", by: "Alex Morgan" } },
+                { common: "Alpine Dawn", binomial: "Landscape Photography", photo: { url: "/images/landscape1.jpg", text: "Alpine mountains", by: "Alex Morgan" } },
+                { common: "First Dance", binomial: "Wedding Photography", photo: { url: "/images/wedding2.jpg", text: "Wedding dance", by: "Alex Morgan" } },
+                { common: "City Lights", binomial: "Street Photography", photo: { url: "/images/street2.jpg", text: "City streets", by: "Alex Morgan" } },
+                { common: "Creative Vision", binomial: "Studio Photography", photo: { url: "/images/hero1.jpg", text: "Studio portrait", by: "Alex Morgan" } },
+              ]}
+              radius={500}
+              autoRotateSpeed={0.015}
+            />
+          </div>
         </div>
-        <ImageStack />
       </section>
 
       {/* ==================== PHOTO DIVIDER ==================== */}
