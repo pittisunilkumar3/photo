@@ -7,6 +7,7 @@ import {
 import { MasonryGallery } from "@/components/ui/masonry-gallery";
 import { CircularFlipGallery } from "@/components/ui/circular-flip-gallery";
 import { ExpandingGallery } from "@/components/ui/expanding-gallery";
+import { InteractiveBentoGallery } from "@/components/ui/bento-gallery";
 import { CircularGallery } from "@/components/ui/circular-gallery";
 import { InfiniteScroll } from "@/components/ui/infinite-scroll";
 import { ImageGallery } from "@/components/ui/image-gallery";
@@ -245,6 +246,16 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* ==================== BENTO GALLERY ==================== */}
+      <section className="section">
+        <div className="section-header">
+          <div className="section-label">Gallery</div>
+          <h2 className="section-title">Creative <span>Bento</span></h2>
+          <p className="section-desc">Drag to rearrange, click to view — an interactive bento grid of our work</p>
+        </div>
+        <InteractiveBentoGallery />
+      </section>
 
       {/* ==================== 3D CIRCULAR GALLERY ==================== */}
       <section style={{ width: "100%", background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)" }}>
