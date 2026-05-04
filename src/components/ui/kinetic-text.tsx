@@ -14,7 +14,7 @@ export function KineticText({
   words,
   className,
   style,
-  interval = 3500,
+  interval = 6000,
   tag: Tag = "span",
 }: KineticTextProps) {
   const textRef = useRef<HTMLElement>(null);
@@ -38,35 +38,41 @@ export function KineticText({
         span.className = "kinetic-char";
         span.textContent = char === " " ? "\u00A0" : char;
 
-        const fromX = (Math.random() - 0.5) * 600;
-        const fromY = (Math.random() - 0.5) * 600;
-        const fromZ = (Math.random() - 0.5) * 400;
-        const fromRotX = (Math.random() - 0.5) * 360;
-        const fromRotY = (Math.random() - 0.5) * 360;
+        const fromX = (Math.random() - 0.5) * 400;
+        const fromY = (Math.random() - 0.5) * 300;
+        const fromZ = (Math.random() - 0.5) * 200;
+        const fromRotX = (Math.random() - 0.5) * 180;
+        const fromRotY = (Math.random() - 0.5) * 180;
 
         span.style.setProperty("--kf-from", `translate3d(${fromX}px,${fromY}px,${fromZ}px) rotateX(${fromRotX}deg) rotateY(${fromRotY}deg)`);
         span.style.animationName = "kinetic-fly-in";
-        span.style.animationDelay = `${i * 0.05}s`;
+        span.style.animationDelay = `${i * 0.07}s`;
         span.style.animationPlayState = "running";
 
         el.appendChild(span);
         return span;
       });
 
+      // Calculate when all letters finish flying in
+      const totalFlyInTime = chars.length * 70 + 800; // stagger + animation duration
+
+      // Start fly-out only after word has been fully visible for a while
+      const holdTime = interval - totalFlyInTime - 1200; // 1200ms for fly-out
+
       animTimeout = setTimeout(() => {
         if (!mounted) return;
         chars.forEach((span, i) => {
-          const toX = (Math.random() - 0.5) * 600;
-          const toY = (Math.random() - 0.5) * 600;
-          const toZ = (Math.random() - 0.5) * 400;
-          const toRotX = (Math.random() - 0.5) * 360;
-          const toRotY = (Math.random() - 0.5) * 360;
+          const toX = (Math.random() - 0.5) * 400;
+          const toY = (Math.random() - 0.5) * 300;
+          const toZ = (Math.random() - 0.5) * 200;
+          const toRotX = (Math.random() - 0.5) * 180;
+          const toRotY = (Math.random() - 0.5) * 180;
 
           span.style.setProperty("--kf-to", `translate3d(${toX}px,${toY}px,${toZ}px) rotateX(${toRotX}deg) rotateY(${toRotY}deg)`);
           span.style.animationName = "kinetic-fly-out";
-          span.style.animationDelay = `${(chars.length - i) * 0.04}s`;
+          span.style.animationDelay = `${i * 0.03}s`;
         });
-      }, interval - 1000);
+      }, totalFlyInTime + Math.max(holdTime, 1500));
 
       cycleTimeout = setTimeout(() => {
         if (!mounted) return;
@@ -133,15 +139,15 @@ export function KineticOnce({
       span.className = "kinetic-char";
       span.textContent = char === " " ? "\u00A0" : char;
 
-      const fromX = (Math.random() - 0.5) * 500;
-      const fromY = (Math.random() - 0.5) * 500;
-      const fromZ = (Math.random() - 0.5) * 300;
-      const fromRotX = (Math.random() - 0.5) * 360;
-      const fromRotY = (Math.random() - 0.5) * 360;
+      const fromX = (Math.random() - 0.5) * 400;
+      const fromY = (Math.random() - 0.5) * 300;
+      const fromZ = (Math.random() - 0.5) * 200;
+      const fromRotX = (Math.random() - 0.5) * 180;
+      const fromRotY = (Math.random() - 0.5) * 180;
 
       span.style.setProperty("--kf-from", `translate3d(${fromX}px,${fromY}px,${fromZ}px) rotateX(${fromRotX}deg) rotateY(${fromRotY}deg)`);
       span.style.animationName = "kinetic-fly-in";
-      span.style.animationDelay = `${delay + i * 0.04}s`;
+      span.style.animationDelay = `${delay + i * 0.06}s`;
       span.style.animationPlayState = "running";
 
       el.appendChild(span);
@@ -151,7 +157,7 @@ export function KineticOnce({
     // After animation, set final inline text
     const timeout = setTimeout(() => {
       if (el) el.textContent = text;
-    }, delay + chars.length * 40 + 700);
+    }, delay + chars.length * 60 + 1000);
 
     return () => clearTimeout(timeout);
   }, [triggered, text, delay]);
