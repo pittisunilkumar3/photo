@@ -148,7 +148,11 @@ export default function Home() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          maxWidth: 650,
+          alignItems: "center",
+          textAlign: "center",
+          width: "100%",
+          maxWidth: 800,
+          margin: "0 auto",
           padding: "0 40px",
           pointerEvents: "none",
         }}

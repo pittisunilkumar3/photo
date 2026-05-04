@@ -30,24 +30,24 @@ body {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background: var(--bg-dark);
-  background-image: url('/images/landscape1.jpg');
-  background-size: cover;
-  background-position: center;
-  animation: heroBgZoom 20s ease-in-out infinite alternate;
+  background: #0a0a0a;
 }
 
-@keyframes heroBgZoom {
-  0% { background-size: 100% auto; }
-  100% { background-size: 110% auto; }
-}
+/* hero zoom removed — gallery is background */
 
 .hero-bg-photos { display: none; }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.6) 100%);
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.75) 0%,
+    rgba(0,0,0,0.4) 40%,
+    rgba(0,0,0,0.3) 60%,
+    rgba(0,0,0,0.5) 100%
+  );
+  z-index: 2;
 }
 
 .hero-content {
@@ -129,6 +129,8 @@ body {
   line-height: 1.8;
   color: rgba(255,255,255,0.6);
   max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 40px;
   opacity: 0;
   transform: translateY(30px);
@@ -998,15 +1000,16 @@ body {
 
 /* ===== HERO TEXT OVERLAY ===== */
 .hero-text-overlay {
-  max-width: 650px;
+  max-width: 800px;
 }
+.hero-text-overlay .hero-badge { margin-left: auto; margin-right: auto; }
+.hero-text-overlay .hero-desc { margin-left: auto; margin-right: auto; }
+.hero-text-overlay .hero-buttons { justify-content: center; }
+.hero-text-overlay .hero-stats { justify-content: center; }
+.hero-text-overlay .hero-title { text-align: center; }
 @media (max-width: 768px) {
   .hero-text-overlay {
     max-width: 100% !important;
     padding: 0 20px !important;
-    text-align: center;
   }
-  .hero-text-overlay .hero-buttons { justify-content: center; }
-  .hero-text-overlay .hero-stats { justify-content: center; }
-  .hero-text-overlay .hero-desc { margin-left: auto; margin-right: auto; }
 }

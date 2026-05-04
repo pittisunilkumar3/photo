@@ -9,10 +9,7 @@ declare global {
   }
 }
 
-interface ImageData {
-  title: string;
-  url: string;
-}
+interface ImageData { title: string; url: string; }
 
 const images: ImageData[] = [
   { title: "Golden Portrait", url: "/images/portrait1.jpg" },
@@ -23,6 +20,10 @@ const images: ImageData[] = [
   { title: "Modern Lines", url: "/images/arch1.jpg" },
 ];
 
+// Full HD viewBox for crisp rendering
+const W = 1920;
+const H = 1080;
+
 export function ImageGallery() {
   const [opened, setOpened] = useState(0);
   const [inPlace, setInPlace] = useState(0);
@@ -31,40 +32,31 @@ export function ImageGallery() {
   const autoplayTimer = useRef<number | null>(null);
 
   useEffect(() => {
-    const loadScripts = () => {
-      if (window.gsap && window.MotionPathPlugin) {
-        window.gsap.registerPlugin(window.MotionPathPlugin);
-        setGsapReady(true);
-        return;
-      }
-      const gsapScript = document.createElement("script");
-      gsapScript.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js";
-      gsapScript.onload = () => {
-        const mp = document.createElement("script");
-        mp.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js";
-        mp.onload = () => {
-          if (window.gsap && window.MotionPathPlugin) {
-            window.gsap.registerPlugin(window.MotionPathPlugin);
-            setGsapReady(true);
-          }
-        };
-        document.body.appendChild(mp);
+    if (window.gsap && window.MotionPathPlugin) {
+      window.gsap.registerPlugin(window.MotionPathPlugin);
+      setGsapReady(true);
+      return;
+    }
+    const s1 = document.createElement("script");
+    s1.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js";
+    s1.onload = () => {
+      const s2 = document.createElement("script");
+      s2.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js";
+      s2.onload = () => {
+        if (window.gsap && window.MotionPathPlugin) {
+          window.gsap.registerPlugin(window.MotionPathPlugin);
+          setGsapReady(true);
+        }
       };
-      document.body.appendChild(gsapScript);
+      document.body.appendChild(s2);
     };
-    loadScripts();
+    document.body.appendChild(s1);
   }, []);
 
-  const onClick = (index: number) => { if (!disabled) setOpened(index); };
-  const onInPlace = (index: number) => setInPlace(index);
-
-  const next = useCallback(() => {
-    setOpened((prev) => (prev + 1 >= images.length ? 0 : prev + 1));
-  }, []);
-
-  const prev = useCallback(() => {
-    setOpened((prev) => (prev - 1 < 0 ? images.length - 1 : prev - 1));
-  }, []);
+  const onClick = (i: number) => { if (!disabled) setOpened(i); };
+  const onInPlace = (i: number) => setInPlace(i);
+  const next = useCallback(() => setOpened((p) => (p + 1 >= images.length ? 0 : p + 1)), []);
+  const prev = useCallback(() => setOpened((p) => (p - 1 < 0 ? images.length - 1 : p - 1)), []);
 
   useEffect(() => setDisabled(true), [opened]);
   useEffect(() => setDisabled(false), [inPlace]);
@@ -76,233 +68,187 @@ export function ImageGallery() {
     return () => { if (autoplayTimer.current) clearInterval(autoplayTimer.current); };
   }, [opened, gsapReady, next]);
 
-  const btnStyle = (side: "left" | "right"): React.CSSProperties => ({
-    position: "absolute",
-    [side]: 30,
-    top: "50%",
-    zIndex: 101,
-    display: "flex",
-    height: 48,
-    width: 48,
-    transform: "translateY(-50%)",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "50%",
-    border: "2px solid rgba(255,255,255,0.25)",
-    background: "rgba(0,0,0,0.35)",
-    backdropFilter: "blur(8px)",
-    color: "#fff",
-    cursor: disabled ? "not-allowed" : "pointer",
-    opacity: disabled ? 0.3 : 0.8,
-    outline: "none",
-    transition: "all 0.3s ease",
-  });
-
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <div
-        style={{
-          position: "relative",
-          height: "100%",
-          width: "100%",
-          overflow: "hidden",
-        }}
+    <div style={{ position: "absolute", inset: 0 }}>
+      {/* SVG gallery fills entire container */}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={`0 0 ${W} ${H}`}
+        preserveAspectRatio="xMidYMid slice"
+        style={{ width: "100%", height: "100%", display: "block" }}
       >
-        {gsapReady &&
-          images.map((image, i) => (
-            <div
-              key={image.url}
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                height: "100%",
-                width: "100%",
-                zIndex: inPlace === i ? i : images.length + 1,
-              }}
-            >
-              <GalleryImage
-                total={images.length}
-                id={i}
-                url={image.url}
-                title={image.title}
-                open={opened === i}
-                inPlace={inPlace === i}
-                onInPlace={onInPlace}
-              />
-            </div>
-          ))}
-        <div style={{ position: "absolute", left: 0, top: 0, zIndex: 100, height: "100%", width: "100%", pointerEvents: "none" }}>
-          <Tabs images={images} onSelect={onClick} />
-        </div>
-      </div>
+        <defs />
 
-      <button onClick={prev} disabled={disabled} aria-label="Previous" style={btnStyle("left")}>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
+        {gsapReady && images.map((image, i) => (
+          <GalleryLayer
+            key={image.url}
+            id={i}
+            url={image.url}
+            title={image.title}
+            open={opened === i}
+            inPlace={inPlace === i}
+            onInPlace={onInPlace}
+            total={images.length}
+          />
+        ))}
+
+        {/* Tab dots at bottom */}
+        {gsapReady && <TabsRow images={images} onSelect={onClick} activeIndex={opened} />}
+      </svg>
+
+      {/* Nav arrows */}
+      <button onClick={prev} disabled={disabled} aria-label="Previous" style={{
+        position: "absolute", left: 24, top: "50%", zIndex: 10,
+        transform: "translateY(-50%)", width: 52, height: 52,
+        borderRadius: "50%", border: "none",
+        background: "rgba(0,0,0,0.35)", backdropFilter: "blur(6px)",
+        color: "#fff", cursor: disabled ? "not-allowed" : "pointer",
+        opacity: disabled ? 0.3 : 0.9, display: "flex",
+        alignItems: "center", justifyContent: "center", transition: "all 0.3s",
+      }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6" /></svg>
       </button>
-
-      <button onClick={next} disabled={disabled} aria-label="Next" style={btnStyle("right")}>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M9 18l6-6-6-6" />
-        </svg>
+      <button onClick={next} disabled={disabled} aria-label="Next" style={{
+        position: "absolute", right: 24, top: "50%", zIndex: 10,
+        transform: "translateY(-50%)", width: 52, height: 52,
+        borderRadius: "50%", border: "none",
+        background: "rgba(0,0,0,0.35)", backdropFilter: "blur(6px)",
+        color: "#fff", cursor: disabled ? "not-allowed" : "pointer",
+        opacity: disabled ? 0.3 : 0.9, display: "flex",
+        alignItems: "center", justifyContent: "center", transition: "all 0.3s",
+      }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
       </button>
     </div>
   );
 }
 
-/* ===== Gallery Image ===== */
+/* ===== Single gallery layer ===== */
+function GalleryLayer({ id, url, title, open, inPlace, onInPlace, total }: {
+  id: number; url: string; title: string; open: boolean; inPlace: boolean;
+  onInPlace: (i: number) => void; total: number;
+}) {
+  const clipRef = useRef<SVGCircleElement>(null);
+  const [firstLoad] = useState(id === 0); // first image visible immediately
 
-interface GalleryImageProps {
-  url: string;
-  title: string;
-  open: boolean;
-  inPlace: boolean;
-  id: number;
-  onInPlace: (id: number) => void;
-  total: number;
-}
+  const R_SMALL = 20;
+  const R_BIG = Math.max(W, H);
+  const GAP = 30;
+  const TAB_Y = H - 60;
+  const DURATION = 0.5;
 
-function GalleryImage({ url, title, open, inPlace, id, onInPlace, total }: GalleryImageProps) {
-  const [firstLoad, setLoaded] = useState(true);
-  const clip = useRef<SVGCircleElement>(null);
-
-  const gap = 10;
-  const circleRadius = 7;
-  const defaults = { transformOrigin: "center center" };
-  const duration = 0.4;
-  const width = 400;
-  const height = 400;
-  const scale = 700;
-  const bigSize = circleRadius * scale;
-  const overlap = 0;
-
-  const getPosSmall = () => ({
-    cx: width / 2 - (total * (circleRadius * 2 + gap) - gap) / 2 + id * (circleRadius * 2 + gap),
-    cy: height - 30,
-    r: circleRadius,
+  const getSmall = () => ({
+    cx: W / 2 - (total * (R_SMALL * 2 + GAP) - GAP) / 2 + id * (R_SMALL * 2 + GAP),
+    cy: TAB_Y, r: R_SMALL,
   });
-  const getPosSmallAbove = () => ({
-    cx: width / 2 - (total * (circleRadius * 2 + gap) - gap) / 2 + id * (circleRadius * 2 + gap),
-    cy: height / 2,
-    r: circleRadius * 2,
+  const getMid = () => ({ cx: W / 2, cy: H / 2, r: 80 });
+  const getBigLeft = () => ({ cx: W / 2 - R_BIG, cy: H / 2, r: R_BIG });
+  const getBigRight = () => ({ cx: W / 2 + R_BIG, cy: H / 2, r: R_BIG });
+  const getSmallAbove = () => ({
+    cx: W / 2 - (total * (R_SMALL * 2 + GAP) - GAP) / 2 + id * (R_SMALL * 2 + GAP),
+    cy: H / 2, r: R_SMALL * 2,
   });
-  const getPosCenter = () => ({ cx: width / 2, cy: height / 2, r: circleRadius * 7 });
-  const getPosEnd = () => ({ cx: width / 2 - bigSize + overlap, cy: height / 2, r: bigSize });
-  const getPosStart = () => ({ cx: width / 2 + bigSize - overlap, cy: height / 2, r: bigSize });
 
   useEffect(() => {
     const gsap = window.gsap;
-    if (!gsap) return;
-    setLoaded(false);
-    if (clip.current) {
-      const flipDuration = firstLoad ? 0 : duration;
-      const upDuration = firstLoad ? 0 : 0.2;
-      const bounceDuration = firstLoad ? 0.01 : 1;
+    if (!gsap || !clipRef.current) return;
 
-      if (open) {
-        gsap
-          .timeline()
-          .set(clip.current, { ...defaults, ...getPosSmall() })
-          .to(clip.current, { ...defaults, ...getPosCenter(), duration: upDuration, ease: "power3.inOut" })
-          .to(clip.current, {
-            ...defaults, ...getPosEnd(), duration: flipDuration, ease: "power4.in",
-            onComplete: () => onInPlace(id),
-          });
-      } else {
-        const delay = firstLoad ? 0 : flipDuration + upDuration;
-        gsap
-          .timeline({ overwrite: true })
-          .set(clip.current, { ...defaults, ...getPosStart() })
-          .to(clip.current, { ...defaults, ...getPosCenter(), delay, duration: flipDuration, ease: "power4.out" })
-          .to(clip.current, {
-            ...defaults,
-            motionPath: { path: [getPosSmallAbove(), getPosSmall()], curviness: 1 },
-            duration: bounceDuration, ease: "bounce.out",
-          });
-      }
+    const dur = firstLoad ? 0 : DURATION;
+    const up = firstLoad ? 0 : 0.25;
+    const bounce = firstLoad ? 0.01 : 1;
+
+    if (open) {
+      gsap.timeline()
+        .set(clipRef.current, { attr: getSmall() })
+        .to(clipRef.current, { attr: getMid(), duration: up, ease: "power3.inOut" })
+        .to(clipRef.current, {
+          attr: getBigLeft(), duration: dur, ease: "power4.in",
+          onComplete: () => onInPlace(id),
+        });
+    } else {
+      const delay = firstLoad ? 0 : dur + up;
+      gsap.timeline({ overwrite: true })
+        .set(clipRef.current, { attr: getBigRight() })
+        .to(clipRef.current, { attr: getMid(), delay, duration: dur, ease: "power4.out" })
+        .to(clipRef.current, {
+          attr: getSmallAbove(), duration: bounce * 0.4, ease: "power2.out",
+        })
+        .to(clipRef.current, {
+          attr: getSmall(), duration: bounce * 0.6, ease: "bounce.out",
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
-      viewBox={`0 0 ${width} ${height}`}
-      preserveAspectRatio="xMidYMid slice"
-      style={{ height: "100%", width: "100%" }}
-    >
-      <defs>
-        <clipPath id={`${id}_circleClip`}>
-          <circle cx="0" cy="0" r={circleRadius} ref={clip} />
-        </clipPath>
-        <clipPath id={`${id}_squareClip`}>
-          <rect width={width} height={height} />
-        </clipPath>
-      </defs>
-      <g clipPath={`url(#${id}${inPlace ? "_squareClip" : "_circleClip"})`}>
-        <image width={width} height={height} href={url} style={{ pointerEvents: "none" }} />
+    <g style={{ zIndex: inPlace ? id : total + 1 }}>
+      <clipPath id={`clip_${id}`}>
+        <circle ref={clipRef} cx={W / 2} cy={H / 2} r={0} />
+      </clipPath>
+      <g clipPath={`url(#clip_${id})`}>
+        <image
+          width={W} height={H}
+          href={url}
+          preserveAspectRatio="xMidYMid slice"
+          style={{ pointerEvents: "none" }}
+        />
+        {/* Title overlay on image */}
+        <text
+          x={W / 2}
+          y={H - 140}
+          textAnchor="middle"
+          fill="white"
+          fontSize="48"
+          fontFamily="Georgia, serif"
+          fontStyle="italic"
+          opacity="0.8"
+          style={{ pointerEvents: "none" }}
+        >
+          {title}
+        </text>
       </g>
-    </svg>
+    </g>
   );
 }
 
-/* ===== Tabs ===== */
-
-interface TabsProps {
-  images: ImageData[];
-  onSelect: (index: number) => void;
-}
-
-function Tabs({ images, onSelect }: TabsProps) {
-  const gap = 10;
-  const circleRadius = 7;
-  const width = 400;
-  const height = 400;
-
-  const getPosX = (i: number) =>
-    width / 2 - (images.length * (circleRadius * 2 + gap) - gap) / 2 + i * (circleRadius * 2 + gap);
-  const getPosY = () => height - 30;
+/* ===== Bottom tab dots ===== */
+function TabsRow({ images, onSelect, activeIndex }: {
+  images: ImageData[]; onSelect: (i: number) => void; activeIndex: number;
+}) {
+  const R = 20;
+  const GAP = 30;
+  const Y = H - 60;
 
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
-      viewBox={`0 0 ${width} ${height}`}
-      preserveAspectRatio="xMidYMid slice"
-      style={{ height: "100%", width: "100%" }}
-    >
-      {images.map((image, i) => (
-        <g key={image.url} style={{ pointerEvents: "auto" }}>
-          <defs>
-            <clipPath id={`tab_${i}_clip`}>
-              <circle cx={getPosX(i)} cy={getPosY()} r={circleRadius} />
-            </clipPath>
-          </defs>
-          <image
-            x={getPosX(i) - circleRadius}
-            y={getPosY() - circleRadius}
-            width={circleRadius * 2}
-            height={circleRadius * 2}
-            href={image.url}
-            clipPath={`url(#tab_${i}_clip)`}
-            style={{ pointerEvents: "none" }}
-            preserveAspectRatio="xMidYMid slice"
-          />
-          <circle
-            onClick={() => onSelect(i)}
-            style={{ cursor: "pointer", fill: "rgba(255,255,255,0)", stroke: "rgba(255,255,255,0.7)", transition: "all 0.3s" }}
-            strokeWidth="2"
-            cx={getPosX(i)}
-            cy={getPosY()}
-            r={circleRadius + 2}
-          />
-        </g>
-      ))}
-    </svg>
+    <g style={{ pointerEvents: "auto" }}>
+      {images.map((img, i) => {
+        const cx = W / 2 - (images.length * (R * 2 + GAP) - GAP) / 2 + i * (R * 2 + GAP);
+        return (
+          <g key={img.url}>
+            <defs>
+              <clipPath id={`tabclip_${i}`}>
+                <circle cx={cx} cy={Y} r={R} />
+              </clipPath>
+            </defs>
+            <image
+              x={cx - R} y={Y - R}
+              width={R * 2} height={R * 2}
+              href={img.url}
+              clipPath={`url(#tabclip_${i})`}
+              preserveAspectRatio="xMidYMid slice"
+              style={{ pointerEvents: "none" }}
+            />
+            <circle
+              cx={cx} cy={Y} r={R + 3}
+              fill="none"
+              stroke={activeIndex === i ? "rgba(201,165,92,0.9)" : "rgba(255,255,255,0.5)"}
+              strokeWidth={activeIndex === i ? 3 : 2}
+              style={{ cursor: "pointer", transition: "all 0.3s" }}
+              onClick={() => onSelect(i)}
+            />
+          </g>
+        );
+      })}
+    </g>
   );
 }
