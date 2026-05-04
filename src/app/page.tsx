@@ -232,13 +232,34 @@ export default function Home() {
         />
       </section>
 
+      {/* ==================== INFINITE SCROLL ==================== */}
+      <section style={{ background: "#0a0a0a" }}>
+        <div style={{ textAlign: "center", paddingTop: 60, paddingBottom: 20 }}>
+          <div className="section-label" style={{ color: "#c9a55c" }}>Showcase</div>
+          <h2 className="section-title" style={{ color: "#fff" }}>Nature <span>Gallery</span></h2>
+          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }}>Hover to pause the scroll</p>
+        </div>
+        <InfiniteScroll />
+      </section>
+
+      {/* ==================== PHOTO DIVIDER ==================== */}
+      <div className="photo-divider">
+        <img src="/images/divider.jpg" alt="" loading="lazy" />
+        <div className="photo-divider-overlay">
+          <div className="photo-divider-quote">
+            &ldquo;Photography is the story I fail to put into words&rdquo;
+            <span>— Destin Sparks</span>
+          </div>
+        </div>
+      </div>
+
       {/* ==================== 3D CIRCULAR GALLERY ==================== */}
       <section style={{ width: "100%", background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)" }}>
         <div style={{ position: "sticky", top: 0, width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
           <div style={{ textAlign: "center", position: "absolute", top: 40, zIndex: 10 }}>
             <div className="section-label" style={{ color: "#c9a55c" }}>Gallery</div>
             <h2 className="section-title" style={{ color: "#fff" }}>3D <span>Carousel</span></h2>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }}>Scroll to rotate • Auto-rotates when idle</p>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }}>Scroll to rotate • Drag to spin • Auto-rotates when idle</p>
           </div>
           <div style={{ width: "100%", height: "100%" }}>
             <CircularGallery
@@ -260,27 +281,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ==================== INFINITE SCROLL ==================== */}
-      <section style={{ background: "#0a0a0a" }}>
-        <div style={{ textAlign: "center", paddingTop: 60, paddingBottom: 20 }}>
-          <div className="section-label" style={{ color: "#c9a55c" }}>Showcase</div>
-          <h2 className="section-title" style={{ color: "#fff" }}>Nature <span>Gallery</span></h2>
-          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }}>Hover to pause the scroll</p>
-        </div>
-        <InfiniteScroll />
-      </section>
-
-      {/* ==================== PHOTO DIVIDER ==================== */}
-      <div className="photo-divider">
-        <img src="/images/divider.jpg" alt="" loading="lazy" />
-        <div className="photo-divider-overlay">
-          <div className="photo-divider-quote">
-            &ldquo;Photography is the story I fail to put into words&rdquo;
-            <span>— Destin Sparks</span>
-          </div>
-        </div>
-      </div>
 
       {/* ==================== ABOUT ==================== */}
       <section id="about" className="section section-alt">
