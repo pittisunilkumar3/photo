@@ -3,7 +3,6 @@
 import * as React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-// Seeded pseudo-random number generator
 class SeededRandom {
   private seed: number;
   constructor(seed: number) { this.seed = seed; }
@@ -14,46 +13,45 @@ class SeededRandom {
 interface ImageData { src: string; alt: string; id: string; }
 interface ScatterPosition { x: number; y: number; rotation: number; scale: number; }
 
-export interface ImageStackProps {
-  images?: ImageData[];
-  maxRotation?: number;
-  scatterRadius?: number;
-  seed?: number;
-  className?: string;
-}
+const DEFAULT_IMAGES: ImageData[] = [
+  { id: "1", src: "/images/landscape1.jpg", alt: "Alpine Dawn" },
+  { id: "2", src: "/images/landscape2.jpg", alt: "Mountain Serenity" },
+  { id: "3", src: "/images/portrait1.jpg", alt: "Golden Portrait" },
+  { id: "4", src: "/images/street1.jpg", alt: "Urban Nights" },
+  { id: "5", src: "/images/wedding1.jpg", alt: "Eternal Love" },
+];
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { delayChildren: 0, staggerChildren: 1.5 } },
+  visible: { transition: { delayChildren: 0, staggerChildren: 0.8 } },
 };
 
 const cardVariants = {
-  hidden: (custom: { zIndex: number }) => ({
-    x: 0, y: 0, rotate: 0, scale: 1, zIndex: custom.zIndex,
+  hidden: () => ({
+    x: 0, y: 0, rotate: 0, scale: 0.8, opacity: 0,
   }),
   visible: (custom: { position: ScatterPosition; zIndex: number; springConfig: any }) => ({
     x: custom.position.x,
     y: custom.position.y,
     rotate: custom.position.rotation,
     scale: custom.position.scale,
+    opacity: 1,
     zIndex: custom.zIndex,
     transition: custom.springConfig,
   }),
 };
 
 export default function ImageStack({
-  images = [
-    { id: "1", src: "/images/landscape1.jpg", alt: "Alpine Dawn" },
-    { id: "2", src: "/images/landscape2.jpg", alt: "Mountain Serenity" },
-    { id: "3", src: "/images/portrait1.jpg", alt: "Golden Portrait" },
-    { id: "4", src: "/images/street1.jpg", alt: "Urban Nights" },
-    { id: "5", src: "/images/wedding1.jpg", alt: "Eternal Love" },
-  ],
-  maxRotation = 15,
-  scatterRadius = 40,
+  images = DEFAULT_IMAGES,
+  maxRotation = 12,
   seed = 12345,
   className = "",
-}: ImageStackProps) {
+}: {
+  images?: ImageData[];
+  maxRotation?: number;
+  seed?: number;
+  className?: string;
+}) {
   const [isVisible, setIsVisible] = React.useState(false);
   const [imagesLoaded, setImagesLoaded] = React.useState(false);
   const [scatterPositions, setScatterPositions] = React.useState<ScatterPosition[]>([]);
@@ -61,35 +59,40 @@ export default function ImageStack({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
+  // Stable reference — only regenerate when seed changes
   const generateScatterPositions = React.useCallback(
     (seedValue: number) => {
       const rng = new SeededRandom(seedValue);
-      return images.map(() => ({
-        x: rng.range(-280, -240),
-        y: rng.range(-scatterRadius, scatterRadius),
+      return images.map((_, i) => ({
+        x: rng.range(-420, 420),
+        y: rng.range(-120, 120),
         rotation: rng.range(-maxRotation, maxRotation),
-        scale: rng.range(0.95, 1.05),
+        scale: rng.range(0.9, 1.05),
       }));
     },
-    [images, scatterRadius, maxRotation]
+    [images, maxRotation]
   );
 
+  // Preload once — use empty deps, images are stable
   React.useEffect(() => {
-    const preloadImages = async () => {
-      const loadPromises = images.map(
-        (image) =>
-          new Promise<string>((resolve) => {
-            const img = new Image();
-            img.onload = () => resolve(image.id);
-            img.onerror = () => resolve(image.id);
-            img.src = image.src;
-          })
+    let cancelled = false;
+    const preload = async () => {
+      await Promise.all(
+        images.map(
+          (img) =>
+            new Promise<void>((resolve) => {
+              const i = new Image();
+              i.onload = () => resolve();
+              i.onerror = () => resolve();
+              i.src = img.src;
+            })
+        )
       );
-      await Promise.all(loadPromises);
-      setImagesLoaded(true);
+      if (!cancelled) setImagesLoaded(true);
     };
-    preloadImages();
-  }, [images]);
+    preload();
+    return () => { cancelled = true; };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     setScatterPositions(generateScatterPositions(currentSeed));
@@ -100,36 +103,45 @@ export default function ImageStack({
       ([entry]) => {
         if (entry.isIntersecting && imagesLoaded) setIsVisible(true);
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
     if (containerRef.current) observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, [imagesLoaded]);
 
   const reshuffle = () => {
-    setCurrentSeed(Math.floor(Math.random() * 1000000));
+    const newSeed = Math.floor(Math.random() * 1000000);
+    setCurrentSeed(newSeed);
     setIsVisible(false);
-    setTimeout(() => setIsVisible(true), 100);
+    setTimeout(() => setIsVisible(true), 150);
   };
 
   const springConfig = prefersReducedMotion
     ? { type: "tween" as const, duration: 0.3 }
-    : { type: "spring" as const, stiffness: 100, damping: 20 };
+    : { type: "spring" as const, stiffness: 80, damping: 18 };
 
   return (
     <div
-      style={{ position: "relative", width: "100%", height: 600, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}
+      style={{
+        position: "relative",
+        width: "100%",
+        height: 700,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+      }}
       className={className}
     >
       <motion.div
         ref={containerRef}
-        style={{ position: "relative", width: "100%", height: "100%", perspective: 1000 }}
+        style={{ position: "relative", width: "100%", height: "100%", perspective: 1200 }}
         variants={containerVariants}
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
       >
         {!imagesLoaded && (
-          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#999" }}>
+          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#999", fontSize: 16 }}>
             Loading images...
           </div>
         )}
@@ -151,37 +163,56 @@ export default function ImageStack({
                 position: "absolute",
                 left: "50%",
                 top: "50%",
-                marginLeft: -160,
-                marginTop: -225,
+                marginLeft: -190,
+                marginTop: -260,
               }}
             >
               <div
                 onClick={reshuffle}
                 style={{
                   background: "#fff",
-                  padding: 20,
+                  padding: 16,
                   boxShadow: "0 20px 50px rgba(0,0,0,0.15)",
                   border: "1px solid #e8e5df",
+                  borderRadius: 4,
                   cursor: "pointer",
                   transition: "box-shadow 0.3s ease, transform 0.3s ease",
+                  width: 340,
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = "0 30px 60px rgba(201,165,92,0.3)";
-                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)";
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(-6px) scale(1.02)";
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 50px rgba(0,0,0,0.15)";
-                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(0) scale(1)";
                 }}
               >
                 <img
                   src={image.src}
                   alt={image.alt}
                   loading="lazy"
-                  style={{ width: 320, height: 384, objectFit: "cover", display: "block" }}
+                  style={{ width: "100%", height: 380, objectFit: "cover", display: "block", borderRadius: 2 }}
                 />
-                <div style={{ marginTop: 12, textAlign: "center", fontSize: 16, color: "#666", fontFamily: "var(--font-playfair), Georgia, serif", fontStyle: "italic" }}>
-                  {image.alt}
+                <div style={{ padding: "14px 8px 8px", textAlign: "center" }}>
+                  <h4 style={{
+                    fontFamily: "var(--font-playfair), Georgia, serif",
+                    fontSize: 18,
+                    fontWeight: 600,
+                    color: "#1a1a1a",
+                    margin: "0 0 4px",
+                  }}>
+                    {image.alt}
+                  </h4>
+                  <p style={{
+                    fontSize: 12,
+                    color: "#999",
+                    margin: 0,
+                    textTransform: "uppercase",
+                    letterSpacing: 1.5,
+                  }}>
+                    Click to reshuffle
+                  </p>
                 </div>
               </div>
             </motion.div>
