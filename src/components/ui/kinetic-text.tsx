@@ -14,7 +14,7 @@ export function KineticText({
   words,
   className,
   style,
-  interval = 6000,
+  interval = 10000,
   tag: Tag = "span",
 }: KineticTextProps) {
   const textRef = useRef<HTMLElement>(null);
@@ -35,44 +35,44 @@ export function KineticText({
 
       const chars = word.split("").map((char, i) => {
         const span = document.createElement("span");
-        span.className = "kinetic-char";
+        span.className = "kinetic-char kinetic-char-cycling";
         span.textContent = char === " " ? "\u00A0" : char;
 
-        const fromX = (Math.random() - 0.5) * 400;
-        const fromY = (Math.random() - 0.5) * 300;
-        const fromZ = (Math.random() - 0.5) * 200;
-        const fromRotX = (Math.random() - 0.5) * 180;
-        const fromRotY = (Math.random() - 0.5) * 180;
+        const fromX = (Math.random() - 0.5) * 300;
+        const fromY = (Math.random() - 0.5) * 250;
+        const fromZ = (Math.random() - 0.5) * 150;
+        const fromRotX = (Math.random() - 0.5) * 120;
+        const fromRotY = (Math.random() - 0.5) * 120;
 
         span.style.setProperty("--kf-from", `translate3d(${fromX}px,${fromY}px,${fromZ}px) rotateX(${fromRotX}deg) rotateY(${fromRotY}deg)`);
         span.style.animationName = "kinetic-fly-in";
-        span.style.animationDelay = `${i * 0.07}s`;
+        span.style.animationDelay = `${i * 0.08}s`;
         span.style.animationPlayState = "running";
 
         el.appendChild(span);
         return span;
       });
 
-      // Calculate when all letters finish flying in
-      const totalFlyInTime = chars.length * 70 + 800; // stagger + animation duration
+      // Total time for all letters to fly in
+      const totalFlyIn = chars.length * 80 + 1000; // stagger + animation
 
-      // Start fly-out only after word has been fully visible for a while
-      const holdTime = interval - totalFlyInTime - 1200; // 1200ms for fly-out
+      // Fly-out starts after word has been readable for a long time
+      const holdTime = interval - totalFlyIn - 1500; // 1.5s reserved for fly-out
 
       animTimeout = setTimeout(() => {
         if (!mounted) return;
         chars.forEach((span, i) => {
-          const toX = (Math.random() - 0.5) * 400;
-          const toY = (Math.random() - 0.5) * 300;
-          const toZ = (Math.random() - 0.5) * 200;
-          const toRotX = (Math.random() - 0.5) * 180;
-          const toRotY = (Math.random() - 0.5) * 180;
+          const toX = (Math.random() - 0.5) * 300;
+          const toY = (Math.random() - 0.5) * 250;
+          const toZ = (Math.random() - 0.5) * 150;
+          const toRotX = (Math.random() - 0.5) * 120;
+          const toRotY = (Math.random() - 0.5) * 120;
 
           span.style.setProperty("--kf-to", `translate3d(${toX}px,${toY}px,${toZ}px) rotateX(${toRotX}deg) rotateY(${toRotY}deg)`);
           span.style.animationName = "kinetic-fly-out";
-          span.style.animationDelay = `${i * 0.03}s`;
+          span.style.animationDelay = `${i * 0.04}s`;
         });
-      }, totalFlyInTime + Math.max(holdTime, 1500));
+      }, totalFlyIn + Math.max(holdTime, 5000));
 
       cycleTimeout = setTimeout(() => {
         if (!mounted) return;
@@ -123,7 +123,7 @@ export function KineticOnce({
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -139,11 +139,11 @@ export function KineticOnce({
       span.className = "kinetic-char";
       span.textContent = char === " " ? "\u00A0" : char;
 
-      const fromX = (Math.random() - 0.5) * 400;
-      const fromY = (Math.random() - 0.5) * 300;
-      const fromZ = (Math.random() - 0.5) * 200;
-      const fromRotX = (Math.random() - 0.5) * 180;
-      const fromRotY = (Math.random() - 0.5) * 180;
+      const fromX = (Math.random() - 0.5) * 300;
+      const fromY = (Math.random() - 0.5) * 250;
+      const fromZ = (Math.random() - 0.5) * 150;
+      const fromRotX = (Math.random() - 0.5) * 120;
+      const fromRotY = (Math.random() - 0.5) * 120;
 
       span.style.setProperty("--kf-from", `translate3d(${fromX}px,${fromY}px,${fromZ}px) rotateX(${fromRotX}deg) rotateY(${fromRotY}deg)`);
       span.style.animationName = "kinetic-fly-in";
@@ -157,7 +157,7 @@ export function KineticOnce({
     // After animation, set final inline text
     const timeout = setTimeout(() => {
       if (el) el.textContent = text;
-    }, delay + chars.length * 60 + 1000);
+    }, delay + chars.length * 60 + 1200);
 
     return () => clearTimeout(timeout);
   }, [triggered, text, delay]);

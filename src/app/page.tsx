@@ -164,8 +164,8 @@ export default function Home() {
               Award-Winning Photography
             </div>
             <h1 className="hero-title">
-              <KineticText words={["Capturing", "Creating", "Crafting", "Freezing"]} interval={6000} tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit" }} />
-              <br /><KineticText words={["Timeless Beauty", "Eternal Moments", "Lasting Memories", "Pure Emotion"]} interval={6000} tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", color: "#c9a55c" }} />
+              <KineticText words={["Capturing", "Creating", "Crafting", "Freezing"]} interval={10000} tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit" }} />
+              <br /><KineticText words={["Timeless Beauty", "Eternal Moments", "Lasting Memories", "Pure Emotion"]} interval={10000} tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", color: "#c9a55c" }} />
             </h1>
             <p className="hero-desc">
               Every moment is a story waiting to be told. Through my lens, I transform
@@ -211,9 +211,9 @@ export default function Home() {
       {/* ==================== PORTFOLIO ==================== */}
       <section id="portfolio" style={{ padding: "80px 0 0" }}>
         <div className="section-header" style={{ padding: "0 40px", marginBottom: 40 }}>
-          <div className="section-label">Portfolio</div>
-          <h2 className="section-title">Selected <KineticOnce text="Works" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-          <p className="section-desc">A curated collection of my finest work across various genres of photography</p>
+          <KineticOnce text="Portfolio" tag="div" className="section-label" />
+          <h2 className="section-title"><KineticOnce text="Selected Works" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+          <KineticOnce text="A curated collection of my finest work across various genres of photography" tag="p" className="section-desc" style={{ fontFamily: "inherit", fontSize: "inherit" }} />
         </div>
         <MasonryGallery />
       </section>
@@ -221,9 +221,9 @@ export default function Home() {
       {/* ==================== CIRCULAR FLIP GALLERY ==================== */}
       <section style={{ background: "#0a0a0a", padding: "60px 40px" }}>
         <div className="section-header">
-          <div className="section-label" style={{ color: "#c9a55c" }}>Gallery</div>
-          <h2 className="section-title" style={{ color: "#fff" }}>Photo <KineticOnce text="Circle" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-          <p className="section-desc" style={{ color: "rgba(255,255,255,0.5)" }}>Hover cards to flip and reveal details</p>
+          <KineticOnce text="Gallery" tag="div" className="section-label" style={{ color: "#c9a55c" }} />
+          <h2 className="section-title" style={{ color: "#fff" }}><KineticOnce text="Photo Circle" tag="span" style={{ color: "#fff", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+          <KineticOnce text="Hover cards to flip and reveal details" tag="p" className="section-desc" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "inherit", fontSize: "inherit" }} />
         </div>
         <CircularFlipGallery />
       </section>
@@ -231,9 +231,9 @@ export default function Home() {
       {/* ==================== INFINITE SCROLL ==================== */}
       <section style={{ background: "#0a0a0a" }}>
         <div style={{ textAlign: "center", paddingTop: 60, paddingBottom: 20 }}>
-          <div className="section-label" style={{ color: "#c9a55c" }}>Showcase</div>
-          <h2 className="section-title" style={{ color: "#fff" }}>Nature <KineticOnce text="Gallery" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }}>Hover to pause the scroll</p>
+          <KineticOnce text="Showcase" tag="div" className="section-label" style={{ color: "#c9a55c" }} />
+          <h2 className="section-title" style={{ color: "#fff" }}><KineticOnce text="Nature Gallery" tag="span" style={{ color: "#fff", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+          <KineticOnce text="Hover to pause the scroll" tag="p" style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }} />
         </div>
         <InfiniteScroll />
       </section>
@@ -243,7 +243,7 @@ export default function Home() {
         <img src="/images/divider.jpg" alt="" loading="lazy" />
         <div className="photo-divider-overlay">
           <div className="photo-divider-quote">
-            &ldquo;<KineticOnce text="Photography" tag="span" style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: "inherit", fontWeight: "inherit", color: "inherit" }} /> is the story I fail to put into words&rdquo;
+            &ldquo;<KineticOnce text="Photography is the story I fail to put into words" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", color: "inherit" }} />&rdquo;
             <span>— Destin Sparks</span>
           </div>
         </div>
@@ -252,9 +252,9 @@ export default function Home() {
       {/* ==================== BENTO GALLERY ==================== */}
       <section className="section">
         <div className="section-header">
-          <div className="section-label">Gallery</div>
-          <h2 className="section-title">Creative <KineticOnce text="Bento" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-          <p className="section-desc">Drag to rearrange, click to view — an interactive bento grid of our work</p>
+          <KineticOnce text="Gallery" tag="div" className="section-label" />
+          <h2 className="section-title"><KineticOnce text="Creative Bento" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+          <KineticOnce text="Drag to rearrange, click to view" tag="p" className="section-desc" style={{ fontFamily: "inherit", fontSize: "inherit" }} />
         </div>
         <InteractiveBentoGallery />
       </section>
@@ -263,9 +263,9 @@ export default function Home() {
       <section style={{ width: "100%", background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)" }}>
         <div style={{ position: "sticky", top: 0, width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
           <div style={{ textAlign: "center", position: "absolute", top: 40, zIndex: 10 }}>
-            <div className="section-label" style={{ color: "#c9a55c" }}>Gallery</div>
-            <h2 className="section-title" style={{ color: "#fff" }}>3D <KineticOnce text="Carousel" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }}>Scroll to rotate • Drag to spin • Auto-rotates when idle</p>
+            <KineticOnce text="Gallery" tag="div" className="section-label" style={{ color: "#c9a55c" }} />
+            <h2 className="section-title" style={{ color: "#fff" }}><KineticOnce text="3D Carousel" tag="span" style={{ color: "#fff", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+            <KineticOnce text="Scroll to rotate, drag to spin" tag="p" style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }} />
           </div>
           <div style={{ width: "100%", height: "100%" }}>
             <CircularGallery
@@ -299,8 +299,8 @@ export default function Home() {
             </div>
           </div>
           <div className="about-content">
-            <div className="section-label">About Me</div>
-            <h3>The Artist Behind <KineticOnce text="the Lens" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h3>
+            <KineticOnce text="About Me" tag="div" className="section-label" />
+            <h3><KineticOnce text="The Artist Behind the Lens" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h3>
             <p>I&apos;m Alex Morgan, a passionate photographer based in New York City. For over 12 years, I&apos;ve been dedicated to the art of visual storytelling.</p>
             <p>My philosophy is simple: every person, every place, every moment has a unique beauty. My job is to find it, frame it, and preserve it forever.</p>
             <div className="skills">
@@ -318,9 +318,9 @@ export default function Home() {
       {/* ==================== INTERACTIVE PHOTO STACK ==================== */}
       <section className="section" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)", color: "#fff" }}>
         <div className="section-header">
-          <div className="section-label" style={{ color: "#c9a55c" }}>Showcase</div>
-          <h2 className="section-title" style={{ color: "#fff" }}>Our <KineticOnce text="Team" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-          <p className="section-desc" style={{ color: "rgba(255,255,255,0.6)" }}>Hover to spread, click to bring to front</p>
+          <KineticOnce text="Showcase" tag="div" className="section-label" style={{ color: "#c9a55c" }} />
+          <h2 className="section-title" style={{ color: "#fff" }}><KineticOnce text="Our Team" tag="span" style={{ color: "#fff", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+          <KineticOnce text="Hover to spread, click to bring to front" tag="p" className="section-desc" style={{ color: "rgba(255,255,255,0.6)", fontFamily: "inherit", fontSize: "inherit" }} />
         </div>
         <InteractivePhotoStack
           items={[
@@ -337,9 +337,9 @@ export default function Home() {
       {/* ==================== SERVICES ==================== */}
       <section id="services" className="section">
         <div className="section-header">
-          <div className="section-label">Services</div>
-          <h2 className="section-title">What I <KineticOnce text="Offer" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-          <p className="section-desc">Tailored photography services to meet your unique vision</p>
+          <KineticOnce text="Services" tag="div" className="section-label" />
+          <h2 className="section-title"><KineticOnce text="What I Offer" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+          <KineticOnce text="Tailored photography services to meet your unique vision" tag="p" className="section-desc" style={{ fontFamily: "inherit", fontSize: "inherit" }} />
         </div>
         <div className="services-grid">
           {services.map((s, i) => (
@@ -361,9 +361,9 @@ export default function Home() {
       {/* ==================== EXPANDING GALLERY ==================== */}
       <section className="section">
         <div className="section-header">
-          <div className="section-label">Latest Work</div>
-          <h2 className="section-title">Our <KineticOnce text="Creations" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-          <p className="section-desc">A visual collection of our most recent works – each piece crafted with intention, emotion, and style</p>
+          <KineticOnce text="Latest Work" tag="div" className="section-label" />
+          <h2 className="section-title"><KineticOnce text="Our Creations" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+          <KineticOnce text="Each piece crafted with intention and style" tag="p" className="section-desc" style={{ fontFamily: "inherit", fontSize: "inherit" }} />
         </div>
         <ExpandingGallery />
       </section>
@@ -371,8 +371,8 @@ export default function Home() {
       {/* ==================== TESTIMONIALS ==================== */}
       <section id="testimonials" className="section section-alt">
         <div className="section-header">
-          <div className="section-label">Testimonials</div>
-          <h2 className="section-title">Client <KineticOnce text="Stories" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+          <KineticOnce text="Testimonials" tag="div" className="section-label" />
+          <h2 className="section-title"><KineticOnce text="Client Stories" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
         </div>
         <div className="testimonial-card">
           <div className="testimonial-quote-icon">&ldquo;</div>
@@ -402,13 +402,13 @@ export default function Home() {
       {/* ==================== CONTACT ==================== */}
       <section id="contact" className="section">
         <div className="section-header">
-          <div className="section-label">Contact</div>
-          <h2 className="section-title">Let&apos;s <KineticOnce text="Connect" tag="span" style={{ color: "#c9a55c", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-          <p className="section-desc">Ready to create something beautiful together?</p>
+          <KineticOnce text="Contact" tag="div" className="section-label" />
+          <h2 className="section-title"><KineticOnce text="Let's Connect" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
+          <KineticOnce text="Ready to create something beautiful together?" tag="p" className="section-desc" style={{ fontFamily: "inherit", fontSize: "inherit" }} />
         </div>
         <div className="contact-grid">
           <div>
-            <h3 className="section-title" style={{ fontSize: 26, marginBottom: 20, textAlign: "left" }}>Get in Touch</h3>
+            <h3 className="section-title" style={{ fontSize: 26, marginBottom: 20, textAlign: "left" }}><KineticOnce text="Get in Touch" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h3>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: "var(--secondary)", marginBottom: 28 }}>Whether you have a specific project in mind or just want to explore possibilities, I&apos;m here to help.</p>
             {[
               { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>, label: "Email", value: "hello@lumiere.photo" },
