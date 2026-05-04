@@ -213,25 +213,6 @@ export default function Home() {
         <MasonryGallery />
       </section>
 
-      {/* ==================== INTERACTIVE PHOTO STACK ==================== */}
-      <section className="section" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)", color: "#fff" }}>
-        <div className="section-header">
-          <div className="section-label" style={{ color: "#c9a55c" }}>Showcase</div>
-          <h2 className="section-title" style={{ color: "#fff" }}>Our <span>Team</span></h2>
-          <p className="section-desc" style={{ color: "rgba(255,255,255,0.6)" }}>Hover to spread, click to bring to front</p>
-        </div>
-        <InteractivePhotoStack
-          items={[
-            { src: "/images/team1.jpg", name: "Alexandre" },
-            { src: "/images/team2.jpg", name: "Isabella" },
-            { src: "/images/team3.jpg", name: "Sophia" },
-            { src: "/images/team4.jpg", name: "Mia" },
-            { src: "/images/portrait1.jpg", name: "Charlotte" },
-          ]}
-          title={<>Our Creative Team</>}
-        />
-      </section>
-
       {/* ==================== INFINITE SCROLL ==================== */}
       <section style={{ background: "#0a0a0a" }}>
         <div style={{ textAlign: "center", paddingTop: 60, paddingBottom: 20 }}>
@@ -307,6 +288,25 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ==================== INTERACTIVE PHOTO STACK ==================== */}
+      <section className="section" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)", color: "#fff" }}>
+        <div className="section-header">
+          <div className="section-label" style={{ color: "#c9a55c" }}>Showcase</div>
+          <h2 className="section-title" style={{ color: "#fff" }}>Our <span>Team</span></h2>
+          <p className="section-desc" style={{ color: "rgba(255,255,255,0.6)" }}>Hover to spread, click to bring to front</p>
+        </div>
+        <InteractivePhotoStack
+          items={[
+            { src: "/images/team1.jpg", name: "Alexandre" },
+            { src: "/images/team2.jpg", name: "Isabella" },
+            { src: "/images/team3.jpg", name: "Sophia" },
+            { src: "/images/team4.jpg", name: "Mia" },
+            { src: "/images/portrait1.jpg", name: "Charlotte" },
+          ]}
+          title={<>Our Creative Team</>}
+        />
       </section>
 
       {/* ==================== SERVICES ==================== */}
