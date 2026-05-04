@@ -1108,3 +1108,8 @@ body {
 /* ===== PHOTO STACK HORIZONTAL SLIDER (mobile/tablet) ===== */
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* ===== IMAGE STACK RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .image-stack-mobile img { width: 220px !important; height: 280px !important; }
+}

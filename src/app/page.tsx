@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   InteractivePhotoStack,
 } from "@/components/ui/photo-stack";
+import ImageStack from "@/components/ui/image-stack";
 
 const photos = [
   { id: 1, src: "/images/portrait1.jpg", title: "Golden Hour Portrait", category: "Portrait", tall: true },
@@ -237,6 +238,16 @@ export default function Home() {
           ]}
           title={<>Our Creative Team</>}
         />
+      </section>
+
+      {/* ==================== SCATTERED IMAGE STACK ==================== */}
+      <section className="section" style={{ background: "#fff" }}>
+        <div className="section-header">
+          <div className="section-label">Creative</div>
+          <h2 className="section-title">Scattered <span>Moments</span></h2>
+          <p className="section-desc">Click any card to reshuffle the layout</p>
+        </div>
+        <ImageStack />
       </section>
 
       {/* ==================== PHOTO DIVIDER ==================== */}
