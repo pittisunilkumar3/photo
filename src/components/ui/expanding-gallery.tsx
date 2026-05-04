@@ -14,6 +14,7 @@ export function ExpandingGallery() {
     <div style={{
       display: "flex",
       alignItems: "center",
+      justifyContent: "center",
       gap: 8,
       height: 400,
       width: "100%",
@@ -26,24 +27,23 @@ export function ExpandingGallery() {
           key={idx}
           style={{
             position: "relative",
-            flexGrow: 1,
-            flexShrink: 0,
+            flex: "1 1 0%",
             height: "100%",
-            width: 180,
             borderRadius: 12,
             overflow: "hidden",
             cursor: "pointer",
-            transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+            transition: "flex 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+            minWidth: 0,
           }}
           onMouseEnter={(e) => {
             const el = e.currentTarget as HTMLDivElement;
-            el.style.flexGrow = "5";
-            el.style.width = "100%";
+            el.style.flex = "5 1 0%";
+            el.style.zIndex = "10";
           }}
           onMouseLeave={(e) => {
             const el = e.currentTarget as HTMLDivElement;
-            el.style.flexGrow = "1";
-            el.style.width = "180px";
+            el.style.flex = "1 1 0%";
+            el.style.zIndex = "1";
           }}
         >
           <img
@@ -57,21 +57,8 @@ export function ExpandingGallery() {
               objectFit: "cover",
               objectPosition: "center",
               display: "block",
-              transition: "transform 0.5s ease",
             }}
           />
-          {/* Hover overlay with number */}
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%)",
-            opacity: 0,
-            transition: "opacity 0.3s ease",
-            display: "flex",
-            alignItems: "flex-end",
-            padding: 16,
-            pointerEvents: "none",
-          }} />
         </div>
       ))}
     </div>
