@@ -118,10 +118,14 @@ export default function Home() {
         <a href="/3d-gallery" style={{ display: "block", padding: "14px 16px", color: "#ccc", textDecoration: "none", borderRadius: 10, marginBottom: 4, fontSize: 15, fontWeight: 500, background: "rgba(255,255,255,0.04)" }}>
           🌌 3D Gallery
         </a>
+        <a href="/our-clicks" style={{ display: "block", padding: "14px 16px", color: "#ccc", textDecoration: "none", borderRadius: 10, marginBottom: 4, fontSize: 15, fontWeight: 500, background: "rgba(255,255,255,0.04)" }}>
+          📸 Our Clicks
+        </a>
 
         <div style={{ marginTop: 24, paddingTop: 24, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
           <a href="#portfolio" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>Portfolio</a>
           <a href="#about" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>About</a>
+          <a href="/our-clicks" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>Our Clicks</a>
           <a href="#services" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>Services</a>
           <a href="#contact" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>Contact</a>
         </div>
