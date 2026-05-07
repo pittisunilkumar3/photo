@@ -208,26 +208,56 @@ export default function BuildQuotePage() {
               <div className="quote-step-number">01</div>
               <div className="quote-step-icon">📋</div>
               <h3>Select Your Events</h3>
-              <p>Choose which ceremonies and celebrations you want covered</p>
             </div>
             <div className="quote-step-card">
               <div className="quote-step-number">02</div>
               <div className="quote-step-icon">📷</div>
               <h3>Pick Photography Style</h3>
-              <p>Candid, traditional, cinematic — choose what suits your vibe</p>
             </div>
             <div className="quote-step-card">
               <div className="quote-step-number">03</div>
               <div className="quote-step-icon">🎁</div>
               <h3>Add Albums & Output</h3>
-              <p>Select albums, videos, and digital deliverables</p>
             </div>
             <div className="quote-step-card">
               <div className="quote-step-number">04</div>
               <div className="quote-step-icon">✨</div>
               <h3>Seal The Deal</h3>
-              <p>Enter details to receive your personalized quote via email</p>
             </div>
+          </div>
+
+          <div style={{ textAlign: "center", marginTop: 40 }}>
+            <a
+              href="#quote-builder"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "16px 40px",
+                background: "linear-gradient(135deg, #c9a55c 0%, #d4b86a 100%)",
+                color: "#fff",
+                fontSize: 16,
+                fontWeight: 600,
+                borderRadius: 50,
+                textDecoration: "none",
+                cursor: "pointer",
+                boxShadow: "0 4px 20px rgba(201,165,92,0.3)",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 8px 30px rgba(201,165,92,0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 20px rgba(201,165,92,0.3)";
+              }}
+            >
+              Start Now
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
           </div>
         </div>
       </section>
