@@ -24,6 +24,7 @@ const PHOTOGRAPHY_TYPES = [
 export default function BuildQuotePage() {
   const [started, setStarted] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [showError, setShowError] = useState(false);
 
   const toggleType = (id: string) => {
     setSelectedTypes(prev => 
@@ -31,6 +32,16 @@ export default function BuildQuotePage() {
         ? prev.filter(item => item !== id)
         : [...prev, id]
     );
+    setShowError(false); // Clear error when selecting
+  };
+
+  const handleNextStep = () => {
+    if (selectedTypes.length === 0) {
+      setShowError(true);
+      return;
+    }
+    // Proceed to next step
+    alert(`Selected: ${selectedTypes.join(", ")}`);
   };
 
   return (
@@ -238,40 +249,70 @@ export default function BuildQuotePage() {
               })}
             </div>
 
+            {/* Error Message */}
+            {showError && (
+              <div style={{
+                padding: "14px 24px",
+                background: "rgba(220, 53, 69, 0.15)",
+                border: "1px solid rgba(220, 53, 69, 0.3)",
+                borderRadius: 12,
+                color: "#ff6b6b",
+                fontSize: 15,
+                fontWeight: 500,
+                marginBottom: 20,
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                maxWidth: 400,
+                margin: "0 auto 20px",
+              }}>
+                <span style={{ fontSize: 20 }}>⚠️</span>
+                You need to select at least one item to continue
+              </div>
+            )}
+
             {/* Next Step Button */}
-            {selectedTypes.length > 0 && (
-              <button
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 10,
-                  padding: "16px 40px",
-                  background: "linear-gradient(135deg, #c9a55c 0%, #d4b86a 100%)",
-                  color: "#fff",
-                  fontSize: 16,
-                  fontWeight: 600,
-                  borderRadius: 50,
-                  border: "none",
-                  cursor: "pointer",
-                  boxShadow: "0 4px 20px rgba(201,165,92,0.3)",
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
+            <button
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "16px 40px",
+                background: selectedTypes.length > 0
+                  ? "linear-gradient(135deg, #c9a55c 0%, #d4b86a 100%)"
+                  : "rgba(255,255,255,0.1)",
+                color: selectedTypes.length > 0 ? "#fff" : "rgba(255,255,255,0.5)",
+                fontSize: 16,
+                fontWeight: 600,
+                borderRadius: 50,
+                border: selectedTypes.length > 0
+                  ? "none"
+                  : "1px solid rgba(255,255,255,0.2)",
+                cursor: "pointer",
+                boxShadow: selectedTypes.length > 0
+                  ? "0 4px 20px rgba(201,165,92,0.3)"
+                  : "none",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                if (selectedTypes.length > 0) {
                   e.currentTarget.style.transform = "translateY(-2px)";
                   e.currentTarget.style.boxShadow = "0 8px 30px rgba(201,165,92,0.4)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                if (selectedTypes.length > 0) {
                   e.currentTarget.style.boxShadow = "0 4px 20px rgba(201,165,92,0.3)";
-                }}
-                onClick={() => alert(`Selected: ${selectedTypes.join(", ")}`)}
-              >
-                Next Step
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </button>
-            )}
+                }
+              }}
+              onClick={handleNextStep}
+            >
+              Next Step
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </section>
       )}
