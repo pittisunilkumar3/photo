@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import "./build-quote.css";
 
-const PHOTOGRAPHY_TYPES = [
+const STEP1_OPTIONS = [
   { 
     id: "candid", 
     label: "Candid Photography", 
@@ -21,48 +21,218 @@ const PHOTOGRAPHY_TYPES = [
   },
 ];
 
+const STEP2_OPTIONS = [
+  { 
+    id: "traditional-photo", 
+    label: "Traditional Photo", 
+    icon: "📸", 
+    description: "Classic posed photographs",
+    image: "/images/traditional-photo-icon.png"
+  },
+  { 
+    id: "traditional-video", 
+    label: "Traditional Video", 
+    icon: "🎥", 
+    description: "Full event video coverage",
+    image: "/images/traditional-video-icon.png"
+  },
+  { 
+    id: "candid-photo", 
+    label: "Candid Photo", 
+    icon: "📷", 
+    description: "Natural, spontaneous moments",
+    image: "/images/candid-photo-icon.png"
+  },
+  { 
+    id: "candid-video", 
+    label: "Candid Video", 
+    icon: "🎬", 
+    description: "Cinematic candid footage",
+    image: "/images/candid-video-icon.png"
+  },
+  { 
+    id: "drone", 
+    label: "Drone", 
+    icon: "🚁", 
+    description: "Aerial shots & coverage",
+    image: "/images/drone-icon.png"
+  },
+];
+
 export default function BuildQuotePage() {
   const [started, setStarted] = useState(false);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [step1Selected, setStep1Selected] = useState<string[]>([]);
+  const [step2Selected, setStep2Selected] = useState<string[]>([]);
   const [showError, setShowError] = useState(false);
 
-  const toggleType = (id: string) => {
-    setSelectedTypes(prev => 
+  const toggleStep1 = (id: string) => {
+    setStep1Selected(prev => 
       prev.includes(id) 
         ? prev.filter(item => item !== id)
         : [...prev, id]
     );
-    setShowError(false); // Clear error when selecting
+    setShowError(false);
   };
 
-  const handleNextStep = () => {
-    if (selectedTypes.length === 0) {
+  const toggleStep2 = (id: string) => {
+    setStep2Selected(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id)
+        : [...prev, id]
+    );
+    setShowError(false);
+  };
+
+  const handleNext = () => {
+    if (currentStep === 1 && step1Selected.length === 0) {
       setShowError(true);
       return;
     }
-    // Proceed to next step
-    alert(`Selected: ${selectedTypes.join(", ")}`);
+    if (currentStep === 2 && step2Selected.length === 0) {
+      setShowError(true);
+      return;
+    }
+    if (currentStep < 2) {
+      setCurrentStep(currentStep + 1);
+      setShowError(false);
+    } else {
+      alert(`Step 1: ${step1Selected.join(", ")}\nStep 2: ${step2Selected.join(", ")}`);
+    }
   };
+
+  const handlePrevious = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      setShowError(false);
+    }
+  };
+
+  const renderOptionCard = (option: any, isSelected: boolean, onClick: () => void) => (
+    <div
+      key={option.id}
+      onClick={onClick}
+      style={{
+        width: 280,
+        cursor: "pointer",
+        borderRadius: 16,
+        overflow: "hidden",
+        border: isSelected 
+          ? "3px solid #c9a55c" 
+          : "3px solid rgba(255,255,255,0.1)",
+        background: isSelected 
+          ? "rgba(201,165,92,0.1)" 
+          : "rgba(255,255,255,0.05)",
+        transition: "all 0.3s ease",
+        transform: isSelected ? "scale(1.02)" : "scale(1)",
+        boxShadow: isSelected 
+          ? "0 10px 40px rgba(201,165,92,0.3)" 
+          : "0 4px 20px rgba(0,0,0,0.3)",
+      }}
+    >
+      {/* Image */}
+      <div style={{
+        position: "relative",
+        height: 200,
+        overflow: "hidden",
+        background: "#1a1a1a",
+      }}>
+        <img
+          src={option.image}
+          alt={option.label}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            transition: "transform 0.3s ease",
+            transform: isSelected ? "scale(1.05)" : "scale(1)",
+          }}
+        />
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: isSelected 
+            ? "linear-gradient(to top, rgba(201,165,92,0.6), transparent)" 
+            : "linear-gradient(to top, rgba(0,0,0,0.4), transparent)",
+          transition: "all 0.3s ease",
+        }} />
+        
+        {/* Icon */}
+        <div style={{
+          position: "absolute",
+          top: 12,
+          right: 12,
+          width: 44,
+          height: 44,
+          borderRadius: "50%",
+          background: isSelected ? "#c9a55c" : "rgba(255,255,255,0.2)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 20,
+          transition: "all 0.3s ease",
+          backdropFilter: "blur(10px)",
+        }}>
+          {option.icon}
+        </div>
+
+        {/* Checkmark */}
+        {isSelected && (
+          <div style={{
+            position: "absolute",
+            top: 12,
+            left: 12,
+            width: 28,
+            height: 28,
+            borderRadius: "50%",
+            background: "#c9a55c",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 16,
+            color: "#fff",
+            fontWeight: 700,
+          }}>
+            ✓
+          </div>
+        )}
+      </div>
+
+      {/* Text */}
+      <div style={{ padding: "18px 16px" }}>
+        <h3 style={{
+          fontFamily: "var(--font-playfair), Georgia, serif",
+          fontSize: 18,
+          fontWeight: 700,
+          color: isSelected ? "#c9a55c" : "#fff",
+          marginBottom: 6,
+          transition: "color 0.3s ease",
+        }}>
+          {option.label}
+        </h3>
+        <p style={{
+          fontSize: 13,
+          color: "rgba(255,255,255,0.6)",
+          margin: 0,
+          lineHeight: 1.4,
+        }}>
+          {option.description}
+        </p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="build-quote-page">
       {/* Hero Section */}
       <section className="quote-hero">
         <div className="quote-hero-bg">
-          <img
-            src="/images/wedding1.jpg"
-            alt="Wedding Photography"
-            className="quote-hero-img"
-          />
+          <img src="/images/wedding1.jpg" alt="Wedding" className="quote-hero-img" />
         </div>
         <div className="quote-hero-overlay" />
         <div className="quote-hero-content">
           <div className="quote-hero-badge">
-            <img
-              src="/images/logo1.jpeg"
-              alt="COUPLE AURA Logo"
-              className="quote-hero-logo"
-            />
+            <img src="/images/logo1.jpeg" alt="COUPLE AURA" className="quote-hero-logo" />
             <span>COUPLE AURA</span>
           </div>
           <h1 className="quote-hero-title">
@@ -70,13 +240,10 @@ export default function BuildQuotePage() {
             <span className="text-gold">Wedding Quotation?</span>
           </h1>
           <p className="quote-hero-subtitle">
-            Select what you love and get instant pricing with a real quote that updates as you make your selections
+            Select what you love and get instant pricing with a real quote
           </p>
           {!started && (
-            <button 
-              className="quote-hero-btn"
-              onClick={() => setStarted(true)}
-            >
+            <button className="quote-hero-btn" onClick={() => setStarted(true)}>
               Start Now
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -86,9 +253,9 @@ export default function BuildQuotePage() {
         </div>
       </section>
 
-      {/* Photography Selection Section - Shows after clicking Start Now */}
+      {/* Steps Section */}
       {started && (
-        <section className="quote-photography-section" style={{
+        <section style={{
           padding: "80px 20px",
           background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%)",
           minHeight: "60vh",
@@ -96,158 +263,124 @@ export default function BuildQuotePage() {
           alignItems: "center",
           justifyContent: "center",
         }}>
-          <div style={{
-            maxWidth: 900,
-            width: "100%",
-            textAlign: "center",
-          }}>
-            {/* Question */}
-            <h2 style={{
-              fontFamily: "var(--font-playfair), Georgia, serif",
-              fontSize: "clamp(24px, 4vw, 40px)",
-              fontWeight: 700,
-              color: "#fff",
-              marginBottom: 12,
-            }}>
-              What Photography do you want?
-            </h2>
-            <p style={{
-              fontSize: 16,
-              color: "rgba(255,255,255,0.6)",
-              marginBottom: 50,
-            }}>
-              Select one or both options to continue
-            </p>
-
-            {/* Photography Options */}
+          <div style={{ maxWidth: 1000, width: "100%", textAlign: "center" }}>
+            
+            {/* Step Indicator */}
             <div style={{
               display: "flex",
-              gap: 30,
               justifyContent: "center",
-              flexWrap: "wrap",
-              marginBottom: 50,
+              gap: 40,
+              marginBottom: 40,
             }}>
-              {PHOTOGRAPHY_TYPES.map((type) => {
-                const isSelected = selectedTypes.includes(type.id);
-                return (
-                  <div
-                    key={type.id}
-                    onClick={() => toggleType(type.id)}
-                    style={{
-                      width: 320,
-                      cursor: "pointer",
-                      borderRadius: 16,
-                      overflow: "hidden",
-                      border: isSelected 
-                        ? "3px solid #c9a55c" 
-                        : "3px solid rgba(255,255,255,0.1)",
-                      background: isSelected 
-                        ? "rgba(201,165,92,0.1)" 
-                        : "rgba(255,255,255,0.05)",
-                      transition: "all 0.3s ease",
-                      transform: isSelected ? "scale(1.02)" : "scale(1)",
-                      boxShadow: isSelected 
-                        ? "0 10px 40px rgba(201,165,92,0.3)" 
-                        : "0 4px 20px rgba(0,0,0,0.3)",
-                    }}
-                  >
-                    {/* Camera Image */}
-                    <div style={{
-                      position: "relative",
-                      height: 220,
-                      overflow: "hidden",
-                    }}>
-                      <img
-                        src={type.image}
-                        alt={type.label}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          transition: "transform 0.3s ease",
-                          transform: isSelected ? "scale(1.05)" : "scale(1)",
-                        }}
-                      />
-                      {/* Overlay */}
-                      <div style={{
-                        position: "absolute",
-                        inset: 0,
-                        background: isSelected 
-                          ? "linear-gradient(to top, rgba(201,165,92,0.8), transparent)" 
-                          : "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
-                        transition: "all 0.3s ease",
-                      }} />
-                      
-                      {/* Camera Icon */}
-                      <div style={{
-                        position: "absolute",
-                        top: 16,
-                        right: 16,
-                        width: 50,
-                        height: 50,
-                        borderRadius: "50%",
-                        background: isSelected 
-                          ? "#c9a55c" 
-                          : "rgba(255,255,255,0.2)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: 24,
-                        transition: "all 0.3s ease",
-                        backdropFilter: "blur(10px)",
-                      }}>
-                        {type.icon}
-                      </div>
-
-                      {/* Checkmark */}
-                      {isSelected && (
-                        <div style={{
-                          position: "absolute",
-                          top: 16,
-                          left: 16,
-                          width: 32,
-                          height: 32,
-                          borderRadius: "50%",
-                          background: "#c9a55c",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: 18,
-                          color: "#fff",
-                          fontWeight: 700,
-                        }}>
-                          ✓
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Text Content */}
-                    <div style={{
-                      padding: "24px 20px",
-                    }}>
-                      <h3 style={{
-                        fontFamily: "var(--font-playfair), Georgia, serif",
-                        fontSize: 20,
-                        fontWeight: 700,
-                        color: isSelected ? "#c9a55c" : "#fff",
-                        marginBottom: 8,
-                        transition: "color 0.3s ease",
-                      }}>
-                        {type.label}
-                      </h3>
-                      <p style={{
-                        fontSize: 14,
-                        color: "rgba(255,255,255,0.6)",
-                        margin: 0,
-                        lineHeight: 1.5,
-                      }}>
-                        {type.description}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                color: currentStep >= 1 ? "#c9a55c" : "rgba(255,255,255,0.3)",
+              }}>
+                <div style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  background: currentStep >= 1 ? "#c9a55c" : "rgba(255,255,255,0.1)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: "#fff",
+                }}>1</div>
+                <span style={{ fontSize: 14, fontWeight: 600 }}>Photography</span>
+              </div>
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                color: currentStep >= 2 ? "#c9a55c" : "rgba(255,255,255,0.3)",
+              }}>
+                <div style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  background: currentStep >= 2 ? "#c9a55c" : "rgba(255,255,255,0.1)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: "#fff",
+                }}>2</div>
+                <span style={{ fontSize: 14, fontWeight: 600 }}>Engagement</span>
+              </div>
             </div>
+
+            {/* Step 1: Photography Selection */}
+            {currentStep === 1 && (
+              <>
+                <h2 style={{
+                  fontFamily: "var(--font-playfair), Georgia, serif",
+                  fontSize: "clamp(24px, 4vw, 40px)",
+                  fontWeight: 700,
+                  color: "#fff",
+                  marginBottom: 12,
+                }}>
+                  What Photography do you want?
+                </h2>
+                <p style={{
+                  fontSize: 16,
+                  color: "rgba(255,255,255,0.6)",
+                  marginBottom: 50,
+                }}>
+                  Select one or both options to continue
+                </p>
+
+                <div style={{
+                  display: "flex",
+                  gap: 30,
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  marginBottom: 40,
+                }}>
+                  {STEP1_OPTIONS.map(option => 
+                    renderOptionCard(option, step1Selected.includes(option.id), () => toggleStep1(option.id))
+                  )}
+                </div>
+              </>
+            )}
+
+            {/* Step 2: Engagement */}
+            {currentStep === 2 && (
+              <>
+                <h2 style={{
+                  fontFamily: "var(--font-playfair), Georgia, serif",
+                  fontSize: "clamp(24px, 4vw, 40px)",
+                  fontWeight: 700,
+                  color: "#fff",
+                  marginBottom: 12,
+                }}>
+                  Engagement
+                </h2>
+                <p style={{
+                  fontSize: 16,
+                  color: "rgba(255,255,255,0.6)",
+                  marginBottom: 50,
+                }}>
+                  Select the services you need for your engagement
+                </p>
+
+                <div style={{
+                  display: "flex",
+                  gap: 24,
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  marginBottom: 40,
+                }}>
+                  {STEP2_OPTIONS.map(option => 
+                    renderOptionCard(option, step2Selected.includes(option.id), () => toggleStep2(option.id))
+                  )}
+                </div>
+              </>
+            )}
 
             {/* Error Message */}
             {showError && (
@@ -259,146 +392,69 @@ export default function BuildQuotePage() {
                 color: "#ff6b6b",
                 fontSize: 15,
                 fontWeight: 500,
-                marginBottom: 20,
+                marginBottom: 24,
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: 10,
                 maxWidth: 400,
-                margin: "0 auto 20px",
+                margin: "0 auto 24px",
               }}>
                 <span style={{ fontSize: 20 }}>⚠️</span>
                 You need to select at least one item to continue
               </div>
             )}
 
-            {/* Next Step Button */}
-            <button
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "16px 40px",
-                background: selectedTypes.length > 0
-                  ? "linear-gradient(135deg, #c9a55c 0%, #d4b86a 100%)"
-                  : "rgba(255,255,255,0.1)",
-                color: selectedTypes.length > 0 ? "#fff" : "rgba(255,255,255,0.5)",
-                fontSize: 16,
-                fontWeight: 600,
-                borderRadius: 50,
-                border: selectedTypes.length > 0
-                  ? "none"
-                  : "1px solid rgba(255,255,255,0.2)",
-                cursor: "pointer",
-                boxShadow: selectedTypes.length > 0
-                  ? "0 4px 20px rgba(201,165,92,0.3)"
-                  : "none",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                if (selectedTypes.length > 0) {
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(201,165,92,0.4)";
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                if (selectedTypes.length > 0) {
-                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(201,165,92,0.3)";
-                }
-              }}
-              onClick={handleNextStep}
-            >
-              Next Step
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </section>
-      )}
+            {/* Navigation Buttons */}
+            <div style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 16,
+              flexWrap: "wrap",
+            }}>
+              {/* Previous Button */}
+              {currentStep > 1 && (
+                <button
+                  onClick={handlePrevious}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    padding: "14px 32px",
+                    background: "transparent",
+                    color: "#c9a55c",
+                    fontSize: 15,
+                    fontWeight: 600,
+                    borderRadius: 50,
+                    border: "2px solid #c9a55c",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(201,165,92,0.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "transparent";
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                  </svg>
+                  Previous Step
+                </button>
+              )}
 
-      {/* Video Section - Only show when not started */}
-      {!started && (
-        <section className="quote-video-section">
-          <div className="quote-video-container">
-            <div className="quote-video-image-side">
-              <img
-                src="/images/wedding2.jpg"
-                alt="Wedding Cinematic"
-                className="quote-video-thumb"
-              />
-              <div className="quote-video-play-overlay">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-              </div>
-            </div>
-            <div className="quote-video-text-side">
-              <h2 className="quote-video-title">Watch Our Quick Video</h2>
-              <p className="quote-video-description">
-                Discover our services, including candid photography, traditional photography, albums, and more
-              </p>
-              <ul className="quote-video-features">
-                <li>📷 Candid & Traditional Photography</li>
-                <li>🎬 Cinematic Wedding Films</li>
-                <li>📖 Premium Photo Albums</li>
-                <li>🚁 Drone / Aerial Coverage</li>
-                <li>📱 Social Media Reels</li>
-              </ul>
-              <button className="quote-video-play-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-                Watch Video
-              </button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* How It Works - Only show when not started */}
-      {!started && (
-        <section className="quote-how-it-works" id="how-it-works">
-          <div className="quote-how-container">
-            <h2 className="section-title">Build Your Quote</h2>
-            <p className="section-subtitle">
-              Select what you love and get instant pricing with a real quote that updates as you make your selections
-            </p>
-            
-            <div className="quote-steps-grid">
-              <div className="quote-step-card">
-                <div className="quote-step-number">01</div>
-                <div className="quote-step-icon">📋</div>
-                <h3>Select Your Events</h3>
-              </div>
-              <div className="quote-step-card">
-                <div className="quote-step-number">02</div>
-                <div className="quote-step-icon">📷</div>
-                <h3>Pick Photography Style</h3>
-              </div>
-              <div className="quote-step-card">
-                <div className="quote-step-number">03</div>
-                <div className="quote-step-icon">🎁</div>
-                <h3>Add Albums & Output</h3>
-              </div>
-              <div className="quote-step-card">
-                <div className="quote-step-number">04</div>
-                <div className="quote-step-icon">✨</div>
-                <h3>Seal The Deal</h3>
-              </div>
-            </div>
-
-            <div style={{ textAlign: "center", marginTop: 40 }}>
+              {/* Next Button */}
               <button
-                onClick={() => setStarted(true)}
+                onClick={handleNext}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 10,
-                  padding: "16px 40px",
+                  gap: 8,
+                  padding: "14px 32px",
                   background: "linear-gradient(135deg, #c9a55c 0%, #d4b86a 100%)",
                   color: "#fff",
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: 600,
                   borderRadius: 50,
                   border: "none",
@@ -415,8 +471,8 @@ export default function BuildQuotePage() {
                   e.currentTarget.style.boxShadow = "0 4px 20px rgba(201,165,92,0.3)";
                 }}
               >
-                Start Now
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                Next Step
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </button>
@@ -429,11 +485,7 @@ export default function BuildQuotePage() {
       <footer className="quote-footer">
         <div className="quote-footer-grid">
           <div className="quote-footer-brand">
-            <img
-              src="/images/logo1.jpeg"
-              alt="COUPLE AURA Logo"
-              className="quote-footer-logo"
-            />
+            <img src="/images/logo1.jpeg" alt="COUPLE AURA" className="quote-footer-logo" />
             <span className="quote-footer-brand-name">COUPLE AURA</span>
             <p>Capturing love stories with artistry and passion.</p>
           </div>
