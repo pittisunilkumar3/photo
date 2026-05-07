@@ -10,14 +10,14 @@ const STEP1_OPTIONS = [
     label: "Candid Photography", 
     icon: "📷", 
     description: "Natural, spontaneous moments captured beautifully",
-    image: "/images/candid-photo.jpg"
+    image: "/images/candid-wedding.jpg"
   },
   { 
     id: "traditional", 
     label: "Traditional Photography", 
     icon: "📸", 
     description: "Classic posed shots with family and friends",
-    image: "/images/traditional-photo.jpg"
+    image: "/images/traditional-wedding.jpg"
   },
 ];
 
@@ -27,35 +27,35 @@ const STEP2_OPTIONS = [
     label: "Traditional Photo", 
     icon: "📸", 
     description: "Classic posed photographs",
-    image: "/images/traditional-photo-icon.png"
+    image: "/images/traditional-photo-real.jpg"
   },
   { 
     id: "traditional-video", 
     label: "Traditional Video", 
     icon: "🎥", 
     description: "Full event video coverage",
-    image: "/images/traditional-video-icon.png"
+    image: "/images/traditional-video-real.jpg"
   },
   { 
     id: "candid-photo", 
     label: "Candid Photo", 
     icon: "📷", 
     description: "Natural, spontaneous moments",
-    image: "/images/candid-photo-icon.png"
+    image: "/images/candid-photo-real.jpg"
   },
   { 
     id: "candid-video", 
     label: "Candid Video", 
     icon: "🎬", 
     description: "Cinematic candid footage",
-    image: "/images/candid-video-icon.png"
+    image: "/images/candid-video-real.jpg"
   },
   { 
     id: "drone", 
     label: "Drone", 
     icon: "🚁", 
     description: "Aerial shots & coverage",
-    image: "/images/drone-icon.png"
+    image: "/images/drone-wedding.jpg"
   },
 ];
 
@@ -133,7 +133,7 @@ export default function BuildQuotePage() {
       {/* Image */}
       <div style={{
         position: "relative",
-        height: 200,
+        height: 220,
         overflow: "hidden",
         background: "#1a1a1a",
       }}>
@@ -143,7 +143,7 @@ export default function BuildQuotePage() {
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "contain",
+            objectFit: "cover",
             transition: "transform 0.3s ease",
             transform: isSelected ? "scale(1.05)" : "scale(1)",
           }}
