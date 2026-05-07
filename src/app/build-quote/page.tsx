@@ -65,6 +65,13 @@ const STEP10_OPTIONS = [
   { id: "sangeet-no", label: "No", icon: "❌", description: "Skip Sangeet from the package", image: "/images/sangeet-no.jpg" },
 ];
 
+const STEP11_OPTIONS = [
+  { id: "sangeet-candid-photo", label: "Candid Photo", icon: "📷", description: "Natural, spontaneous moments", image: "/images/sangeet-candid-photo.jpg" },
+  { id: "sangeet-candid-video", label: "Candid Video", icon: "🎬", description: "Cinematic candid footage", image: "/images/sangeet-candid-video.jpg" },
+  { id: "sangeet-traditional-video", label: "Traditional Video", icon: "🎥", description: "Full event video coverage", image: "/images/sangeet-traditional-video.jpg" },
+  { id: "sangeet-drone", label: "Drone", icon: "🚁", description: "Aerial shots & coverage", image: "/images/sangeet-drone.jpg" },
+];
+
 export default function BuildQuotePage() {
   const [started, setStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
@@ -78,6 +85,7 @@ export default function BuildQuotePage() {
   const [step8Selected, setStep8Selected] = useState<string[]>([]);
   const [step9Selected, setStep9Selected] = useState<string[]>([]);
   const [step10Selected, setStep10Selected] = useState<string[]>([]);
+  const [step11Selected, setStep11Selected] = useState<string[]>([]);
   const [showError, setShowError] = useState(false);
 
   const toggleStep1 = (id: string) => { setStep1Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
@@ -90,6 +98,7 @@ export default function BuildQuotePage() {
   const toggleStep8 = (id: string) => { setStep8Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
   const toggleStep9 = (id: string) => { setStep9Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
   const toggleStep10 = (id: string) => { setStep10Selected(prev => prev.includes(id) ? [] : [id]); setShowError(false); };
+  const toggleStep11 = (id: string) => { setStep11Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
 
   const handleNext = () => {
     if (currentStep === 1 && step1Selected.length === 0) { setShowError(true); return; }
@@ -102,11 +111,51 @@ export default function BuildQuotePage() {
     if (currentStep === 8 && step8Selected.length === 0) { setShowError(true); return; }
     if (currentStep === 9 && step9Selected.length === 0) { setShowError(true); return; }
     if (currentStep === 10 && step10Selected.length === 0) { setShowError(true); return; }
+    if (currentStep === 11 && step11Selected.length === 0) { setShowError(true); return; }
+    
+    // If on step 10 and "Yes" is selected, go to step 11
+    if (currentStep === 10 && step10Selected.includes("sangeet-yes")) {
+      setCurrentStep(11);
+      setShowError(false);
+      return;
+    }
+    
+    // If on step 10 and "No" is selected, show quote
+    if (currentStep === 10 && step10Selected.includes("sangeet-no")) {
+      const allSelections = [
+        `Step 1 (Photography): ${step1Selected.join(", ")}`,
+        `Step 2 (Engagement): ${step2Selected.join(", ")}`,
+        `Step 3 (Pellikoduku): ${step3Selected.join(", ")}`,
+        `Step 4 (Groom Haldi): ${step4Selected.join(", ")}`,
+        `Step 5 (Pellikuthuru): ${step5Selected.join(", ")}`,
+        `Step 6 (Bride Haldi): ${step6Selected.join(", ")}`,
+        `Step 7 (Reception): ${step7Selected.join(", ")}`,
+        `Step 8 (The Big Day): ${step8Selected.join(", ")}`,
+        `Step 9 (Vratham): ${step9Selected.join(", ")}`,
+        `Sangeet: No`
+      ].join("\n");
+      alert(allSelections);
+      return;
+    }
+    
     if (currentStep < 10) {
       setCurrentStep(currentStep + 1);
       setShowError(false);
-    } else {
-      alert(`Step 1: ${step1Selected.join(", ")}\nStep 2: ${step2Selected.join(", ")}\nStep 3: ${step3Selected.join(", ")}\nStep 4: ${step4Selected.join(", ")}\nStep 5: ${step5Selected.join(", ")}\nStep 6: ${step6Selected.join(", ")}\nStep 7: ${step7Selected.join(", ")}\nStep 8: ${step8Selected.join(", ")}\nStep 9: ${step9Selected.join(", ")}\nStep 10: ${step10Selected.join(", ")}`);
+    } else if (currentStep === 11) {
+      const allSelections = [
+        `Step 1 (Photography): ${step1Selected.join(", ")}`,
+        `Step 2 (Engagement): ${step2Selected.join(", ")}`,
+        `Step 3 (Pellikoduku): ${step3Selected.join(", ")}`,
+        `Step 4 (Groom Haldi): ${step4Selected.join(", ")}`,
+        `Step 5 (Pellikuthuru): ${step5Selected.join(", ")}`,
+        `Step 6 (Bride Haldi): ${step6Selected.join(", ")}`,
+        `Step 7 (Reception): ${step7Selected.join(", ")}`,
+        `Step 8 (The Big Day): ${step8Selected.join(", ")}`,
+        `Step 9 (Vratham): ${step9Selected.join(", ")}`,
+        `Sangeet: Yes`,
+        `Sangeet Services: ${step11Selected.join(", ")}`
+      ].join("\n");
+      alert(allSelections);
     }
   };
 
@@ -160,6 +209,7 @@ export default function BuildQuotePage() {
       case 8: return STEP8_OPTIONS;
       case 9: return STEP9_OPTIONS;
       case 10: return STEP10_OPTIONS;
+      case 11: return STEP11_OPTIONS;
       default: return STEP1_OPTIONS;
     }
   };
@@ -176,6 +226,7 @@ export default function BuildQuotePage() {
       case 8: return step8Selected;
       case 9: return step9Selected;
       case 10: return step10Selected;
+      case 11: return step11Selected;
       default: return step1Selected;
     }
   };
@@ -192,6 +243,7 @@ export default function BuildQuotePage() {
       case 8: return toggleStep8;
       case 9: return toggleStep9;
       case 10: return toggleStep10;
+      case 11: return toggleStep11;
       default: return toggleStep1;
     }
   };
@@ -208,6 +260,7 @@ export default function BuildQuotePage() {
       case 8: return "The Big Day";
       case 9: return "Vratham";
       case 10: return "Do we have Sangeet?";
+      case 11: return "Sangeet";
       default: return "Select Options";
     }
   };
@@ -224,6 +277,7 @@ export default function BuildQuotePage() {
       case 8: return "Select the services you need for The Big Day";
       case 9: return "Select the services you need for Vratham";
       case 10: return "Would you like to include Sangeet?";
+      case 11: return "Select the services you need for Sangeet";
       default: return "Select options to continue";
     }
   };
@@ -279,7 +333,7 @@ export default function BuildQuotePage() {
               marginBottom: 40,
               flexWrap: "wrap",
             }}>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(step => (
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(step => (
                 <div key={step} style={{
                   display: "flex",
                   alignItems: "center",
@@ -299,7 +353,7 @@ export default function BuildQuotePage() {
                     color: "#fff",
                   }}>{step}</div>
                   <span style={{ fontSize: 9, fontWeight: 600 }}>
-                    {step === 1 ? "Photo" : step === 2 ? "Engage" : step === 3 ? "Pelli" : step === 4 ? "G.Haldi" : step === 5 ? "Pelli" : step === 6 ? "B.Haldi" : step === 7 ? "Recep" : step === 8 ? "BigDay" : step === 9 ? "Vratham" : "Sangeet"}
+                    {step === 1 ? "Photo" : step === 2 ? "Engage" : step === 3 ? "Pelli" : step === 4 ? "G.Haldi" : step === 5 ? "Pelli" : step === 6 ? "B.Haldi" : step === 7 ? "Recep" : step === 8 ? "BigDay" : step === 9 ? "Vratham" : step === 10 ? "Sangeet?" : "Sangeet"}
                   </span>
                 </div>
               ))}
@@ -417,7 +471,7 @@ export default function BuildQuotePage() {
                 onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(201,165,92,0.4)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(201,165,92,0.3)"; }}
               >
-                {currentStep === 10 ? "Get Quote" : "Next Step"}
+                {currentStep === 11 ? "Get Quote" : currentStep === 10 && step10Selected.includes("sangeet-no") ? "Get Quote" : "Next Step"}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
