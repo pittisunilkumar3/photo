@@ -10,14 +10,14 @@ const PHOTOGRAPHY_TYPES = [
     label: "Candid Photography", 
     icon: "📷", 
     description: "Natural, spontaneous moments captured beautifully",
-    image: "/images/portrait1.jpg"
+    image: "/images/candid-user.png"
   },
   { 
     id: "traditional", 
     label: "Traditional Photography", 
     icon: "📸", 
     description: "Classic posed shots with family and friends",
-    image: "/images/portrait2.jpg"
+    image: "/images/traditional-user.png"
   },
 ];
 
