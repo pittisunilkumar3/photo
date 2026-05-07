@@ -83,12 +83,55 @@ const STEP3_OPTIONS = [
   },
 ];
 
+const STEP4_OPTIONS = [
+  { 
+    id: "groom-haldi-candid-photo", 
+    label: "Candid Photo", 
+    icon: "📷", 
+    description: "Natural, spontaneous moments",
+    image: "/images/groom-haldi-candid-photo.jpg"
+  },
+  { 
+    id: "groom-haldi-candid-video", 
+    label: "Candid Video", 
+    icon: "🎬", 
+    description: "Cinematic candid footage",
+    image: "/images/groom-haldi-candid-video.jpg"
+  },
+];
+
+const STEP5_OPTIONS = [
+  { 
+    id: "pellikuthuru-traditional-photo", 
+    label: "Traditional Photo", 
+    icon: "📸", 
+    description: "Classic posed photographs",
+    image: "/images/pellikuthuru-traditional-photo.jpg"
+  },
+  { 
+    id: "pellikuthuru-traditional-video", 
+    label: "Traditional Video", 
+    icon: "🎥", 
+    description: "Full event video coverage",
+    image: "/images/pellikuthuru-traditional-video.jpg"
+  },
+  { 
+    id: "pellikuthuru-candid-photo", 
+    label: "Candid Photo", 
+    icon: "📷", 
+    description: "Natural, spontaneous moments",
+    image: "/images/pellikuthuru-candid-photo.jpg"
+  },
+];
+
 export default function BuildQuotePage() {
   const [started, setStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [step1Selected, setStep1Selected] = useState<string[]>([]);
   const [step2Selected, setStep2Selected] = useState<string[]>([]);
   const [step3Selected, setStep3Selected] = useState<string[]>([]);
+  const [step4Selected, setStep4Selected] = useState<string[]>([]);
+  const [step5Selected, setStep5Selected] = useState<string[]>([]);
   const [showError, setShowError] = useState(false);
 
   const toggleStep1 = (id: string) => {
@@ -118,6 +161,24 @@ export default function BuildQuotePage() {
     setShowError(false);
   };
 
+  const toggleStep4 = (id: string) => {
+    setStep4Selected(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id)
+        : [...prev, id]
+    );
+    setShowError(false);
+  };
+
+  const toggleStep5 = (id: string) => {
+    setStep5Selected(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id)
+        : [...prev, id]
+    );
+    setShowError(false);
+  };
+
   const handleNext = () => {
     if (currentStep === 1 && step1Selected.length === 0) {
       setShowError(true);
@@ -131,11 +192,19 @@ export default function BuildQuotePage() {
       setShowError(true);
       return;
     }
-    if (currentStep < 3) {
+    if (currentStep === 4 && step4Selected.length === 0) {
+      setShowError(true);
+      return;
+    }
+    if (currentStep === 5 && step5Selected.length === 0) {
+      setShowError(true);
+      return;
+    }
+    if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
       setShowError(false);
     } else {
-      alert(`Step 1: ${step1Selected.join(", ")}\nStep 2: ${step2Selected.join(", ")}\nStep 3: ${step3Selected.join(", ")}`);
+      alert(`Step 1: ${step1Selected.join(", ")}\nStep 2: ${step2Selected.join(", ")}\nStep 3: ${step3Selected.join(", ")}\nStep 4: ${step4Selected.join(", ")}\nStep 5: ${step5Selected.join(", ")}`);
     }
   };
 
@@ -265,6 +334,8 @@ export default function BuildQuotePage() {
       case 1: return STEP1_OPTIONS;
       case 2: return STEP2_OPTIONS;
       case 3: return STEP3_OPTIONS;
+      case 4: return STEP4_OPTIONS;
+      case 5: return STEP5_OPTIONS;
       default: return STEP1_OPTIONS;
     }
   };
@@ -274,6 +345,8 @@ export default function BuildQuotePage() {
       case 1: return step1Selected;
       case 2: return step2Selected;
       case 3: return step3Selected;
+      case 4: return step4Selected;
+      case 5: return step5Selected;
       default: return step1Selected;
     }
   };
@@ -283,6 +356,8 @@ export default function BuildQuotePage() {
       case 1: return toggleStep1;
       case 2: return toggleStep2;
       case 3: return toggleStep3;
+      case 4: return toggleStep4;
+      case 5: return toggleStep5;
       default: return toggleStep1;
     }
   };
@@ -292,6 +367,8 @@ export default function BuildQuotePage() {
       case 1: return "What Photography do you want?";
       case 2: return "Engagement";
       case 3: return "Pellikoduku";
+      case 4: return "Groom Haldi";
+      case 5: return "Pellikuthuru";
       default: return "Select Options";
     }
   };
@@ -301,6 +378,8 @@ export default function BuildQuotePage() {
       case 1: return "Select one or both options to continue";
       case 2: return "Select the services you need for your engagement";
       case 3: return "Select the services you need for Pellikoduku";
+      case 4: return "Select the services you need for Groom Haldi";
+      case 5: return "Select the services you need for Pellikuthuru";
       default: return "Select options to continue";
     }
   };
@@ -352,31 +431,31 @@ export default function BuildQuotePage() {
             <div style={{
               display: "flex",
               justifyContent: "center",
-              gap: 30,
+              gap: 16,
               marginBottom: 40,
               flexWrap: "wrap",
             }}>
-              {[1, 2, 3].map(step => (
+              {[1, 2, 3, 4, 5].map(step => (
                 <div key={step} style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 8,
+                  gap: 6,
                   color: currentStep >= step ? "#c9a55c" : "rgba(255,255,255,0.3)",
                 }}>
                   <div style={{
-                    width: 36,
-                    height: 36,
+                    width: 28,
+                    height: 28,
                     borderRadius: "50%",
                     background: currentStep >= step ? "#c9a55c" : "rgba(255,255,255,0.1)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: 700,
                     color: "#fff",
                   }}>{step}</div>
-                  <span style={{ fontSize: 14, fontWeight: 600 }}>
-                    {step === 1 ? "Photography" : step === 2 ? "Engagement" : "Pellikoduku"}
+                  <span style={{ fontSize: 12, fontWeight: 600 }}>
+                    {step === 1 ? "Photo" : step === 2 ? "Engage" : step === 3 ? "Pelli" : step === 4 ? "Haldi" : "Pelli"}
                   </span>
                 </div>
               ))}
@@ -506,7 +585,7 @@ export default function BuildQuotePage() {
                   e.currentTarget.style.boxShadow = "0 4px 20px rgba(201,165,92,0.3)";
                 }}
               >
-                {currentStep === 3 ? "Get Quote" : "Next Step"}
+                {currentStep === 5 ? "Get Quote" : "Next Step"}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
