@@ -18,8 +18,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "hello@lumiere.photo",
-    href: "mailto:hello@lumiere.photo",
+    value: "hello@coupleaura.com",
+    href: "mailto:hello@coupleaura.com",
   },
   {
     icon: Phone,

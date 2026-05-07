@@ -187,7 +187,9 @@ function GalleryLayer({ id, circleEl, url, title, open, inPlace, onInPlace, tota
     <g style={{ zIndex: inPlace ? id : total + 1 }}>
       <g clipPath={`url(#${clipId})`}>
         <image width={W} height={H} href={url} preserveAspectRatio="xMidYMid slice" style={{ pointerEvents: "none" }} />
-        <text x={W / 2} y={H - 140} textAnchor="middle" fill="white" fontSize="48" fontFamily="Georgia, serif" fontStyle="italic" opacity="0.8" style={{ pointerEvents: "none" }}>
+        {/* Title background for readability */}
+        <rect x={W / 2 - 250} y={H - 180} width={500} height={70} rx={35} fill="rgba(0,0,0,0.5)" style={{ pointerEvents: "none" }} />
+        <text x={W / 2} y={H - 138} textAnchor="middle" fill="#c9a55c" fontSize="28" fontFamily="Georgia, serif" fontWeight="600" letterSpacing="3" style={{ pointerEvents: "none" }}>
           {title}
         </text>
       </g>

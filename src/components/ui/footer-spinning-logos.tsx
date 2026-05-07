@@ -37,12 +37,12 @@ const SocialIcons: Record<string, React.FC<{ size?: number }>> = {
 };
 
 const logos = [
-  { name: "Instagram", color: "#E4405F", href: "https://instagram.com/lumiere.photo" },
-  { name: "Facebook", color: "#1877F2", href: "https://facebook.com/lumierephoto" },
-  { name: "YouTube", color: "#FF0000", href: "https://youtube.com/@lumierephoto" },
-  { name: "Twitter", color: "#14171A", href: "https://x.com/lumierephoto" },
-  { name: "TikTok", color: "#010101", href: "https://tiktok.com/@lumierephoto" },
-  { name: "LinkedIn", color: "#0A66C2", href: "https://linkedin.com/company/lumierephoto" },
+  { name: "Instagram", color: "#E4405F", href: "https://instagram.com/coupleaura" },
+  { name: "Facebook", color: "#1877F2", href: "https://facebook.com/coupleaura" },
+  { name: "YouTube", color: "#FF0000", href: "https://youtube.com/@coupleaura" },
+  { name: "Twitter", color: "#14171A", href: "https://x.com/coupleaura" },
+  { name: "TikTok", color: "#010101", href: "https://tiktok.com/@coupleaura" },
+  { name: "LinkedIn", color: "#0A66C2", href: "https://linkedin.com/company/coupleaura" },
 ];
 
 export function FooterSpinningLogos() {
@@ -134,7 +134,7 @@ export function FooterSpinningLogos() {
             boxShadow: "0 2px 12px rgba(201,165,92,0.4)",
           }}
         >
-          L
+          CA
         </div>
       </div>
 

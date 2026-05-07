@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import NavbarWrapper from "@/components/NavbarWrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,9 +16,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Lumière Photography | Capturing Moments, Creating Art",
+  title: "COUPLE AURA Photography | Capturing Moments, Creating Art",
   description:
-    "Professional photography portfolio specializing in portrait, landscape, wedding, and street photography.",
+    "Professional photography portfolio specializing in portrait, landscape, wedding, and couple photography.",
 };
 
 export default function RootLayout({
@@ -28,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${playfair.variable}`}>
+        <NavbarWrapper />
         {children}
       </body>
     </html>

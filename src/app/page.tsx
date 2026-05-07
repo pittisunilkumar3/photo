@@ -40,7 +40,16 @@ const services = [
 ];
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    // Only show animation once per session
+    if (typeof window !== "undefined") {
+      const hasSeenAnimation = sessionStorage.getItem("coupleAura_animationShown");
+      if (hasSeenAnimation) return false;
+      sessionStorage.setItem("coupleAura_animationShown", "true");
+      return true;
+    }
+    return false;
+  });
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", service: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -55,8 +64,6 @@ export default function Home() {
     setTimeout(() => setIsSubmitted(false), 4000);
   };
 
-  const [sideMenuOpen, setSideMenuOpen] = useState(false);
-
   return (
     <>
       {/* ===== VAPORIZE LOADER ===== */}
@@ -65,76 +72,8 @@ export default function Home() {
       {/* ===== MAIN SITE ===== */}
       <div style={{ opacity: loading ? 0 : 1, transition: "opacity 0.6s ease" }}>
 
-      {/* ==================== SIDE MENU ==================== */}
-      <button
-        onClick={() => setSideMenuOpen(true)}
-        style={{
-          position: "fixed", top: 20, left: 20, zIndex: 9998,
-          width: 44, height: 44, borderRadius: 12,
-          background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)",
-          color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-          backdropFilter: "blur(10px)",
-        }}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12h18M3 6h18M3 18h18" /></svg>
-      </button>
-
-      {/* Overlay */}
-      {sideMenuOpen && (
-        <div
-          onClick={() => setSideMenuOpen(false)}
-          style={{
-            position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)",
-            zIndex: 9998, backdropFilter: "blur(4px)",
-          }}
-        />
-      )}
-
-      {/* Sidebar Panel */}
-      <div
-        style={{
-          position: "fixed", top: 0, left: 0, bottom: 0, width: 280,
-          background: "#111", zIndex: 9999,
-          transform: sideMenuOpen ? "translateX(0)" : "translateX(-100%)",
-          transition: "transform 0.3s ease",
-          borderRight: "1px solid rgba(255,255,255,0.08)",
-          padding: "32px 24px",
-          display: "flex", flexDirection: "column",
-        }}
-      >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 40 }}>
-          <span style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, fontWeight: 700, color: "#c9a55c" }}>Menu</span>
-          <button
-            onClick={() => setSideMenuOpen(false)}
-            style={{ background: "none", border: "none", color: "#888", cursor: "pointer", padding: 4 }}
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12" /></svg>
-          </button>
-        </div>
-
-        <a href="/" style={{ display: "block", padding: "14px 16px", color: "#ccc", textDecoration: "none", borderRadius: 10, marginBottom: 4, fontSize: 15, fontWeight: 500, background: "rgba(255,255,255,0.04)" }}>
-          🏠 Home
-        </a>
-        <a href="/3d-gallery" style={{ display: "block", padding: "14px 16px", color: "#ccc", textDecoration: "none", borderRadius: 10, marginBottom: 4, fontSize: 15, fontWeight: 500, background: "rgba(255,255,255,0.04)" }}>
-          🌌 3D Gallery
-        </a>
-        <a href="/our-clicks" style={{ display: "block", padding: "14px 16px", color: "#ccc", textDecoration: "none", borderRadius: 10, marginBottom: 4, fontSize: 15, fontWeight: 500, background: "rgba(255,255,255,0.04)" }}>
-          📸 Our Clicks
-        </a>
-
-        <div style={{ marginTop: 24, paddingTop: 24, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-          <a href="#portfolio" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>Portfolio</a>
-          <a href="#about" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>About</a>
-          <a href="/our-clicks" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>Our Clicks</a>
-          <a href="#services" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>Services</a>
-          <a href="#contact" onClick={() => setSideMenuOpen(false)} style={{ display: "block", padding: "10px 16px", color: "#888", textDecoration: "none", fontSize: 14, borderRadius: 8, marginBottom: 2 }}>Contact</a>
-        </div>
-      </div>
-
       {/* ==================== HERO ==================== */}
       <section className="hero">
-        <div className="hero-overlay" />
-
         {/* Full background gallery */}
         <div style={{
           position: "absolute",
@@ -146,6 +85,9 @@ export default function Home() {
         }}>
           <ImageGallery />
         </div>
+
+        {/* Dark overlay for text readability */}
+        <div className="hero-overlay" />
 
         {/* Text overlay on top */}
         <div style={{
@@ -260,18 +202,18 @@ export default function Home() {
         <div className="section-header" style={{ padding: "0 40px", marginBottom: 40 }}>
           <KineticOnce text="Gallery" tag="div" className="section-label" />
           <h2 className="section-title"><KineticOnce text="Creative Bento" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-          <KineticOnce text="Drag to rearrange, click to view" tag="p" className="section-desc" style={{ fontFamily: "inherit", fontSize: "inherit" }} />
+          <KineticOnce text="Click to view" tag="p" className="section-desc" style={{ fontFamily: "inherit", fontSize: "inherit" }} />
         </div>
         <InteractiveBentoGallery />
       </section>
 
       {/* ==================== 3D CIRCULAR GALLERY ==================== */}
       <section style={{ width: "100%", background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)" }}>
-        <div style={{ position: "sticky", top: 0, width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+        <div style={{ position: "relative", width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
           <div style={{ textAlign: "center", position: "absolute", top: 40, zIndex: 10 }}>
             <KineticOnce text="Gallery" tag="div" className="section-label" style={{ color: "#c9a55c" }} />
             <h2 className="section-title" style={{ color: "#fff" }}><KineticOnce text="3D Carousel" tag="span" style={{ color: "#fff", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h2>
-            <KineticOnce text="Scroll to rotate, drag to spin" tag="p" style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }} />
+            <KineticOnce text="Scroll to rotate" tag="p" style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginTop: 8 }} />
           </div>
           <div style={{ width: "100%", height: "100%" }}>
             <CircularGallery
@@ -397,7 +339,7 @@ export default function Home() {
             { imgSrc: "/images/arch1.jpg", alt: "Architecture" },
           ]}
           badgeText="Testimonials"
-          title={<>What Our Clients Say About <span style={{ color: "#c9a55c" }}>Lumière</span></>}
+          title={<>What Our Clients Say About <span style={{ color: "#c9a55c" }}>COUPLE AURA</span></>}
           description={<>Don&apos;t just take our word for it. Here&apos;s what our clients have to say about their experience working with us.</>}
           ctaText="Read More Stories"
           ctaHref="#contact"
@@ -416,7 +358,7 @@ export default function Home() {
             <h3 className="section-title" style={{ fontSize: 26, marginBottom: 20, textAlign: "left" }}><KineticOnce text="Get in Touch" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h3>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: "var(--secondary)", marginBottom: 28 }}>Whether you have a specific project in mind or just want to explore possibilities, I&apos;m here to help.</p>
             {[
-              { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>, label: "Email", value: "hello@lumiere.photo" },
+              { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>, label: "Email", value: "hello@coupleaura.com" },
               { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>, label: "Phone", value: "+1 (555) 123-4567" },
               { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>, label: "Studio", value: "123 Photography Lane, NYC" },
               { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>, label: "Hours", value: "Mon - Sat, 9AM - 7PM" },
@@ -448,12 +390,27 @@ export default function Home() {
       <footer className="footer">
         <div className="footer-grid">
           <div className="footer-brand">
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+              <img
+                src="/images/logo1.jpeg"
+                alt="COUPLE AURA Logo"
+                style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover" }}
+              />
+              <span style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, fontWeight: 700, color: "#c9a55c" }}>COUPLE AURA</span>
+            </div>
             <p>Capturing life&apos;s most precious moments with artistry and passion. Based in New York, available worldwide.</p>
             <FooterSpinningLogos />
           </div>
           <div>
             <h4 className="footer-title">Quick Links</h4>
-            <ul className="footer-links">{["Home", "Portfolio", "About", "Services", "Contact"].map(l => <li key={l}><a href={`#${l.toLowerCase()}`}>{l}</a></li>)}</ul>
+            <ul className="footer-links">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#portfolio">Portfolio</a></li>
+              <li><a href="/build-quote">Build Quote</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
           </div>
           <div>
             <h4 className="footer-title">Services</h4>
@@ -465,7 +422,7 @@ export default function Home() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2024 Lumière Photography. All rights reserved.</p>
+          <p>© 2024 COUPLE AURA Photography. All rights reserved.</p>
           <p>Made with ❤️ by <a href="#">Alex Morgan</a></p>
         </div>
       </footer>

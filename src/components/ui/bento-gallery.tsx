@@ -25,7 +25,7 @@ const defaultMedia: MediaItem[] = [
   { id: 10, type: "image", title: "Studio Vision", desc: "Creative direction at its best", url: "/images/hero1.jpg", span: "col-span-1 row-span-3" },
 ];
 
-/* Span resolver — converts Tailwind-like span strings to inline CSS grid placement */
+/* Span resolver */
 function getSpanStyle(span: string): React.CSSProperties {
   const styles: React.CSSProperties = {};
   const parts = span.split(" ");
@@ -331,21 +331,29 @@ function GalleryModal({
 export function InteractiveBentoGallery() {
   const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
   const [items, setItems] = useState(defaultMedia);
-  const [isDragging, setIsDragging] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <>
       <div
         style={{
           width: "100%",
+          touchAction: "pan-y", // Allow vertical scrolling on mobile
         }}
       >
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gridAutoRows: 55,
-            gap: 10,
+            gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+            gridAutoRows: isMobile ? 45 : 55,
+            gap: isMobile ? 6 : 10,
           }}
         >
           {items.map((item, index) => (
@@ -354,67 +362,54 @@ export function InteractiveBentoGallery() {
               style={{
                 position: "relative",
                 overflow: "hidden",
-                borderRadius: 12,
+                borderRadius: isMobile ? 8 : 12,
                 cursor: "pointer",
+                touchAction: "pan-y", // Allow vertical scrolling
                 ...getSpanStyle(item.span),
               }}
-              onClick={() => !isDragging && setSelectedItem(item)}
-              initial={{ y: 50, scale: 0.9, opacity: 0 }}
+              onClick={() => setSelectedItem(item)}
+              initial={{ y: 30, scale: 0.95, opacity: 0 }}
               animate={{ y: 0, scale: 1, opacity: 1 }}
               transition={{
                 type: "spring",
                 stiffness: 350,
                 damping: 25,
-                delay: index * 0.06,
+                delay: index * 0.05,
               }}
-              whileHover={{ scale: 1.03 }}
-              drag
-              dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-              dragElastic={1}
-              onDragStart={() => setIsDragging(true)}
-              onDragEnd={(_, info) => {
-                setIsDragging(false);
-                const dist = info.offset.x + info.offset.y;
-                if (Math.abs(dist) > 50) {
-                  const newItems = [...items];
-                  const dragged = newItems[index];
-                  const target = dist > 0 ? Math.min(index + 1, items.length - 1) : Math.max(index - 1, 0);
-                  newItems.splice(index, 1);
-                  newItems.splice(target, 0, dragged);
-                  setItems(newItems);
-                }
-              }}
+              whileHover={{ scale: isMobile ? 1 : 1.03 }}
             >
               <MediaImage item={item} />
-              {/* Hover overlay */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                  padding: 14,
-                  pointerEvents: "none",
-                }}
-              >
-                <div
+              {/* Hover overlay - only on desktop */}
+              {!isMobile && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                    padding: 14,
+                    pointerEvents: "none",
                   }}
-                />
-                <h3 style={{ position: "relative", color: "#fff", fontSize: 13, fontWeight: 600, margin: "0 0 2px" }}>
-                  {item.title}
-                </h3>
-                <p style={{ position: "relative", color: "rgba(255,255,255,0.6)", fontSize: 11, margin: 0, lineHeight: 1.3 }}>
-                  {item.desc}
-                </p>
-              </motion.div>
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
+                    }}
+                  />
+                  <h3 style={{ position: "relative", color: "#fff", fontSize: 13, fontWeight: 600, margin: "0 0 2px" }}>
+                    {item.title}
+                  </h3>
+                  <p style={{ position: "relative", color: "rgba(255,255,255,0.6)", fontSize: 11, margin: 0, lineHeight: 1.3 }}>
+                    {item.desc}
+                  </p>
+                </motion.div>
+              )}
             </motion.div>
           ))}
         </div>

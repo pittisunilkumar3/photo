@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Camera, Heart, ArrowUp, Mail, Phone, MapPin } from "lucide-react";
+import { Heart, ArrowUp, Mail, Phone, MapPin } from "lucide-react";
 import Link from "next/link";
 
 const quickLinks = [
@@ -60,10 +60,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="#home" className="flex items-center gap-3 group">
-              <Camera className="w-8 h-8 text-accent" />
+              <img
+                src="/images/logo1.jpeg"
+                alt="COUPLE AURA Logo"
+                className="w-10 h-10 object-contain rounded-full"
+              />
               <div className="flex flex-col">
                 <span className="text-xl font-display font-bold text-white">
-                  Lumière
+                  COUPLE AURA
                 </span>
                 <span className="text-[10px] uppercase tracking-[0.3em] text-gray-500">
                   Photography
@@ -76,10 +80,10 @@ export default function Footer() {
             </p>
             <div className="mt-6 space-y-3">
               <a
-                href="mailto:hello@lumiere.photo"
+                href="mailto:hello@coupleaura.com"
                 className="flex items-center gap-2 text-sm text-gray-400 hover:text-accent transition-colors"
               >
-                <Mail className="w-4 h-4" /> hello@lumiere.photo
+                <Mail className="w-4 h-4" /> hello@coupleaura.com
               </a>
               <a
                 href="tel:+15551234567"
@@ -163,7 +167,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 border-t border-gray-800">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500">
-            © 2024 Lumière Photography. All rights reserved.
+            © 2024 COUPLE AURA Photography. All rights reserved.
           </p>
           <p className="text-sm text-gray-500 flex items-center gap-1">
             Made with <Heart className="w-3 h-3 text-accent fill-accent" /> by
