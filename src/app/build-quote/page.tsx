@@ -89,7 +89,7 @@ export default function BuildQuotePage() {
   const toggleStep7 = (id: string) => { setStep7Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
   const toggleStep8 = (id: string) => { setStep8Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
   const toggleStep9 = (id: string) => { setStep9Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep10 = (id: string) => { setStep10Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
+  const toggleStep10 = (id: string) => { setStep10Selected(prev => prev.includes(id) ? [] : [id]); setShowError(false); };
 
   const handleNext = () => {
     if (currentStep === 1 && step1Selected.length === 0) { setShowError(true); return; }
