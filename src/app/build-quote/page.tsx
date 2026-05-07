@@ -59,11 +59,36 @@ const STEP2_OPTIONS = [
   },
 ];
 
+const STEP3_OPTIONS = [
+  { 
+    id: "pellikoduku-traditional-photo", 
+    label: "Traditional Photo", 
+    icon: "📸", 
+    description: "Classic posed photographs",
+    image: "/images/pellikoduku-traditional-photo.jpg"
+  },
+  { 
+    id: "pellikoduku-traditional-video", 
+    label: "Traditional Video", 
+    icon: "🎥", 
+    description: "Full event video coverage",
+    image: "/images/pellikoduku-traditional-video.jpg"
+  },
+  { 
+    id: "pellikoduku-candid-photo", 
+    label: "Candid Photo", 
+    icon: "📷", 
+    description: "Natural, spontaneous moments",
+    image: "/images/pellikoduku-candid-photo.jpg"
+  },
+];
+
 export default function BuildQuotePage() {
   const [started, setStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [step1Selected, setStep1Selected] = useState<string[]>([]);
   const [step2Selected, setStep2Selected] = useState<string[]>([]);
+  const [step3Selected, setStep3Selected] = useState<string[]>([]);
   const [showError, setShowError] = useState(false);
 
   const toggleStep1 = (id: string) => {
@@ -84,6 +109,15 @@ export default function BuildQuotePage() {
     setShowError(false);
   };
 
+  const toggleStep3 = (id: string) => {
+    setStep3Selected(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id)
+        : [...prev, id]
+    );
+    setShowError(false);
+  };
+
   const handleNext = () => {
     if (currentStep === 1 && step1Selected.length === 0) {
       setShowError(true);
@@ -93,11 +127,15 @@ export default function BuildQuotePage() {
       setShowError(true);
       return;
     }
-    if (currentStep < 2) {
+    if (currentStep === 3 && step3Selected.length === 0) {
+      setShowError(true);
+      return;
+    }
+    if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
       setShowError(false);
     } else {
-      alert(`Step 1: ${step1Selected.join(", ")}\nStep 2: ${step2Selected.join(", ")}`);
+      alert(`Step 1: ${step1Selected.join(", ")}\nStep 2: ${step2Selected.join(", ")}\nStep 3: ${step3Selected.join(", ")}`);
     }
   };
 
@@ -222,6 +260,51 @@ export default function BuildQuotePage() {
     </div>
   );
 
+  const getCurrentOptions = () => {
+    switch (currentStep) {
+      case 1: return STEP1_OPTIONS;
+      case 2: return STEP2_OPTIONS;
+      case 3: return STEP3_OPTIONS;
+      default: return STEP1_OPTIONS;
+    }
+  };
+
+  const getSelectedForStep = () => {
+    switch (currentStep) {
+      case 1: return step1Selected;
+      case 2: return step2Selected;
+      case 3: return step3Selected;
+      default: return step1Selected;
+    }
+  };
+
+  const getToggleForStep = () => {
+    switch (currentStep) {
+      case 1: return toggleStep1;
+      case 2: return toggleStep2;
+      case 3: return toggleStep3;
+      default: return toggleStep1;
+    }
+  };
+
+  const getStepTitle = () => {
+    switch (currentStep) {
+      case 1: return "What Photography do you want?";
+      case 2: return "Engagement";
+      case 3: return "Pellikoduku";
+      default: return "Select Options";
+    }
+  };
+
+  const getStepDescription = () => {
+    switch (currentStep) {
+      case 1: return "Select one or both options to continue";
+      case 2: return "Select the services you need for your engagement";
+      case 3: return "Select the services you need for Pellikoduku";
+      default: return "Select options to continue";
+    }
+  };
+
   return (
     <div className="build-quote-page">
       {/* Hero Section */}
@@ -269,118 +352,70 @@ export default function BuildQuotePage() {
             <div style={{
               display: "flex",
               justifyContent: "center",
-              gap: 40,
+              gap: 30,
               marginBottom: 40,
+              flexWrap: "wrap",
             }}>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                color: currentStep >= 1 ? "#c9a55c" : "rgba(255,255,255,0.3)",
-              }}>
-                <div style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: "50%",
-                  background: currentStep >= 1 ? "#c9a55c" : "rgba(255,255,255,0.1)",
+              {[1, 2, 3].map(step => (
+                <div key={step} style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: "#fff",
-                }}>1</div>
-                <span style={{ fontSize: 14, fontWeight: 600 }}>Photography</span>
-              </div>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                color: currentStep >= 2 ? "#c9a55c" : "rgba(255,255,255,0.3)",
-              }}>
-                <div style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: "50%",
-                  background: currentStep >= 2 ? "#c9a55c" : "rgba(255,255,255,0.1)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: "#fff",
-                }}>2</div>
-                <span style={{ fontSize: 14, fontWeight: 600 }}>Engagement</span>
-              </div>
+                  gap: 8,
+                  color: currentStep >= step ? "#c9a55c" : "rgba(255,255,255,0.3)",
+                }}>
+                  <div style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: "50%",
+                    background: currentStep >= step ? "#c9a55c" : "rgba(255,255,255,0.1)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 14,
+                    fontWeight: 700,
+                    color: "#fff",
+                  }}>{step}</div>
+                  <span style={{ fontSize: 14, fontWeight: 600 }}>
+                    {step === 1 ? "Photography" : step === 2 ? "Engagement" : "Pellikoduku"}
+                  </span>
+                </div>
+              ))}
             </div>
 
-            {/* Step 1: Photography Selection */}
-            {currentStep === 1 && (
-              <>
-                <h2 style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                  fontSize: "clamp(24px, 4vw, 40px)",
-                  fontWeight: 700,
-                  color: "#fff",
-                  marginBottom: 12,
-                }}>
-                  What Photography do you want?
-                </h2>
-                <p style={{
-                  fontSize: 16,
-                  color: "rgba(255,255,255,0.6)",
-                  marginBottom: 50,
-                }}>
-                  Select one or both options to continue
-                </p>
+            {/* Step Title */}
+            <h2 style={{
+              fontFamily: "var(--font-playfair), Georgia, serif",
+              fontSize: "clamp(24px, 4vw, 40px)",
+              fontWeight: 700,
+              color: "#fff",
+              marginBottom: 12,
+            }}>
+              {getStepTitle()}
+            </h2>
+            <p style={{
+              fontSize: 16,
+              color: "rgba(255,255,255,0.6)",
+              marginBottom: 50,
+            }}>
+              {getStepDescription()}
+            </p>
 
-                <div style={{
-                  display: "flex",
-                  gap: 30,
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                  marginBottom: 40,
-                }}>
-                  {STEP1_OPTIONS.map(option => 
-                    renderOptionCard(option, step1Selected.includes(option.id), () => toggleStep1(option.id))
-                  )}
-                </div>
-              </>
-            )}
-
-            {/* Step 2: Engagement */}
-            {currentStep === 2 && (
-              <>
-                <h2 style={{
-                  fontFamily: "var(--font-playfair), Georgia, serif",
-                  fontSize: "clamp(24px, 4vw, 40px)",
-                  fontWeight: 700,
-                  color: "#fff",
-                  marginBottom: 12,
-                }}>
-                  Engagement
-                </h2>
-                <p style={{
-                  fontSize: 16,
-                  color: "rgba(255,255,255,0.6)",
-                  marginBottom: 50,
-                }}>
-                  Select the services you need for your engagement
-                </p>
-
-                <div style={{
-                  display: "flex",
-                  gap: 24,
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                  marginBottom: 40,
-                }}>
-                  {STEP2_OPTIONS.map(option => 
-                    renderOptionCard(option, step2Selected.includes(option.id), () => toggleStep2(option.id))
-                  )}
-                </div>
-              </>
-            )}
+            {/* Options Grid */}
+            <div style={{
+              display: "flex",
+              gap: 24,
+              justifyContent: "center",
+              flexWrap: "wrap",
+              marginBottom: 40,
+            }}>
+              {getCurrentOptions().map(option => 
+                renderOptionCard(
+                  option, 
+                  getSelectedForStep().includes(option.id), 
+                  () => getToggleForStep()(option.id)
+                )
+              )}
+            </div>
 
             {/* Error Message */}
             {showError && (
@@ -471,7 +506,7 @@ export default function BuildQuotePage() {
                   e.currentTarget.style.boxShadow = "0 4px 20px rgba(201,165,92,0.3)";
                 }}
               >
-                Next Step
+                {currentStep === 3 ? "Get Quote" : "Next Step"}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
