@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import "./build-quote.css";
 
+// Step 1: Photography
 const STEP1_OPTIONS = [
   { id: "candid", label: "Candid Photography", icon: "📷", description: "Natural, spontaneous moments captured beautifully", image: "/images/candid-wedding.jpg" },
   { id: "traditional", label: "Traditional Photography", icon: "📸", description: "Classic posed shots with family and friends", image: "/images/traditional-wedding.jpg" },
 ];
 
+// Step 2: Engagement
 const STEP2_OPTIONS = [
   { id: "traditional-photo", label: "Traditional Photo", icon: "📸", description: "Classic posed photographs", image: "/images/traditional-photo-real.jpg" },
   { id: "traditional-video", label: "Traditional Video", icon: "🎥", description: "Full event video coverage", image: "/images/traditional-video-real.jpg" },
@@ -17,28 +19,33 @@ const STEP2_OPTIONS = [
   { id: "drone", label: "Drone", icon: "🚁", description: "Aerial shots & coverage", image: "/images/drone-wedding.jpg" },
 ];
 
+// Step 3: Pellikoduku
 const STEP3_OPTIONS = [
   { id: "pellikoduku-traditional-photo", label: "Traditional Photo", icon: "📸", description: "Classic posed photographs", image: "/images/pellikoduku-traditional-photo.jpg" },
   { id: "pellikoduku-traditional-video", label: "Traditional Video", icon: "🎥", description: "Full event video coverage", image: "/images/pellikoduku-traditional-video.jpg" },
   { id: "pellikoduku-candid-photo", label: "Candid Photo", icon: "📷", description: "Natural, spontaneous moments", image: "/images/pellikoduku-candid-photo.jpg" },
 ];
 
+// Step 4: Groom Haldi
 const STEP4_OPTIONS = [
   { id: "groom-haldi-candid-photo", label: "Candid Photo", icon: "📷", description: "Natural, spontaneous moments", image: "/images/groom-haldi-candid-photo.jpg" },
   { id: "groom-haldi-candid-video", label: "Candid Video", icon: "🎬", description: "Cinematic candid footage", image: "/images/groom-haldi-candid-video.jpg" },
 ];
 
+// Step 5: Pellikuthuru
 const STEP5_OPTIONS = [
   { id: "pellikuthuru-traditional-photo", label: "Traditional Photo", icon: "📸", description: "Classic posed photographs", image: "/images/pellikuthuru-traditional-photo.jpg" },
   { id: "pellikuthuru-traditional-video", label: "Traditional Video", icon: "🎥", description: "Full event video coverage", image: "/images/pellikuthuru-traditional-video.jpg" },
   { id: "pellikuthuru-candid-photo", label: "Candid Photo", icon: "📷", description: "Natural, spontaneous moments", image: "/images/pellikuthuru-candid-photo.jpg" },
 ];
 
+// Step 6: Bride Haldi
 const STEP6_OPTIONS = [
   { id: "bride-haldi-candid-photo", label: "Candid Photo", icon: "📷", description: "Natural, spontaneous moments", image: "/images/bride-haldi-candid-photo.jpg" },
   { id: "bride-haldi-candid-video", label: "Candid Video", icon: "🎬", description: "Cinematic candid footage", image: "/images/bride-haldi-candid-video.jpg" },
 ];
 
+// Step 7: Reception
 const STEP7_OPTIONS = [
   { id: "reception-traditional-photo", label: "Traditional Photo", icon: "📸", description: "Classic posed photographs", image: "/images/reception-traditional-photo.jpg" },
   { id: "reception-traditional-video", label: "Traditional Video", icon: "🎥", description: "Full event video coverage", image: "/images/reception-traditional-video.jpg" },
@@ -47,6 +54,7 @@ const STEP7_OPTIONS = [
   { id: "reception-drone", label: "Drone", icon: "🚁", description: "Aerial shots & coverage", image: "/images/reception-drone.jpg" },
 ];
 
+// Step 8: The Big Day
 const STEP8_OPTIONS = [
   { id: "bigday-traditional-photo", label: "Traditional Photo", icon: "📸", description: "Classic posed photographs", image: "/images/bigday-traditional-photo.jpg" },
   { id: "bigday-traditional-video", label: "Traditional Video", icon: "🎥", description: "Full event video coverage", image: "/images/bigday-traditional-video.jpg" },
@@ -55,16 +63,19 @@ const STEP8_OPTIONS = [
   { id: "bigday-drone", label: "Drone", icon: "🚁", description: "Aerial shots & coverage", image: "/images/bigday-drone.jpg" },
 ];
 
+// Step 9: Vratham
 const STEP9_OPTIONS = [
   { id: "vratham-traditional-photo", label: "Traditional Photo", icon: "📸", description: "Classic posed photographs", image: "/images/vratham-traditional-photo.jpg" },
   { id: "vratham-traditional-video", label: "Traditional Video", icon: "🎥", description: "Full event video coverage", image: "/images/vratham-traditional-video.jpg" },
 ];
 
+// Step 10: Do we have Sangeet? (Yes/No)
 const STEP10_OPTIONS = [
   { id: "sangeet-yes", label: "Yes", icon: "✅", description: "Include Sangeet in the package", image: "/images/sangeet-yes.jpg" },
   { id: "sangeet-no", label: "No", icon: "❌", description: "Skip Sangeet from the package", image: "/images/sangeet-no.jpg" },
 ];
 
+// Step 11: Sangeet Services
 const STEP11_OPTIONS = [
   { id: "sangeet-candid-photo", label: "Candid Photo", icon: "📷", description: "Natural, spontaneous moments", image: "/images/sangeet-candid-photo.jpg" },
   { id: "sangeet-candid-video", label: "Candid Video", icon: "🎬", description: "Cinematic candid footage", image: "/images/sangeet-candid-video.jpg" },
@@ -72,9 +83,78 @@ const STEP11_OPTIONS = [
   { id: "sangeet-drone", label: "Drone", icon: "🚁", description: "Aerial shots & coverage", image: "/images/sangeet-drone.jpg" },
 ];
 
+// Step 12: Do we have Mehandi? (Yes/No)
+const STEP12_OPTIONS = [
+  { id: "mehandi-yes", label: "Yes", icon: "✅", description: "Include Mehandi in the package", image: "/images/sangeet-yes.jpg" },
+  { id: "mehandi-no", label: "No", icon: "❌", description: "Skip Mehandi from the package", image: "/images/sangeet-no.jpg" },
+];
+
+// Step 13: Mehandi Services
+const STEP13_OPTIONS = [
+  { id: "mehandi-candid-photo", label: "Candid Photo", icon: "📷", description: "Natural, spontaneous moments", image: "/images/mehandi-candid-photo.jpg" },
+  { id: "mehandi-traditional-video", label: "Traditional Video", icon: "🎥", description: "Full event video coverage", image: "/images/mehandi-traditional-video.jpg" },
+];
+
+// Step 14: Cocktail Party? (Yes/No)
+const STEP14_OPTIONS = [
+  { id: "cocktail-yes", label: "Yes", icon: "✅", description: "Include Cocktail Party", image: "/images/sangeet-yes.jpg" },
+  { id: "cocktail-no", label: "No", icon: "❌", description: "Skip Cocktail Party", image: "/images/sangeet-no.jpg" },
+];
+
+// Step 15: Cocktail Party Services
+const STEP15_OPTIONS = [
+  { id: "cocktail-candid-photo", label: "Candid Photo", icon: "📷", description: "Natural, spontaneous moments", image: "/images/cocktail-candid-photo.jpg" },
+  { id: "cocktail-candid-video", label: "Candid Video", icon: "🎬", description: "Cinematic candid footage", image: "/images/cocktail-candid-video.jpg" },
+];
+
+// Step 16: Do you really need albums? (Yes/No)
+const STEP16_OPTIONS = [
+  { id: "albums-yes", label: "Yes", icon: "✅", description: "Include albums in the package", image: "/images/sangeet-yes.jpg" },
+  { id: "albums-no", label: "No", icon: "❌", description: "Skip albums", image: "/images/sangeet-no.jpg" },
+];
+
+// Step 17: Candid Album
+const STEP17_OPTIONS = [
+  { id: "candid-album-pressbook", label: "Press Book", icon: "📖", description: "Classic press book album", image: "/images/album-pressbook.jpg" },
+  { id: "candid-album-magnum", label: "Magnum", icon: "📚", description: "Premium magnum album", image: "/images/album-magnum.jpg" },
+];
+
+// Step 18: Traditional Album
+const STEP18_OPTIONS = [
+  { id: "traditional-album-pressbook", label: "Press Book", icon: "📖", description: "Classic press book album", image: "/images/album-pressbook.jpg" },
+  { id: "traditional-album-magnum", label: "Magnum", icon: "📚", description: "Premium magnum album", image: "/images/album-magnum.jpg" },
+];
+
+// Step 19: When do you want your output? (Post Production)
+const STEP19_OPTIONS = [
+  { id: "output-1month", label: "One Month", icon: "📅", description: "Get your output in 1 month", image: "/images/sangeet-yes.jpg" },
+  { id: "output-5months", label: "Five Months", icon: "📆", description: "Get your output in 5 months", image: "/images/sangeet-no.jpg" },
+];
+
+// Step 20: Do we have pre-wedding shoot? (Yes/No)
+const STEP20_OPTIONS = [
+  { id: "prewedding-yes", label: "Yes", icon: "✅", description: "Include pre-wedding shoot", image: "/images/sangeet-yes.jpg" },
+  { id: "prewedding-no", label: "No", icon: "❌", description: "Skip pre-wedding shoot", image: "/images/sangeet-no.jpg" },
+];
+
+// Step 21: Romantic pre-wedding
+const STEP21_OPTIONS = [
+  { id: "prewedding-only-photo", label: "Only Photo", icon: "📷", description: "Photo coverage only", image: "/images/prewedding-photo.jpg" },
+  { id: "prewedding-both", label: "Both Photo & Video", icon: "🎬", description: "Complete photo and video coverage", image: "/images/prewedding-both.jpg" },
+];
+
+// Step 22: Which shooting style do you prefer?
+const STEP22_OPTIONS = [
+  { id: "documentary-style", label: "Documentary Style", icon: "🎬", description: "Cinematic documentary approach", image: "/images/documentary-style.jpg" },
+];
+
 export default function BuildQuotePage() {
   const [started, setStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [showCongrats, setShowCongrats] = useState(false);
+  const [showError, setShowError] = useState(false);
+  
+  // All selections
   const [step1Selected, setStep1Selected] = useState<string[]>([]);
   const [step2Selected, setStep2Selected] = useState<string[]>([]);
   const [step3Selected, setStep3Selected] = useState<string[]>([]);
@@ -86,84 +166,245 @@ export default function BuildQuotePage() {
   const [step9Selected, setStep9Selected] = useState<string[]>([]);
   const [step10Selected, setStep10Selected] = useState<string[]>([]);
   const [step11Selected, setStep11Selected] = useState<string[]>([]);
-  const [showError, setShowError] = useState(false);
+  const [step12Selected, setStep12Selected] = useState<string[]>([]);
+  const [step13Selected, setStep13Selected] = useState<string[]>([]);
+  const [step14Selected, setStep14Selected] = useState<string[]>([]);
+  const [step15Selected, setStep15Selected] = useState<string[]>([]);
+  const [step16Selected, setStep16Selected] = useState<string[]>([]);
+  const [step17Selected, setStep17Selected] = useState<string[]>([]);
+  const [step18Selected, setStep18Selected] = useState<string[]>([]);
+  const [step19Selected, setStep19Selected] = useState<string[]>([]);
+  const [step20Selected, setStep20Selected] = useState<string[]>([]);
+  const [step21Selected, setStep21Selected] = useState<string[]>([]);
+  const [step22Selected, setStep22Selected] = useState<string[]>([]);
 
-  const toggleStep1 = (id: string) => { setStep1Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep2 = (id: string) => { setStep2Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep3 = (id: string) => { setStep3Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep4 = (id: string) => { setStep4Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep5 = (id: string) => { setStep5Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep6 = (id: string) => { setStep6Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep7 = (id: string) => { setStep7Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep8 = (id: string) => { setStep8Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep9 = (id: string) => { setStep9Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
-  const toggleStep10 = (id: string) => { setStep10Selected(prev => prev.includes(id) ? [] : [id]); setShowError(false); };
-  const toggleStep11 = (id: string) => { setStep11Selected(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]); setShowError(false); };
+  // Toggle functions (multi-select)
+  const toggleMulti = (setter: React.Dispatch<React.SetStateAction<string[]>>) => (id: string) => {
+    setter(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]);
+    setShowError(false);
+  };
+
+  // Toggle functions (single-select for Yes/No)
+  const toggleSingle = (setter: React.Dispatch<React.SetStateAction<string[]>>) => (id: string) => {
+    setter(prev => prev.includes(id) ? [] : [id]);
+    setShowError(false);
+  };
+
+  const toggleStep1 = toggleMulti(setStep1Selected);
+  const toggleStep2 = toggleMulti(setStep2Selected);
+  const toggleStep3 = toggleMulti(setStep3Selected);
+  const toggleStep4 = toggleMulti(setStep4Selected);
+  const toggleStep5 = toggleMulti(setStep5Selected);
+  const toggleStep6 = toggleMulti(setStep6Selected);
+  const toggleStep7 = toggleMulti(setStep7Selected);
+  const toggleStep8 = toggleMulti(setStep8Selected);
+  const toggleStep9 = toggleMulti(setStep9Selected);
+  const toggleStep10 = toggleSingle(setStep10Selected);
+  const toggleStep11 = toggleMulti(setStep11Selected);
+  const toggleStep12 = toggleSingle(setStep12Selected);
+  const toggleStep13 = toggleMulti(setStep13Selected);
+  const toggleStep14 = toggleSingle(setStep14Selected);
+  const toggleStep15 = toggleMulti(setStep15Selected);
+  const toggleStep16 = toggleSingle(setStep16Selected);
+  const toggleStep17 = toggleMulti(setStep17Selected);
+  const toggleStep18 = toggleMulti(setStep18Selected);
+  const toggleStep19 = toggleSingle(setStep19Selected);
+  const toggleStep20 = toggleSingle(setStep20Selected);
+  const toggleStep21 = toggleSingle(setStep21Selected);
+  const toggleStep22 = toggleSingle(setStep22Selected);
+
+  const getSelections = () => {
+    const selections: string[] = [];
+    if (step1Selected.length > 0) selections.push(`Photography: ${step1Selected.join(", ")}`);
+    if (step2Selected.length > 0) selections.push(`Engagement: ${step2Selected.join(", ")}`);
+    if (step3Selected.length > 0) selections.push(`Pellikoduku: ${step3Selected.join(", ")}`);
+    if (step4Selected.length > 0) selections.push(`Groom Haldi: ${step4Selected.join(", ")}`);
+    if (step5Selected.length > 0) selections.push(`Pellikuthuru: ${step5Selected.join(", ")}`);
+    if (step6Selected.length > 0) selections.push(`Bride Haldi: ${step6Selected.join(", ")}`);
+    if (step7Selected.length > 0) selections.push(`Reception: ${step7Selected.join(", ")}`);
+    if (step8Selected.length > 0) selections.push(`The Big Day: ${step8Selected.join(", ")}`);
+    if (step9Selected.length > 0) selections.push(`Vratham: ${step9Selected.join(", ")}`);
+    if (step10Selected.includes("sangeet-yes")) selections.push(`Sangeet: Yes`);
+    if (step10Selected.includes("sangeet-no")) selections.push(`Sangeet: No`);
+    if (step11Selected.length > 0) selections.push(`Sangeet Services: ${step11Selected.join(", ")}`);
+    if (step12Selected.includes("mehandi-yes")) selections.push(`Mehandi: Yes`);
+    if (step12Selected.includes("mehandi-no")) selections.push(`Mehandi: No`);
+    if (step13Selected.length > 0) selections.push(`Mehandi Services: ${step13Selected.join(", ")}`);
+    if (step14Selected.includes("cocktail-yes")) selections.push(`Cocktail Party: Yes`);
+    if (step14Selected.includes("cocktail-no")) selections.push(`Cocktail Party: No`);
+    if (step15Selected.length > 0) selections.push(`Cocktail Services: ${step15Selected.join(", ")}`);
+    if (step16Selected.includes("albums-yes")) selections.push(`Albums: Yes`);
+    if (step16Selected.includes("albums-no")) selections.push(`Albums: No`);
+    if (step17Selected.length > 0) selections.push(`Candid Album: ${step17Selected.join(", ")}`);
+    if (step18Selected.length > 0) selections.push(`Traditional Album: ${step18Selected.join(", ")}`);
+    if (step19Selected.length > 0) selections.push(`Output Timeline: ${step19Selected.join(", ")}`);
+    if (step20Selected.includes("prewedding-yes")) selections.push(`Pre-Wedding Shoot: Yes`);
+    if (step20Selected.includes("prewedding-no")) selections.push(`Pre-Wedding Shoot: No`);
+    if (step21Selected.length > 0) selections.push(`Pre-Wedding Style: ${step21Selected.join(", ")}`);
+    if (step22Selected.length > 0) selections.push(`Shooting Style: ${step22Selected.join(", ")}`);
+    return selections;
+  };
 
   const handleNext = () => {
-    if (currentStep === 1 && step1Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 2 && step2Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 3 && step3Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 4 && step4Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 5 && step5Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 6 && step6Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 7 && step7Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 8 && step8Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 9 && step9Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 10 && step10Selected.length === 0) { setShowError(true); return; }
-    if (currentStep === 11 && step11Selected.length === 0) { setShowError(true); return; }
-    
-    // If on step 10 and "Yes" is selected, go to step 11
-    if (currentStep === 10 && step10Selected.includes("sangeet-yes")) {
-      setCurrentStep(11);
+    // Validation for current step
+    const stepSelections: Record<number, string[]> = {
+      1: step1Selected, 2: step2Selected, 3: step3Selected, 4: step4Selected,
+      5: step5Selected, 6: step6Selected, 7: step7Selected, 8: step8Selected,
+      9: step9Selected, 10: step10Selected, 11: step11Selected, 12: step12Selected,
+      13: step13Selected, 14: step14Selected, 15: step15Selected, 16: step16Selected,
+      17: step17Selected, 18: step18Selected, 19: step19Selected, 20: step20Selected,
+      21: step21Selected, 22: step22Selected
+    };
+
+    if (stepSelections[currentStep]?.length === 0) {
+      setShowError(true);
+      return;
+    }
+
+    // Step 10: Sangeet - conditional flow
+    if (currentStep === 10) {
+      if (step10Selected.includes("sangeet-yes")) {
+        setCurrentStep(11);
+      } else {
+        setCurrentStep(12);
+      }
       setShowError(false);
       return;
     }
-    
-    // If on step 10 and "No" is selected, show quote
-    if (currentStep === 10 && step10Selected.includes("sangeet-no")) {
-      const allSelections = [
-        `Step 1 (Photography): ${step1Selected.join(", ")}`,
-        `Step 2 (Engagement): ${step2Selected.join(", ")}`,
-        `Step 3 (Pellikoduku): ${step3Selected.join(", ")}`,
-        `Step 4 (Groom Haldi): ${step4Selected.join(", ")}`,
-        `Step 5 (Pellikuthuru): ${step5Selected.join(", ")}`,
-        `Step 6 (Bride Haldi): ${step6Selected.join(", ")}`,
-        `Step 7 (Reception): ${step7Selected.join(", ")}`,
-        `Step 8 (The Big Day): ${step8Selected.join(", ")}`,
-        `Step 9 (Vratham): ${step9Selected.join(", ")}`,
-        `Sangeet: No`
-      ].join("\n");
-      alert(allSelections);
+
+    // Step 11: Sangeet services -> Step 12
+    if (currentStep === 11) {
+      setCurrentStep(12);
+      setShowError(false);
       return;
     }
-    
-    if (currentStep < 10) {
+
+    // Step 12: Mehandi - conditional flow
+    if (currentStep === 12) {
+      if (step12Selected.includes("mehandi-yes")) {
+        setCurrentStep(13);
+      } else {
+        setCurrentStep(14);
+      }
+      setShowError(false);
+      return;
+    }
+
+    // Step 13: Mehandi services -> Step 14
+    if (currentStep === 13) {
+      setCurrentStep(14);
+      setShowError(false);
+      return;
+    }
+
+    // Step 14: Cocktail Party - conditional flow
+    if (currentStep === 14) {
+      if (step14Selected.includes("cocktail-yes")) {
+        setCurrentStep(15);
+      } else {
+        setCurrentStep(16);
+      }
+      setShowError(false);
+      return;
+    }
+
+    // Step 15: Cocktail services -> Step 16
+    if (currentStep === 15) {
+      setCurrentStep(16);
+      setShowError(false);
+      return;
+    }
+
+    // Step 16: Albums - conditional flow
+    if (currentStep === 16) {
+      if (step16Selected.includes("albums-yes")) {
+        setCurrentStep(17);
+      } else {
+        setCurrentStep(19);
+      }
+      setShowError(false);
+      return;
+    }
+
+    // Step 17: Candid Album -> Step 18
+    if (currentStep === 17) {
+      setCurrentStep(18);
+      setShowError(false);
+      return;
+    }
+
+    // Step 18: Traditional Album -> Step 19
+    if (currentStep === 18) {
+      setCurrentStep(19);
+      setShowError(false);
+      return;
+    }
+
+    // Step 19: Output timeline -> Step 20
+    if (currentStep === 19) {
+      setCurrentStep(20);
+      setShowError(false);
+      return;
+    }
+
+    // Step 20: Pre-wedding - conditional flow
+    if (currentStep === 20) {
+      if (step20Selected.includes("prewedding-yes")) {
+        setCurrentStep(21);
+      } else {
+        setShowCongrats(true);
+      }
+      setShowError(false);
+      return;
+    }
+
+    // Step 21: Pre-wedding style -> Step 22
+    if (currentStep === 21) {
+      setCurrentStep(22);
+      setShowError(false);
+      return;
+    }
+
+    // Step 22: Final step -> Congratulations
+    if (currentStep === 22) {
+      setShowCongrats(true);
+      setShowError(false);
+      return;
+    }
+
+    // Steps 1-9: Linear flow
+    if (currentStep < 9) {
       setCurrentStep(currentStep + 1);
       setShowError(false);
-    } else if (currentStep === 11) {
-      const allSelections = [
-        `Step 1 (Photography): ${step1Selected.join(", ")}`,
-        `Step 2 (Engagement): ${step2Selected.join(", ")}`,
-        `Step 3 (Pellikoduku): ${step3Selected.join(", ")}`,
-        `Step 4 (Groom Haldi): ${step4Selected.join(", ")}`,
-        `Step 5 (Pellikuthuru): ${step5Selected.join(", ")}`,
-        `Step 6 (Bride Haldi): ${step6Selected.join(", ")}`,
-        `Step 7 (Reception): ${step7Selected.join(", ")}`,
-        `Step 8 (The Big Day): ${step8Selected.join(", ")}`,
-        `Step 9 (Vratham): ${step9Selected.join(", ")}`,
-        `Sangeet: Yes`,
-        `Sangeet Services: ${step11Selected.join(", ")}`
-      ].join("\n");
-      alert(allSelections);
     }
   };
 
   const handlePrevious = () => {
-    if (currentStep > 1) {
+    // Reverse the conditional logic for going back
+    if (currentStep === 11) {
+      setCurrentStep(10);
+    } else if (currentStep === 13) {
+      setCurrentStep(12);
+    } else if (currentStep === 15) {
+      setCurrentStep(14);
+    } else if (currentStep === 17) {
+      setCurrentStep(16);
+    } else if (currentStep === 18) {
+      setCurrentStep(17);
+    } else if (currentStep === 19) {
+      if (step16Selected.includes("albums-yes")) {
+        setCurrentStep(18);
+      } else {
+        setCurrentStep(16);
+      }
+    } else if (currentStep === 21) {
+      setCurrentStep(20);
+    } else if (currentStep === 22) {
+      setCurrentStep(21);
+    } else if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
-      setShowError(false);
     }
+    setShowError(false);
   };
 
   const renderOptionCard = (option: any, isSelected: boolean, onClick: () => void) => (
@@ -198,89 +439,140 @@ export default function BuildQuotePage() {
   );
 
   const getCurrentOptions = () => {
-    switch (currentStep) {
-      case 1: return STEP1_OPTIONS;
-      case 2: return STEP2_OPTIONS;
-      case 3: return STEP3_OPTIONS;
-      case 4: return STEP4_OPTIONS;
-      case 5: return STEP5_OPTIONS;
-      case 6: return STEP6_OPTIONS;
-      case 7: return STEP7_OPTIONS;
-      case 8: return STEP8_OPTIONS;
-      case 9: return STEP9_OPTIONS;
-      case 10: return STEP10_OPTIONS;
-      case 11: return STEP11_OPTIONS;
-      default: return STEP1_OPTIONS;
-    }
+    const options: Record<number, any[]> = {
+      1: STEP1_OPTIONS, 2: STEP2_OPTIONS, 3: STEP3_OPTIONS, 4: STEP4_OPTIONS,
+      5: STEP5_OPTIONS, 6: STEP6_OPTIONS, 7: STEP7_OPTIONS, 8: STEP8_OPTIONS,
+      9: STEP9_OPTIONS, 10: STEP10_OPTIONS, 11: STEP11_OPTIONS, 12: STEP12_OPTIONS,
+      13: STEP13_OPTIONS, 14: STEP14_OPTIONS, 15: STEP15_OPTIONS, 16: STEP16_OPTIONS,
+      17: STEP17_OPTIONS, 18: STEP18_OPTIONS, 19: STEP19_OPTIONS, 20: STEP20_OPTIONS,
+      21: STEP21_OPTIONS, 22: STEP22_OPTIONS
+    };
+    return options[currentStep] || STEP1_OPTIONS;
   };
 
   const getSelectedForStep = () => {
-    switch (currentStep) {
-      case 1: return step1Selected;
-      case 2: return step2Selected;
-      case 3: return step3Selected;
-      case 4: return step4Selected;
-      case 5: return step5Selected;
-      case 6: return step6Selected;
-      case 7: return step7Selected;
-      case 8: return step8Selected;
-      case 9: return step9Selected;
-      case 10: return step10Selected;
-      case 11: return step11Selected;
-      default: return step1Selected;
-    }
+    const selections: Record<number, string[]> = {
+      1: step1Selected, 2: step2Selected, 3: step3Selected, 4: step4Selected,
+      5: step5Selected, 6: step6Selected, 7: step7Selected, 8: step8Selected,
+      9: step9Selected, 10: step10Selected, 11: step11Selected, 12: step12Selected,
+      13: step13Selected, 14: step14Selected, 15: step15Selected, 16: step16Selected,
+      17: step17Selected, 18: step18Selected, 19: step19Selected, 20: step20Selected,
+      21: step21Selected, 22: step22Selected
+    };
+    return selections[currentStep] || [];
   };
 
   const getToggleForStep = () => {
-    switch (currentStep) {
-      case 1: return toggleStep1;
-      case 2: return toggleStep2;
-      case 3: return toggleStep3;
-      case 4: return toggleStep4;
-      case 5: return toggleStep5;
-      case 6: return toggleStep6;
-      case 7: return toggleStep7;
-      case 8: return toggleStep8;
-      case 9: return toggleStep9;
-      case 10: return toggleStep10;
-      case 11: return toggleStep11;
-      default: return toggleStep1;
-    }
+    const toggles: Record<number, (id: string) => void> = {
+      1: toggleStep1, 2: toggleStep2, 3: toggleStep3, 4: toggleStep4,
+      5: toggleStep5, 6: toggleStep6, 7: toggleStep7, 8: toggleStep8,
+      9: toggleStep9, 10: toggleStep10, 11: toggleStep11, 12: toggleStep12,
+      13: toggleStep13, 14: toggleStep14, 15: toggleStep15, 16: toggleStep16,
+      17: toggleStep17, 18: toggleStep18, 19: toggleStep19, 20: toggleStep20,
+      21: toggleStep21, 22: toggleStep22
+    };
+    return toggles[currentStep] || toggleStep1;
   };
 
   const getStepTitle = () => {
-    switch (currentStep) {
-      case 1: return "What Photography do you want?";
-      case 2: return "Engagement";
-      case 3: return "Pellikoduku";
-      case 4: return "Groom Haldi";
-      case 5: return "Pellikuthuru";
-      case 6: return "Bride Haldi";
-      case 7: return "Reception";
-      case 8: return "The Big Day";
-      case 9: return "Vratham";
-      case 10: return "Do we have Sangeet?";
-      case 11: return "Sangeet";
-      default: return "Select Options";
-    }
+    const titles: Record<number, string> = {
+      1: "What Photography do you want?", 2: "Engagement", 3: "Pellikoduku",
+      4: "Groom Haldi", 5: "Pellikuthuru", 6: "Bride Haldi", 7: "Reception",
+      8: "The Big Day", 9: "Vratham", 10: "Do we have Sangeet?", 11: "Sangeet",
+      12: "Do we have Mehandi?", 13: "Mehandi", 14: "Cocktail Party?",
+      15: "Cocktail Party", 16: "Do you really need albums?", 17: "Candid Album",
+      18: "Traditional Album", 19: "When do you want your output?",
+      20: "Do we have pre-wedding shoot?", 21: "Romantic Pre-Wedding",
+      22: "Which shooting style do you prefer?"
+    };
+    return titles[currentStep] || "Select Options";
   };
 
   const getStepDescription = () => {
-    switch (currentStep) {
-      case 1: return "Select one or both options to continue";
-      case 2: return "Select the services you need for your engagement";
-      case 3: return "Select the services you need for Pellikoduku";
-      case 4: return "Select the services you need for Groom Haldi";
-      case 5: return "Select the services you need for Pellikuthuru";
-      case 6: return "Select the services you need for Bride Haldi";
-      case 7: return "Select the services you need for Reception";
-      case 8: return "Select the services you need for The Big Day";
-      case 9: return "Select the services you need for Vratham";
-      case 10: return "Would you like to include Sangeet?";
-      case 11: return "Select the services you need for Sangeet";
-      default: return "Select options to continue";
-    }
+    const descriptions: Record<number, string> = {
+      1: "Select one or both options to continue", 2: "Select the services you need for your engagement",
+      3: "Select the services you need for Pellikoduku", 4: "Select the services you need for Groom Haldi",
+      5: "Select the services you need for Pellikuthuru", 6: "Select the services you need for Bride Haldi",
+      7: "Select the services you need for Reception", 8: "Select the services you need for The Big Day",
+      9: "Select the services you need for Vratham", 10: "Would you like to include Sangeet?",
+      11: "Select the services you need for Sangeet", 12: "Would you like to include Mehandi?",
+      13: "Select the services you need for Mehandi", 14: "Would you like to include Cocktail Party?",
+      15: "Select the services for Cocktail Party (Part time)", 16: "Would you like to include albums?",
+      17: "Select your preferred Candid Album", 18: "Select your preferred Traditional Album",
+      19: "Post Production timeline", 20: "Would you like to include pre-wedding shoot?",
+      21: "Select your pre-wedding style", 22: "Select your preferred shooting style"
+    };
+    return descriptions[currentStep] || "Select options to continue";
   };
+
+  const isLastStep = () => {
+    if (currentStep === 22) return true;
+    if (currentStep === 10 && step10Selected.includes("sangeet-no")) return false;
+    if (currentStep === 12 && step12Selected.includes("mehandi-no")) return false;
+    if (currentStep === 14 && step14Selected.includes("cocktail-no")) return false;
+    if (currentStep === 16 && step16Selected.includes("albums-no")) return false;
+    if (currentStep === 20 && step20Selected.includes("prewedding-no")) return true;
+    return false;
+  };
+
+  const getButtonText = () => {
+    if (currentStep === 22) return "Get Quote";
+    if (currentStep === 20 && step20Selected.includes("prewedding-no")) return "Get Quote";
+    if (currentStep === 10 && step10Selected.includes("sangeet-no")) return "Next Step";
+    if (currentStep === 12 && step12Selected.includes("mehandi-no")) return "Next Step";
+    if (currentStep === 14 && step14Selected.includes("cocktail-no")) return "Next Step";
+    if (currentStep === 16 && step16Selected.includes("albums-no")) return "Next Step";
+    return "Next Step";
+  };
+
+  // Congratulations page
+  if (showCongrats) {
+    const selections = getSelections();
+    return (
+      <div className="build-quote-page" style={{ minHeight: "100vh", background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px" }}>
+        <div style={{ maxWidth: 700, width: "100%", textAlign: "center" }}>
+          <div style={{ fontSize: 80, marginBottom: 20 }}>🎉</div>
+          <h1 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: "clamp(28px, 5vw, 48px)", fontWeight: 700, color: "#c9a55c", marginBottom: 16 }}>
+            Congratulations!
+          </h1>
+          <p style={{ fontSize: 18, color: "rgba(255,255,255,0.8)", marginBottom: 40 }}>
+            Your wedding quotation has been generated
+          </p>
+          
+          <div style={{ background: "rgba(201,165,92,0.1)", border: "1px solid rgba(201,165,92,0.3)", borderRadius: 16, padding: 30, marginBottom: 30, textAlign: "left" }}>
+            <h2 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 24, fontWeight: 700, color: "#c9a55c", marginBottom: 20, textAlign: "center" }}>
+              Your Selected Services
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {selections.map((item, index) => (
+                <div key={index} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 16px", background: "rgba(255,255,255,0.05)", borderRadius: 8 }}>
+                  <span style={{ color: "#c9a55c", fontSize: 16 }}>✓</span>
+                  <span style={{ color: "#fff", fontSize: 14 }}>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ background: "linear-gradient(135deg, #c9a55c 0%, #d4b86a 100%)", borderRadius: 16, padding: 30, marginBottom: 30 }}>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", marginBottom: 8 }}>Final Estimated Price</p>
+            <p style={{ fontSize: 36, fontWeight: 700, color: "#fff" }}>Contact for Quote</p>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", marginTop: 8 }}>hello@coupleaura.com</p>
+          </div>
+
+          <button
+            onClick={() => { setShowCongrats(false); setCurrentStep(1); }}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 32px",
+              background: "transparent", color: "#c9a55c", fontSize: 15, fontWeight: 600,
+              borderRadius: 50, border: "2px solid #c9a55c", cursor: "pointer", transition: "all 0.3s ease",
+            }}
+          >
+            Start New Quote
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="build-quote-page">
@@ -329,32 +621,29 @@ export default function BuildQuotePage() {
             <div style={{
               display: "flex",
               justifyContent: "center",
-              gap: 8,
+              gap: 6,
               marginBottom: 40,
               flexWrap: "wrap",
             }}>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(step => (
+              {Array.from({ length: 22 }, (_, i) => i + 1).map(step => (
                 <div key={step} style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 4,
+                  gap: 3,
                   color: currentStep >= step ? "#c9a55c" : "rgba(255,255,255,0.3)",
                 }}>
                   <div style={{
-                    width: 24,
-                    height: 24,
+                    width: 22,
+                    height: 22,
                     borderRadius: "50%",
                     background: currentStep >= step ? "#c9a55c" : "rgba(255,255,255,0.1)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: 10,
+                    fontSize: 9,
                     fontWeight: 700,
                     color: "#fff",
                   }}>{step}</div>
-                  <span style={{ fontSize: 9, fontWeight: 600 }}>
-                    {step === 1 ? "Photo" : step === 2 ? "Engage" : step === 3 ? "Pelli" : step === 4 ? "G.Haldi" : step === 5 ? "Pelli" : step === 6 ? "B.Haldi" : step === 7 ? "Recep" : step === 8 ? "BigDay" : step === 9 ? "Vratham" : step === 10 ? "Sangeet?" : "Sangeet"}
-                  </span>
                 </div>
               ))}
             </div>
@@ -471,7 +760,7 @@ export default function BuildQuotePage() {
                 onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(201,165,92,0.4)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(201,165,92,0.3)"; }}
               >
-                {currentStep === 11 ? "Get Quote" : currentStep === 10 && step10Selected.includes("sangeet-no") ? "Get Quote" : "Next Step"}
+                {getButtonText()}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
