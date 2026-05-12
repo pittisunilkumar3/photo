@@ -76,23 +76,23 @@ export default function Footer() {
             </Link>
             <p className="mt-6 text-gray-400 text-sm leading-relaxed">
               Capturing life&apos;s most precious moments with artistry and
-              passion. Based in New York, available worldwide.
+              passion. Available worldwide.
             </p>
             <div className="mt-6 space-y-3">
               <a
-                href="mailto:hello@coupleaura.com"
+                href="mailto:coupleaura1photography@gmail.com"
                 className="flex items-center gap-2 text-sm text-gray-400 hover:text-accent transition-colors"
               >
-                <Mail className="w-4 h-4" /> hello@coupleaura.com
+                <Mail className="w-4 h-4" /> coupleaura1photography@gmail.com
               </a>
               <a
-                href="tel:+15551234567"
+                href="tel:+917893279292"
                 className="flex items-center gap-2 text-sm text-gray-400 hover:text-accent transition-colors"
               >
-                <Phone className="w-4 h-4" /> +1 (555) 123-4567
+                <Phone className="w-4 h-4" /> 7893279292
               </a>
               <div className="flex items-center gap-2 text-sm text-gray-400">
-                <MapPin className="w-4 h-4" /> New York City, NY
+                <MapPin className="w-4 h-4" /> India
               </div>
             </div>
           </div>

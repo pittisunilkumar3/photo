@@ -102,7 +102,7 @@ export default function About() {
               <span className="text-gradient">the Lens</span>
             </h2>
             <p className="mt-6 text-gray-600 leading-relaxed text-lg">
-              I&apos;m Alex Morgan, a passionate photographer based in New York
+              I&apos;m Alex Morgan, a passionate photographer based in India
               City. For over 12 years, I&apos;ve been dedicated to the art of
               visual storytelling, capturing the essence of every moment with
               authenticity and creativity.

@@ -249,7 +249,7 @@ export default function Home() {
           <div className="about-content">
             <KineticOnce text="About Me" tag="div" className="section-label" />
             <h3><KineticOnce text="The Artist Behind the Lens" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h3>
-            <p>I&apos;m Alex Morgan, a passionate photographer based in New York City. For over 12 years, I&apos;ve been dedicated to the art of visual storytelling.</p>
+            <p>I&apos;m Alex Morgan, a passionate photographer based in India. For over 12 years, I&apos;ve been dedicated to the art of visual storytelling.</p>
             <p>My philosophy is simple: every person, every place, every moment has a unique beauty. My job is to find it, frame it, and preserve it forever.</p>
             <div className="skills">
               {[["Portrait Photography", 98], ["Landscape Photography", 95], ["Wedding Photography", 97], ["Photo Editing", 92]].map(([name, val]) => (
@@ -358,9 +358,9 @@ export default function Home() {
             <h3 className="section-title" style={{ fontSize: 26, marginBottom: 20, textAlign: "left" }}><KineticOnce text="Get in Touch" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} /></h3>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: "var(--secondary)", marginBottom: 28 }}>Whether you have a specific project in mind or just want to explore possibilities, I&apos;m here to help.</p>
             {[
-              { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>, label: "Email", value: "hello@coupleaura.com" },
-              { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>, label: "Phone", value: "+1 (555) 123-4567" },
-              { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>, label: "Studio", value: "123 Photography Lane, NYC" },
+              { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>, label: "Email", value: "coupleaura1photography@gmail.com" },
+              { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>, label: "Phone", value: "7893279292" },
+              { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>, label: "Studio", value: "India" },
               { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>, label: "Hours", value: "Mon - Sat, 9AM - 7PM" },
             ].map(item => (
               <div key={item.label} className="contact-info-card">
@@ -398,7 +398,7 @@ export default function Home() {
               />
               <span style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, fontWeight: 700, color: "#c9a55c" }}>COUPLE AURA</span>
             </div>
-            <p>Capturing life&apos;s most precious moments with artistry and passion. Based in New York, available worldwide.</p>
+            <p>Capturing life&apos;s most precious moments with artistry and passion. Available worldwide.</p>
             <FooterSpinningLogos />
           </div>
           <div>

@@ -18,19 +18,19 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "hello@coupleaura.com",
-    href: "mailto:hello@coupleaura.com",
+    value: "coupleaura1photography@gmail.com",
+    href: "mailto:coupleaura1photography@gmail.com",
   },
   {
     icon: Phone,
     label: "Phone",
-    value: "+1 (555) 123-4567",
-    href: "tel:+15551234567",
+    value: "7893279292",
+    href: "tel:+917893279292",
   },
   {
     icon: MapPin,
     label: "Studio",
-    value: "123 Photography Lane, NYC",
+    value: "India",
     href: "#",
   },
   {

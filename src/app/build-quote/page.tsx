@@ -496,7 +496,7 @@ export default function BuildQuotePage() {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                    placeholder="+91 98765 43210"
+                    placeholder="7893279292"
                     style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,165,92,0.3)", borderRadius: 10, color: "#fff", fontSize: 15, outline: "none", transition: "border-color 0.3s" }}
                     onFocus={(e) => e.target.style.borderColor = "#c9a55c"}
                     onBlur={(e) => e.target.style.borderColor = "rgba(201,165,92,0.3)"}
@@ -678,8 +678,8 @@ export default function BuildQuotePage() {
           </div>
           <div className="quote-footer-contact">
             <h4>Contact Us</h4>
-            <a href="mailto:hello@coupleaura.com">hello@coupleaura.com</a>
-            <a href="tel:+919876543210">+91 98765 43210</a>
+            <a href="mailto:coupleaura1photography@gmail.com">coupleaura1photography@gmail.com</a>
+            <a href="tel:+917893279292">7893279292</a>
           </div>
         </div>
         <div className="quote-footer-bottom">
