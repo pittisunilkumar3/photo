@@ -408,7 +408,7 @@ export default function Home() {
               <img
                 src="/images/logo1.jpeg"
                 alt="COUPLE AURA Logo"
-                style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover" }}
+                style={{ height: 44, width: "auto", objectFit: "contain" }}
               />
               <span style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, fontWeight: 700, color: "#c9a55c" }}>COUPLE AURA</span>
             </div>

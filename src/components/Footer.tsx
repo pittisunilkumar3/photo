@@ -63,7 +63,7 @@ export default function Footer() {
               <img
                 src="/images/logo1.jpeg"
                 alt="COUPLE AURA Logo"
-                className="w-10 h-10 object-contain rounded-full"
+                style={{ height: 40, width: "auto", objectFit: "contain" }}
               />
               <div className="flex flex-col">
                 <span className="text-xl font-display font-bold text-white">

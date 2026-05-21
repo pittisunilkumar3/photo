@@ -586,7 +586,7 @@ export default function BuildQuotePage() {
         <div className="quote-hero-overlay" />
         <div className="quote-hero-content">
           <div className="quote-hero-badge">
-            <img src="/images/logo1.jpeg" alt="COUPLE AURA" className="quote-hero-logo" />
+            <img src="/images/logo1.jpeg" alt="COUPLE AURA" style={{ height: 40, width: "auto", objectFit: "contain" }} />
             <span>COUPLE AURA</span>
           </div>
           <h1 className="quote-hero-title">
@@ -663,7 +663,7 @@ export default function BuildQuotePage() {
       <footer className="quote-footer">
         <div className="quote-footer-grid">
           <div className="quote-footer-brand">
-            <img src="/images/logo1.jpeg" alt="COUPLE AURA" className="quote-footer-logo" />
+            <img src="/images/logo1.jpeg" alt="COUPLE AURA" style={{ height: 50, width: "auto", objectFit: "contain" }} />
             <span className="quote-footer-brand-name">COUPLE AURA</span>
             <p>Capturing love stories with artistry and passion.</p>
           </div>

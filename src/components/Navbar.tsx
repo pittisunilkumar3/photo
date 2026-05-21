@@ -129,11 +129,9 @@ export default function Navbar() {
               src="/images/logo1.jpeg"
               alt="COUPLE AURA"
               style={{
-                width: 32,
-                height: 32,
-                borderRadius: "50%",
-                objectFit: "cover",
-                border: "2px solid rgba(201,165,92,0.6)",
+                height: 42,
+                width: "auto",
+                objectFit: "contain",
               }}
             />
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -275,7 +273,7 @@ export default function Navbar() {
                 marginBottom: 32,
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <img src="/images/logo1.jpeg" alt="COUPLE AURA" style={{ width: 28, height: 28, borderRadius: "50%", objectFit: "cover" }} />
+                  <img src="/images/logo1.jpeg" alt="COUPLE AURA" style={{ height: 36, width: "auto", objectFit: "contain" }} />
                   <span style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 14, fontWeight: 700, color: "#c9a55c" }}>COUPLE AURA</span>
                 </div>
                 <button
