@@ -7,20 +7,23 @@ const columns: { src: string; alt: string; aspect: string }[][] = [
   // Column 1
   [
     { src: "/images/hero-bg1.jpg", alt: "Couple Aura Portrait", aspect: "3 / 4" },
-    { src: "/images/hero-bg3.jpg", alt: "Timeless Beauty", aspect: "16 / 10" },
+    { src: "/images/candid-wedding.jpg", alt: "Candid Wedding", aspect: "16 / 10" },
     { src: "/images/hero-bg5.jpg", alt: "Captured Moment", aspect: "4 / 5" },
+    { src: "/images/bride-haldi-candid-photo.jpg", alt: "Bride Haldi", aspect: "3 / 4" },
   ],
   // Column 2
   [
     { src: "/images/hero-bg2.jpg", alt: "Eternal Love", aspect: "16 / 10" },
     { src: "/images/hero-bg4.jpg", alt: "Natural Beauty", aspect: "3 / 4" },
-    { src: "/images/hero-bg1.jpg", alt: "Golden Hour", aspect: "4 / 5" },
+    { src: "/images/traditional-wedding.jpg", alt: "Traditional Wedding", aspect: "4 / 5" },
+    { src: "/images/drone-wedding.jpg", alt: "Drone Shot", aspect: "16 / 10" },
   ],
   // Column 3
   [
-    { src: "/images/hero-bg5.jpg", alt: "Soft Light", aspect: "2 / 3" },
-    { src: "/images/hero-bg3.jpg", alt: "Romantic Frame", aspect: "16 / 10" },
-    { src: "/images/hero-bg2.jpg", alt: "Studio Vision", aspect: "3 / 4" },
+    { src: "/images/hero-bg3.jpg", alt: "Timeless Beauty", aspect: "2 / 3" },
+    { src: "/images/reception-candid-photo.jpg", alt: "Reception", aspect: "16 / 10" },
+    { src: "/images/prewedding-both.jpg", alt: "Pre-Wedding", aspect: "3 / 4" },
+    { src: "/images/sangeet-candid-photo.jpg", alt: "Sangeet Night", aspect: "4 / 5" },
   ],
 ];
 

@@ -6,21 +6,16 @@ const cn = (...classes: (string | undefined | null | false)[]) =>
   classes.filter(Boolean).join(" ");
 
 const cardData = [
-  { image: "/images/portrait1.jpg", title: "Golden Hour", description: "Capturing the perfect moment when day meets night" },
-  { image: "/images/landscape2.jpg", title: "Paradise Found", description: "Escape to pristine landscapes and crystal waters" },
-  { image: "/images/wedding1.jpg", title: "Vintage Memories", description: "Preserving moments with timeless elegance" },
-  { image: "/images/portrait2.jpg", title: "Natural Beauty", description: "Finding art in nature's simplest forms" },
-  { image: "/images/arch1.jpg", title: "Creative Expression", description: "Where imagination meets artistic vision" },
-  { image: "/images/landscape1.jpg", title: "Mountain Majesty", description: "Standing tall among nature's giants" },
-  { image: "/images/street1.jpg", title: "Urban Lines", description: "Geometry and light in modern spaces" },
-  { image: "/images/wedding2.jpg", title: "Warm Moments", description: "Finding comfort in life's simple pleasures" },
-  { image: "/images/street2.jpg", title: "Cosmic Wonder", description: "Exploring the infinite beauty above us" },
-  { image: "/images/hero1.jpg", title: "Nature's Path", description: "Following trails through seasonal beauty" },
-  { image: "/images/landscape1.jpg", title: "Pure Design", description: "Elegance through thoughtful simplicity" },
-  { image: "/images/arch1.jpg", title: "Ocean Power", description: "Witnessing nature's raw energy and grace" },
-  { image: "/images/portrait1.jpg", title: "Knowledge Keeper", description: "Stories waiting to be discovered" },
-  { image: "/images/street2.jpg", title: "Night Lights", description: "When the city comes alive with energy" },
-  { image: "/images/landscape2.jpg", title: "Desert Dreams", description: "Finding beauty in vast, open spaces" },
+  { image: "/images/hero-bg1.jpg", title: "Couple Aura", description: "Capturing the essence of love and togetherness" },
+  { image: "/images/hero-bg2.jpg", title: "Eternal Bond", description: "Moments that last a lifetime" },
+  { image: "/images/hero-bg3.jpg", title: "Timeless Beauty", description: "Art in every frame" },
+  { image: "/images/hero-bg4.jpg", title: "Natural Grace", description: "Elegance captured naturally" },
+  { image: "/images/hero-bg5.jpg", title: "Golden Moment", description: "When light meets love" },
+  { image: "/images/candid-wedding.jpg", title: "Candid Wedding", description: "Unscripted moments of pure joy" },
+  { image: "/images/traditional-wedding.jpg", title: "Traditional Ceremony", description: "Timeless rituals beautifully documented" },
+  { image: "/images/drone-wedding.jpg", title: "Aerial View", description: "A breathtaking perspective from above" },
+  { image: "/images/prewedding-both.jpg", title: "Pre-Wedding", description: "The anticipation of forever" },
+  { image: "/images/bride-haldi-candid-photo.jpg", title: "Bride Haldi", description: "Colors of celebration and blessing" },
 ];
 
 function FlipCard({ image, title, description, className, style, onClick }: {

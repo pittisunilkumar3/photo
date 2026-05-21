@@ -183,7 +183,7 @@ export default function Home() {
 
       {/* ==================== PHOTO DIVIDER ==================== */}
       <div className="photo-divider">
-        <img src="/images/divider.jpg" alt="" loading="lazy" />
+        <img src="/images/hero-bg3.jpg" alt="" loading="lazy" />
         <div className="photo-divider-overlay">
           <div className="photo-divider-quote">
             &ldquo;<KineticOnce text="Photography is the story I fail to put into words" tag="span" style={{ fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", color: "inherit" }} />&rdquo;
@@ -218,6 +218,11 @@ export default function Home() {
                 { common: "Timeless Beauty", binomial: "Portrait Photography", photo: { url: "/images/hero-bg3.jpg", text: "Art of photography", by: "Couple Aura" } },
                 { common: "Natural Grace", binomial: "Couple Photography", photo: { url: "/images/hero-bg4.jpg", text: "Natural elegance", by: "Couple Aura" } },
                 { common: "Golden Moment", binomial: "Portrait Photography", photo: { url: "/images/hero-bg5.jpg", text: "Golden hour magic", by: "Couple Aura" } },
+                { common: "Candid Wedding", binomial: "Wedding Photography", photo: { url: "/images/candid-wedding.jpg", text: "Candid moments", by: "Couple Aura" } },
+                { common: "Traditional Wedding", binomial: "Wedding Photography", photo: { url: "/images/traditional-wedding.jpg", text: "Traditional ceremony", by: "Couple Aura" } },
+                { common: "Drone View", binomial: "Aerial Photography", photo: { url: "/images/drone-wedding.jpg", text: "Aerial perspective", by: "Couple Aura" } },
+                { common: "Pre-Wedding", binomial: "Couple Photography", photo: { url: "/images/prewedding-both.jpg", text: "Pre-wedding shoot", by: "Couple Aura" } },
+                { common: "Bride Haldi", binomial: "Event Photography", photo: { url: "/images/bride-haldi-candid-photo.jpg", text: "Haldi ceremony", by: "Couple Aura" } },
               ]}
               radius={500}
               autoRotateSpeed={0.015}
@@ -230,7 +235,7 @@ export default function Home() {
       <section id="about" className="section section-alt">
         <div className="about-grid">
           <div className="about-img-wrap">
-            <img src="/images/hero1.jpg" alt="Photographer" className="about-img" loading="lazy" />
+            <img src="/images/hero-bg1.jpg" alt="Photographer" className="about-img" loading="lazy" />
             <div className="about-img-card">
               <div className="about-img-card-num">12+</div>
               <div className="about-img-card-txt">Years of Experience</div>
@@ -262,11 +267,11 @@ export default function Home() {
         </div>
         <InteractivePhotoStack
           items={[
-            { src: "/images/team1.jpg", name: "Alexandre" },
-            { src: "/images/team2.jpg", name: "Isabella" },
-            { src: "/images/team3.jpg", name: "Sophia" },
-            { src: "/images/team4.jpg", name: "Mia" },
-            { src: "/images/portrait1.jpg", name: "Charlotte" },
+            { src: "/images/hero-bg1.jpg", name: "Couple Aura" },
+            { src: "/images/hero-bg2.jpg", name: "Eternal Bond" },
+            { src: "/images/hero-bg3.jpg", name: "Timeless" },
+            { src: "/images/hero-bg4.jpg", name: "Natural Grace" },
+            { src: "/images/hero-bg5.jpg", name: "Golden" },
           ]}
           title={<>Our Creative Team</>}
         />
@@ -310,23 +315,21 @@ export default function Home() {
       <section id="testimonials" className="section section-alt">
         <AnimatedTestimonialGrid
           testimonials={[
-            { imgSrc: "/images/avatar1.jpg", alt: "Sarah & James" },
-            { imgSrc: "/images/avatar2.jpg", alt: "Michael Chen" },
-            { imgSrc: "/images/avatar3.jpg", alt: "Emma Rodriguez" },
-            { imgSrc: "/images/portrait1.jpg", alt: "Portrait" },
-            { imgSrc: "/images/portrait2.jpg", alt: "Portrait" },
-            { imgSrc: "/images/team1.jpg", alt: "Alexandre" },
-            { imgSrc: "/images/team2.jpg", alt: "Isabella" },
-            { imgSrc: "/images/team3.jpg", alt: "Sophia" },
-            { imgSrc: "/images/team4.jpg", alt: "Mia" },
-            { imgSrc: "/images/wedding1.jpg", alt: "Wedding" },
-            { imgSrc: "/images/wedding2.jpg", alt: "Wedding" },
-            { imgSrc: "/images/hero1.jpg", alt: "Studio" },
-            { imgSrc: "/images/landscape1.jpg", alt: "Landscape" },
-            { imgSrc: "/images/landscape2.jpg", alt: "Landscape" },
-            { imgSrc: "/images/street1.jpg", alt: "Street" },
-            { imgSrc: "/images/street2.jpg", alt: "Street" },
-            { imgSrc: "/images/arch1.jpg", alt: "Architecture" },
+            { imgSrc: "/images/hero-bg1.jpg", alt: "Couple Aura" },
+            { imgSrc: "/images/hero-bg2.jpg", alt: "Eternal Bond" },
+            { imgSrc: "/images/hero-bg3.jpg", alt: "Timeless Beauty" },
+            { imgSrc: "/images/hero-bg4.jpg", alt: "Natural Grace" },
+            { imgSrc: "/images/hero-bg5.jpg", alt: "Golden Moment" },
+            { imgSrc: "/images/candid-wedding.jpg", alt: "Candid Wedding" },
+            { imgSrc: "/images/traditional-wedding.jpg", alt: "Traditional Ceremony" },
+            { imgSrc: "/images/drone-wedding.jpg", alt: "Aerial View" },
+            { imgSrc: "/images/prewedding-both.jpg", alt: "Pre-Wedding" },
+            { imgSrc: "/images/bride-haldi-candid-photo.jpg", alt: "Bride Haldi" },
+            { imgSrc: "/images/reception-candid-photo.jpg", alt: "Reception" },
+            { imgSrc: "/images/sangeet-candid-photo.jpg", alt: "Sangeet Night" },
+            { imgSrc: "/images/avatar1.jpg", alt: "Client" },
+            { imgSrc: "/images/avatar2.jpg", alt: "Client" },
+            { imgSrc: "/images/avatar3.jpg", alt: "Client" },
           ]}
           badgeText="Testimonials"
           title={<>What Our Clients Say About <span style={{ color: "#c9a55c" }}>COUPLE AURA</span></>}

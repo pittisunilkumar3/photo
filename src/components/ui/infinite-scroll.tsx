@@ -3,14 +3,16 @@
 import React from "react";
 
 const images = [
-  "https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1472396961693-142e6e269027?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1505142468610-359e7d316be0?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?q=80&w=800&auto=format&fit=crop",
-  "https://plus.unsplash.com/premium_photo-1673264933212-d78737f38e48?q=80&w=800&auto=format&fit=crop",
-  "https://plus.unsplash.com/premium_photo-1711434824963-ca894373272e?q=80&w=800&auto=format&fit=crop",
-  "https://plus.unsplash.com/premium_photo-1675705721263-0bbeec261c49?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1524799526615-766a9833dec0?q=80&w=800&auto=format&fit=crop",
+  "/images/hero-bg1.jpg",
+  "/images/candid-wedding.jpg",
+  "/images/hero-bg2.jpg",
+  "/images/traditional-wedding.jpg",
+  "/images/hero-bg3.jpg",
+  "/images/drone-wedding.jpg",
+  "/images/hero-bg4.jpg",
+  "/images/prewedding-both.jpg",
+  "/images/hero-bg5.jpg",
+  "/images/bride-haldi-candid-photo.jpg",
 ];
 
 const duplicated = [...images, ...images];

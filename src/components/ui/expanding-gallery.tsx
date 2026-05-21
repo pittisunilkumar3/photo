@@ -2,12 +2,12 @@
 
 export function ExpandingGallery() {
   const images = [
-    "/images/portrait1.jpg",
-    "/images/landscape2.jpg",
-    "/images/wedding1.jpg",
-    "/images/street1.jpg",
-    "/images/arch1.jpg",
-    "/images/landscape1.jpg",
+    "/images/hero-bg1.jpg",
+    "/images/hero-bg2.jpg",
+    "/images/hero-bg3.jpg",
+    "/images/hero-bg4.jpg",
+    "/images/hero-bg5.jpg",
+    "/images/candid-wedding.jpg",
   ];
 
   return (
