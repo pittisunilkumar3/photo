@@ -9,9 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 const navLinks = [
   { href: "/", label: "Home", isPage: true },
   { href: "/build-quote", label: "Build Quote", isPage: true },
-  { href: "/3d-gallery", label: "3D Gallery", isPage: true },
   { href: "/our-clicks", label: "Our Clicks", isPage: true },
-  { href: "#about", label: "About", isPage: false },
   { href: "#services", label: "Services", isPage: false },
   { href: "#contact", label: "Contact", isPage: false },
 ];
@@ -32,7 +30,7 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      const sections = ["home", "about", "services", "contact"];
+      const sections = ["home", "services", "contact"];
       for (const section of sections.reverse()) {
         const el = document.getElementById(section);
         if (el) {
