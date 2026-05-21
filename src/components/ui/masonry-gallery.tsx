@@ -3,7 +3,8 @@
 import React from "react";
 import { useInView } from "framer-motion";
 
-// Set B: 15 unique Indian wedding ceremony photos
+// 15 photos from /Users/sunil/Documents/photoshopwebsitephotots
+// Each mapped 1-to-1 from the user's actual photos
 const columns: { src: string; alt: string; aspect: string }[][] = [
   // Column 1
   [
@@ -25,8 +26,8 @@ const columns: { src: string; alt: string; aspect: string }[][] = [
   [
     { src: "/images/reception-candid-photo.jpg", alt: "Reception", aspect: "800 / 1200" },
     { src: "/images/drone-wedding.jpg", alt: "Drone Shot", aspect: "1200 / 800" },
-    { src: "/images/cocktail-candid-photo.jpg", alt: "Cocktail Night", aspect: "800 / 1200" },
-    { src: "/images/prewedding-photo.jpg", alt: "Pre-Wedding Portrait", aspect: "800 / 1213" },
+    { src: "/images/cocktail-candid-photo.jpg", alt: "Cocktail Night", aspect: "1200 / 800" },
+    { src: "/images/prewedding-photo.jpg", alt: "Pre-Wedding Portrait", aspect: "1200 / 800" },
     { src: "/images/reception-traditional-photo.jpg", alt: "Reception Traditional", aspect: "1200 / 800" },
   ],
 ];
