@@ -6,16 +6,26 @@ const cn = (...classes: (string | undefined | null | false)[]) =>
   classes.filter(Boolean).join(" ");
 
 const cardData = [
-  { image: "/images/hero-bg1.jpg", title: "Couple Aura", description: "Capturing the essence of love and togetherness" },
-  { image: "/images/hero-bg2.jpg", title: "Eternal Bond", description: "Moments that last a lifetime" },
-  { image: "/images/hero-bg3.jpg", title: "Timeless Beauty", description: "Art in every frame" },
-  { image: "/images/hero-bg4.jpg", title: "Natural Grace", description: "Elegance captured naturally" },
-  { image: "/images/hero-bg5.jpg", title: "Golden Moment", description: "When light meets love" },
-  { image: "/images/candid-wedding.jpg", title: "Candid Wedding", description: "Unscripted moments of pure joy" },
-  { image: "/images/traditional-wedding.jpg", title: "Traditional Ceremony", description: "Timeless rituals beautifully documented" },
-  { image: "/images/drone-wedding.jpg", title: "Aerial View", description: "A breathtaking perspective from above" },
-  { image: "/images/prewedding-both.jpg", title: "Pre-Wedding", description: "The anticipation of forever" },
-  { image: "/images/bride-haldi-candid-photo.jpg", title: "Bride Haldi", description: "Colors of celebration and blessing" },
+  { image: "/images/landscape1.jpg", title: "Landscape", description: "Nature's breathtaking canvas" },
+  { image: "/images/landscape2.jpg", title: "Scenic View", description: "Beauty in every direction" },
+  { image: "/images/street1.jpg", title: "Urban Life", description: "Stories woven through city streets" },
+  { image: "/images/street2.jpg", title: "City Nights", description: "When the city comes alive" },
+  { image: "/images/arch1.jpg", title: "Architecture", description: "Geometry and grandeur" },
+  { image: "/images/hero1.jpg", title: "Studio", description: "Creative studio portraits" },
+  { image: "/images/team1.jpg", title: "Creative Team", description: "Passionate artists behind the lens" },
+  { image: "/images/team2.jpg", title: "Team Spirit", description: "Working together for perfection" },
+  { image: "/images/team3.jpg", title: "Our Crew", description: "Dedicated professionals" },
+  { image: "/images/team4.jpg", title: "Behind the Scenes", description: "Making magic happen" },
+  { image: "/images/bride-haldi-candid-photo.jpg", title: "Bride Haldi", description: "Joyful haldi celebration" },
+  { image: "/images/groom-haldi-candid-photo.jpg", title: "Groom Haldi", description: "Vibrant haldi ceremony" },
+  { image: "/images/pellikuthuru-candid-photo.jpg", title: "Pellikuthuru", description: "Sacred bridal rituals" },
+  { image: "/images/pellikoduku-candid-photo.jpg", title: "Pellikoduku", description: "Groom's traditional ceremony" },
+  { image: "/images/sangeet-candid-photo.jpg", title: "Sangeet Night", description: "Music, dance & celebration" },
+  { image: "/images/mehandi-candid-photo.jpg", title: "Mehandi", description: "Intricate mehandi artistry" },
+  { image: "/images/reception-candid-photo.jpg", title: "Reception", description: "Grand reception evening" },
+  { image: "/images/cocktail-candid-photo.jpg", title: "Cocktail Party", description: "Fun-filled cocktail night" },
+  { image: "/images/wedding1.jpg", title: "Wedding Day", description: "The big day celebrations" },
+  { image: "/images/wedding2.jpg", title: "First Dance", description: "A magical first dance" },
 ];
 
 function FlipCard({ image, title, description, className, style, onClick }: {
@@ -253,7 +263,7 @@ export function CircularFlipGallery() {
           style={{
             position: "relative",
             width: "100%",
-            maxWidth: 650,
+            maxWidth: 850,
             aspectRatio: "1",
             display: "flex",
             alignItems: "center",

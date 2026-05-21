@@ -14,11 +14,11 @@ interface ImageData { src: string; alt: string; id: string; }
 interface ScatterPosition { x: number; y: number; rotation: number; scale: number; }
 
 const DEFAULT_IMAGES: ImageData[] = [
-  { id: "1", src: "/images/landscape1.jpg", alt: "Alpine Dawn" },
-  { id: "2", src: "/images/landscape2.jpg", alt: "Mountain Serenity" },
-  { id: "3", src: "/images/portrait1.jpg", alt: "Golden Portrait" },
-  { id: "4", src: "/images/street1.jpg", alt: "Urban Nights" },
-  { id: "5", src: "/images/wedding1.jpg", alt: "Eternal Love" },
+  { id: "1", src: "/images/bigday-candid-video.jpg", alt: "Big Day" },
+  { id: "2", src: "/images/bride-haldi-candid-video.jpg", alt: "Bride Haldi" },
+  { id: "3", src: "/images/cocktail-candid-video.jpg", alt: "Cocktail" },
+  { id: "4", src: "/images/groom-haldi-candid-video.jpg", alt: "Groom Haldi" },
+  { id: "5", src: "/images/mehandi-traditional-video.jpg", alt: "Mehandi" },
 ];
 
 const containerVariants = {

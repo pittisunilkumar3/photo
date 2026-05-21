@@ -140,7 +140,6 @@ function GalleryLayer({ id, circleEl, url, title, open, inPlace, onInPlace, tota
   const GAP = 30;
   const TAB_Y = H - 60;
   const DUR = 0.5;
-  // Big enough to cover viewport even when offset
   const BIG = 3000;
 
   const small = () => ({
@@ -179,7 +178,6 @@ function GalleryLayer({ id, circleEl, url, title, open, inPlace, onInPlace, tota
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, circleEl]);
 
-  // KEY FIX: use rect clipPath when inPlace (full image visible)
   const clipId = inPlace ? `rc_${id}` : `cc_${id}`;
 
   return (

@@ -2,17 +2,19 @@
 
 import React from "react";
 
+// Infinite Scroll: Set C — 10 unique photos (no overlap with Hero or Masonry)
+// Infinite Scroll: Set E — video thumbnails + weddings (unique)
 const images = [
-  "/images/hero-bg1.jpg",
-  "/images/candid-wedding.jpg",
-  "/images/hero-bg2.jpg",
-  "/images/traditional-wedding.jpg",
-  "/images/hero-bg3.jpg",
-  "/images/drone-wedding.jpg",
-  "/images/hero-bg4.jpg",
-  "/images/prewedding-both.jpg",
-  "/images/hero-bg5.jpg",
-  "/images/bride-haldi-candid-photo.jpg",
+  "/images/bigday-candid-video.jpg",
+  "/images/bride-haldi-candid-video.jpg",
+  "/images/wedding1.jpg",
+  "/images/cocktail-candid-video.jpg",
+  "/images/wedding2.jpg",
+  "/images/groom-haldi-candid-video.jpg",
+  "/images/candid-moments.jpg",
+  "/images/mehandi-traditional-video.jpg",
+  "/images/sangeet-candid-video.jpg",
+  "/images/reception-candid-video.jpg",
 ];
 
 const duplicated = [...images, ...images];

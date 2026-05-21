@@ -13,16 +13,16 @@ interface MediaItem {
 }
 
 const defaultMedia: MediaItem[] = [
-  { id: 1, type: "image", title: "Couple Aura", desc: "The essence of love and togetherness", url: "/images/hero-bg1.jpg", span: "col-span-2 row-span-4" },
-  { id: 2, type: "image", title: "Eternal Bond", desc: "Moments that last a lifetime", url: "/images/hero-bg2.jpg", span: "col-span-1 row-span-3" },
-  { id: 3, type: "image", title: "Timeless Beauty", desc: "Art in every frame", url: "/images/hero-bg3.jpg", span: "col-span-1 row-span-3" },
-  { id: 4, type: "image", title: "Natural Grace", desc: "Elegance captured naturally", url: "/images/hero-bg4.jpg", span: "col-span-1 row-span-4" },
-  { id: 5, type: "image", title: "Golden Moment", desc: "When light meets love", url: "/images/hero-bg5.jpg", span: "col-span-2 row-span-3" },
-  { id: 6, type: "image", title: "Candid Wedding", desc: "Unscripted moments of pure joy", url: "/images/candid-wedding.jpg", span: "col-span-1 row-span-3" },
-  { id: 7, type: "image", title: "Traditional Ceremony", desc: "Timeless rituals beautifully documented", url: "/images/traditional-wedding.jpg", span: "col-span-1 row-span-4" },
-  { id: 8, type: "image", title: "Pre-Wedding", desc: "The anticipation of forever", url: "/images/prewedding-both.jpg", span: "col-span-1 row-span-3" },
-  { id: 9, type: "image", title: "Aerial View", desc: "A breathtaking perspective from above", url: "/images/drone-wedding.jpg", span: "col-span-2 row-span-3" },
-  { id: 10, type: "image", title: "Bride Haldi", desc: "Colors of celebration and blessing", url: "/images/bride-haldi-candid-photo.jpg", span: "col-span-1 row-span-3" },
+  { id: 1, type: "image", title: "Reception Drone", desc: "Grand celebrations from above", url: "/images/reception-drone.jpg", span: "col-span-2 row-span-4" },
+  { id: 2, type: "image", title: "Big Day Candid", desc: "Every emotion on the big day", url: "/images/bigday-candid-photo.jpg", span: "col-span-1 row-span-3" },
+  { id: 3, type: "image", title: "Sangeet Drone", desc: "Music and lights from above", url: "/images/sangeet-drone.jpg", span: "col-span-1 row-span-3" },
+  { id: 4, type: "image", title: "Pellikuthuru Candid", desc: "Sacred bridal preparation", url: "/images/pellikuthuru-candid-photo.jpg", span: "col-span-1 row-span-4" },
+  { id: 5, type: "image", title: "Big Day Traditional", desc: "Customs and traditions", url: "/images/bigday-traditional-photo.jpg", span: "col-span-2 row-span-3" },
+  { id: 6, type: "image", title: "Pellikoduku Candid", desc: "The groom's ceremony", url: "/images/pellikoduku-candid-photo.jpg", span: "col-span-1 row-span-3" },
+  { id: 7, type: "image", title: "Big Day Drone", desc: "Aerial celebration view", url: "/images/bigday-drone.jpg", span: "col-span-1 row-span-4" },
+  { id: 8, type: "image", title: "Documentary Style", desc: "Storytelling through the lens", url: "/images/documentary-style.jpg", span: "col-span-1 row-span-3" },
+  { id: 9, type: "image", title: "Candid Photo", desc: "Capturing real emotions", url: "/images/candid-photo.jpg", span: "col-span-2 row-span-3" },
+  { id: 10, type: "image", title: "Traditional Photo", desc: "Classic wedding shots", url: "/images/traditional-photo.jpg", span: "col-span-1 row-span-3" },
 ];
 
 /* Span resolver */

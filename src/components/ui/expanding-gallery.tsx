@@ -2,12 +2,16 @@
 
 export function ExpandingGallery() {
   const images = [
-    "/images/hero-bg1.jpg",
-    "/images/hero-bg2.jpg",
-    "/images/hero-bg3.jpg",
-    "/images/hero-bg4.jpg",
-    "/images/hero-bg5.jpg",
-    "/images/candid-wedding.jpg",
+    "/images/bigday-traditional-video.jpg",
+    "/images/pellikuthuru-traditional-video.jpg",
+    "/images/pellikoduku-traditional-video.jpg",
+    "/images/sangeet-traditional-video.jpg",
+    "/images/reception-traditional-video.jpg",
+    "/images/vratham-traditional-video.jpg",
+    "/images/sangeet-no.jpg",
+    "/images/sangeet-yes.jpg",
+    "/images/album-magnum.jpg",
+    "/images/album-pressbook.jpg",
   ];
 
   return (
