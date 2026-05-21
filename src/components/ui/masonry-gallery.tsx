@@ -60,9 +60,12 @@ export function MasonryGallery() {
 
 function MasonryImage({ src, alt, aspect }: { src: string; alt: string; aspect: string }) {
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, amount: "some" });
   const [loaded, setLoaded] = React.useState(false);
   const [hovered, setHovered] = React.useState(false);
+  const [error, setError] = React.useState(false);
+
+  const visible = loaded || isInView;
 
   return (
     <div
@@ -85,13 +88,14 @@ function MasonryImage({ src, alt, aspect }: { src: string; alt: string; aspect: 
         loading="lazy"
         draggable={false}
         onLoad={() => setLoaded(true)}
+        onError={() => setError(true)}
         style={{
           width: "100%",
           height: "100%",
           objectFit: "cover",
           display: "block",
-          opacity: isInView && loaded ? 1 : 0,
-          transform: isInView && loaded
+          opacity: error ? 0 : visible ? 1 : 0.3,
+          transform: visible
             ? hovered ? "scale(1.06)" : "scale(1)"
             : "scale(1.08)",
           transition: hovered
