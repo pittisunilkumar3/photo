@@ -203,7 +203,8 @@ export default function Home() {
         <InteractiveBentoGallery />
       </section>
 
-      {/* ==================== 3D CIRCULAR GALLERY ==================== */}
+      {/* ==================== 3D CIRCULAR GALLERY (HIDDEN) ==================== */}
+      {/*
       <section style={{ width: "100%", background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)" }}>
         <div style={{ position: "relative", width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
           <div style={{ textAlign: "center", position: "absolute", top: 40, zIndex: 10 }}>
@@ -229,8 +230,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
-      {/* ==================== ABOUT ==================== */}
+      {/* ==================== ABOUT (HIDDEN) ==================== */}
+      {/*
       <section id="about" className="section section-alt">
         <div className="about-grid">
           <div className="about-img-wrap">
@@ -256,8 +259,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
-      {/* ==================== INTERACTIVE PHOTO STACK ==================== */}
+      {/* ==================== INTERACTIVE PHOTO STACK / OUR TEAM (HIDDEN) ==================== */}
+      {/*
       <section className="section" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)", color: "#fff" }}>
         <div className="section-header">
           <KineticOnce text="Showcase" tag="div" className="section-label" style={{ color: "#c9a55c" }} />
@@ -275,6 +280,7 @@ export default function Home() {
           title={<>Our Creative Team</>}
         />
       </section>
+      */}
 
       {/* ==================== SERVICES ==================== */}
       <section id="services" className="section">
