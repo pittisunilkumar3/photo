@@ -37,12 +37,9 @@ const SocialIcons: Record<string, React.FC<{ size?: number }>> = {
 };
 
 const logos = [
-  { name: "Instagram", color: "#E4405F", href: "https://instagram.com/coupleaura" },
-  { name: "Facebook", color: "#1877F2", href: "https://facebook.com/coupleaura" },
-  { name: "YouTube", color: "#FF0000", href: "https://youtube.com/@coupleaura" },
-  { name: "Twitter", color: "#14171A", href: "https://x.com/coupleaura" },
-  { name: "TikTok", color: "#010101", href: "https://tiktok.com/@coupleaura" },
-  { name: "LinkedIn", color: "#0A66C2", href: "https://linkedin.com/company/coupleaura" },
+  { name: "YouTube", color: "#FF0000", href: "https://www.youtube.com/@CoupleauraPhotography" },
+  { name: "Instagram", color: "#E4405F", href: "https://www.instagram.com/coupleaura_official?igsh=aHd1bWdyZXp2c3dv&utm_source=qr" },
+  { name: "Facebook", color: "#1877F2", href: "https://www.facebook.com/share/1EP1ZZLNwz/" },
 ];
 
 export function FooterSpinningLogos() {
