@@ -10,12 +10,9 @@ declare global {
 }
 
 const images = [
-  { title: "Golden Portrait", url: "/images/portrait1.jpg" },
-  { title: "Mountain Serenity", url: "/images/landscape2.jpg" },
-  { title: "Eternal Love", url: "/images/wedding1.jpg" },
-  { title: "Urban Nights", url: "/images/street1.jpg" },
-  { title: "Natural Beauty", url: "/images/portrait2.jpg" },
-  { title: "Modern Lines", url: "/images/arch1.jpg" },
+  { title: "Capturing Timeless Beauty", url: "/images/hero-bg1.jpg" },
+  { title: "Capturing Timeless Beauty", url: "/images/hero-bg2.jpg" },
+  { title: "Capturing Timeless Beauty", url: "/images/hero-bg3.jpg" },
 ];
 
 const W = 1920;
@@ -187,11 +184,7 @@ function GalleryLayer({ id, circleEl, url, title, open, inPlace, onInPlace, tota
     <g style={{ zIndex: inPlace ? id : total + 1 }}>
       <g clipPath={`url(#${clipId})`}>
         <image width={W} height={H} href={url} preserveAspectRatio="xMidYMid slice" style={{ pointerEvents: "none" }} />
-        {/* Title background for readability */}
-        <rect x={W / 2 - 250} y={H - 180} width={500} height={70} rx={35} fill="rgba(0,0,0,0.5)" style={{ pointerEvents: "none" }} />
-        <text x={W / 2} y={H - 138} textAnchor="middle" fill="#c9a55c" fontSize="28" fontFamily="Georgia, serif" fontWeight="600" letterSpacing="3" style={{ pointerEvents: "none" }}>
-          {title}
-        </text>
+        {/* Title label hidden - hero text overlay handles this */}
       </g>
     </g>
   );
