@@ -122,27 +122,10 @@ export default function Home() {
               </a>
               <button className="btn-outline" onClick={() => setShowVideo(true)}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3" /></svg>
-                Watch Showreel
+                Our Story
               </button>
             </div>
-            <div className="hero-stats">
-              <div className="hero-stat">
-                <div className="hero-stat-number">500+</div>
-                <div className="hero-stat-label">Projects</div>
-              </div>
-              <div className="hero-stat">
-                <div className="hero-stat-number">12</div>
-                <div className="hero-stat-label">Years</div>
-              </div>
-              <div className="hero-stat">
-                <div className="hero-stat-number">98%</div>
-                <div className="hero-stat-label">Happy</div>
-              </div>
-              <div className="hero-stat">
-                <div className="hero-stat-number">15+</div>
-                <div className="hero-stat-label">Awards</div>
-              </div>
-            </div>
+
           </div>
         </div>
 
