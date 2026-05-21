@@ -31,11 +31,11 @@ const photos = [
 const categories = ["All", "Portrait", "Landscape", "Wedding", "Street", "Architecture"];
 
 const services = [
-  { icon: "💍", title: "Wedding Photography", desc: "Capturing the magic of your special day with an artistic, documentary approach.", price: "From $2,500", features: ["Full day coverage", "Second photographer", "Online gallery", "500+ edited photos"], popular: true },
-  { icon: "📸", title: "Portrait Sessions", desc: "Professional portraits that reveal your authentic self.", price: "From $450", features: ["1-2 hour session", "Multiple outfits", "Retouched images", "Print rights"] },
+  { icon: "💍", title: "Wedding Photography", desc: "Capturing the magic of your special day with an artistic, documentary approach.", price: "From ₹2,500", features: ["Full day coverage", "Second photographer", "Online gallery", "500+ edited photos"], popular: true },
+  { icon: "📸", title: "Portrait Sessions", desc: "Professional portraits that reveal your authentic self.", price: "From ₹450", features: ["1-2 hour session", "Multiple outfits", "Retouched images", "Print rights"] },
   { icon: "🏔️", title: "Landscape & Travel", desc: "Breathtaking landscape photography for prints and publications.", price: "Custom Quote", features: ["Location scouting", "Golden hour shoots", "Aerial drone shots", "Fine art prints"] },
-  { icon: "🏢", title: "Commercial & Brand", desc: "Elevate your brand with stunning visual content.", price: "From $1,200", features: ["Creative direction", "Brand consultation", "Multiple formats", "Usage licensing"] },
-  { icon: "🎉", title: "Event Photography", desc: "Professional coverage for events, galas, and parties.", price: "From $800", features: ["4-8 hour coverage", "Same-day previews", "Group photos", "Online gallery"] },
+  { icon: "🏢", title: "Commercial & Brand", desc: "Elevate your brand with stunning visual content.", price: "From ₹1,200", features: ["Creative direction", "Brand consultation", "Multiple formats", "Usage licensing"] },
+  { icon: "🎉", title: "Event Photography", desc: "Professional coverage for events, galas, and parties.", price: "From ₹800", features: ["4-8 hour coverage", "Same-day previews", "Group photos", "Online gallery"] },
   { icon: "✨", title: "Fine Art & Editorial", desc: "Conceptual photography for magazines and galleries.", price: "Custom Quote", features: ["Creative concepts", "Styling assistance", "Post-production", "Exhibition prints"] },
 ];
 

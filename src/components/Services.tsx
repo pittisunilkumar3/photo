@@ -17,7 +17,7 @@ const services = [
     title: "Wedding Photography",
     description:
       "Capturing the magic of your special day with an artistic, documentary approach. Every tear, every laugh, every kiss preserved forever.",
-    price: "From $2,500",
+    price: "From ₹2,500",
     features: ["Full day coverage", "Second photographer", "Online gallery", "500+ edited photos"],
     popular: true,
   },
@@ -26,7 +26,7 @@ const services = [
     title: "Portrait Sessions",
     description:
       "Professional portraits that reveal your authentic self. Perfect for professionals, artists, families, or anyone who wants to look their best.",
-    price: "From $450",
+    price: "From ₹450",
     features: ["1-2 hour session", "Multiple outfits", "Retouched images", "Print rights"],
     popular: false,
   },
@@ -44,7 +44,7 @@ const services = [
     title: "Commercial & Brand",
     description:
       "Elevate your brand with stunning visual content. Product photography, corporate headshots, and brand storytelling.",
-    price: "From $1,200",
+    price: "From ₹1,200",
     features: ["Creative direction", "Brand consultation", "Multiple formats", "Usage licensing"],
     popular: false,
   },
@@ -53,7 +53,7 @@ const services = [
     title: "Event Photography",
     description:
       "Professional coverage for corporate events, galas, conferences, and private parties. Candid and posed shots that capture the energy.",
-    price: "From $800",
+    price: "From ₹800",
     features: ["4-8 hour coverage", "Same-day previews", "Group photos", "Online gallery"],
     popular: false,
   },
