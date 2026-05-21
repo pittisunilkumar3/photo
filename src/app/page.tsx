@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   InteractivePhotoStack,
 } from "@/components/ui/photo-stack";
@@ -40,16 +40,15 @@ const services = [
 ];
 
 export default function Home() {
-  const [loading, setLoading] = useState(() => {
-    // Only show animation once per session
-    if (typeof window !== "undefined") {
-      const hasSeenAnimation = sessionStorage.getItem("coupleAura_animationShown");
-      if (hasSeenAnimation) return false;
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const hasSeenAnimation = sessionStorage.getItem("coupleAura_animationShown");
+    if (!hasSeenAnimation) {
       sessionStorage.setItem("coupleAura_animationShown", "true");
-      return true;
+      setLoading(true);
     }
-    return false;
-  });
+  }, []);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", service: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -108,10 +107,6 @@ export default function Home() {
         className="hero-text-overlay"
         >
           <div style={{ pointerEvents: "auto" }}>
-            <div className="hero-badge">
-              <span className="hero-badge-dot" />
-              Award-Winning Photography
-            </div>
             <h1 className="hero-title">
               Capturing<br /><span>Timeless Beauty</span>
             </h1>
