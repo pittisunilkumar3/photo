@@ -213,16 +213,11 @@ export default function Home() {
           <div style={{ width: "100%", height: "100%" }}>
             <CircularGallery
               items={[
-                { common: "Golden Portrait", binomial: "Portrait Photography", photo: { url: "/images/portrait1.jpg", text: "Golden hour portrait", by: "Alex Morgan" } },
-                { common: "Mountain Serenity", binomial: "Landscape Photography", photo: { url: "/images/landscape2.jpg", text: "Mountain landscape", pos: "50% 30%", by: "Alex Morgan" } },
-                { common: "Eternal Love", binomial: "Wedding Photography", photo: { url: "/images/wedding1.jpg", text: "Wedding couple", by: "Alex Morgan" } },
-                { common: "Urban Nights", binomial: "Street Photography", photo: { url: "/images/street1.jpg", text: "City at night", by: "Alex Morgan" } },
-                { common: "Natural Beauty", binomial: "Portrait Photography", photo: { url: "/images/portrait2.jpg", text: "Natural portrait", by: "Alex Morgan" } },
-                { common: "Modern Lines", binomial: "Architecture Photography", photo: { url: "/images/arch1.jpg", text: "Modern architecture", by: "Alex Morgan" } },
-                { common: "Alpine Dawn", binomial: "Landscape Photography", photo: { url: "/images/landscape1.jpg", text: "Alpine mountains", by: "Alex Morgan" } },
-                { common: "First Dance", binomial: "Wedding Photography", photo: { url: "/images/wedding2.jpg", text: "Wedding dance", by: "Alex Morgan" } },
-                { common: "City Lights", binomial: "Street Photography", photo: { url: "/images/street2.jpg", text: "City streets", by: "Alex Morgan" } },
-                { common: "Creative Vision", binomial: "Studio Photography", photo: { url: "/images/hero1.jpg", text: "Studio portrait", by: "Alex Morgan" } },
+                { common: "Couple Aura", binomial: "Portrait Photography", photo: { url: "/images/hero-bg1.jpg", text: "Capturing timeless beauty", by: "Couple Aura" } },
+                { common: "Eternal Bond", binomial: "Couple Photography", photo: { url: "/images/hero-bg2.jpg", text: "Moments of love", by: "Couple Aura" } },
+                { common: "Timeless Beauty", binomial: "Portrait Photography", photo: { url: "/images/hero-bg3.jpg", text: "Art of photography", by: "Couple Aura" } },
+                { common: "Natural Grace", binomial: "Couple Photography", photo: { url: "/images/hero-bg4.jpg", text: "Natural elegance", by: "Couple Aura" } },
+                { common: "Golden Moment", binomial: "Portrait Photography", photo: { url: "/images/hero-bg5.jpg", text: "Golden hour magic", by: "Couple Aura" } },
               ]}
               radius={500}
               autoRotateSpeed={0.015}

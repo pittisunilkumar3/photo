@@ -4,32 +4,23 @@ import React from "react";
 import { useInView } from "framer-motion";
 
 const columns: { src: string; alt: string; aspect: string }[][] = [
-  // Column 1 — mix of tall and wide
+  // Column 1
   [
-    { src: "/images/portrait1.jpg", alt: "Golden Hour Portrait", aspect: "3 / 4" },
-    { src: "/images/landscape2.jpg", alt: "Mountain Serenity", aspect: "16 / 10" },
-    { src: "/images/wedding2.jpg", alt: "First Dance", aspect: "4 / 5" },
-    { src: "/images/street2.jpg", alt: "City Lights", aspect: "3 / 4" },
-    { src: "/images/landscape1.jpg", alt: "Alpine Dawn", aspect: "16 / 10" },
-    { src: "/images/portrait2.jpg", alt: "Natural Beauty", aspect: "2 / 3" },
+    { src: "/images/hero-bg1.jpg", alt: "Couple Aura Portrait", aspect: "3 / 4" },
+    { src: "/images/hero-bg3.jpg", alt: "Timeless Beauty", aspect: "16 / 10" },
+    { src: "/images/hero-bg5.jpg", alt: "Captured Moment", aspect: "4 / 5" },
   ],
   // Column 2
   [
-    { src: "/images/wedding1.jpg", alt: "Eternal Love", aspect: "16 / 10" },
-    { src: "/images/portrait2.jpg", alt: "Natural Beauty", aspect: "3 / 4" },
-    { src: "/images/arch1.jpg", alt: "Modern Lines", aspect: "4 / 3" },
-    { src: "/images/hero1.jpg", alt: "Studio Vision", aspect: "2 / 3" },
-    { src: "/images/street1.jpg", alt: "Urban Nights", aspect: "16 / 10" },
-    { src: "/images/wedding2.jpg", alt: "Wedding Dance", aspect: "4 / 5" },
+    { src: "/images/hero-bg2.jpg", alt: "Eternal Love", aspect: "16 / 10" },
+    { src: "/images/hero-bg4.jpg", alt: "Natural Beauty", aspect: "3 / 4" },
+    { src: "/images/hero-bg1.jpg", alt: "Golden Hour", aspect: "4 / 5" },
   ],
   // Column 3
   [
-    { src: "/images/landscape1.jpg", alt: "Alpine Dawn", aspect: "4 / 3" },
-    { src: "/images/wedding1.jpg", alt: "Wedding Bells", aspect: "3 / 4" },
-    { src: "/images/portrait1.jpg", alt: "Soft Light", aspect: "2 / 3" },
-    { src: "/images/landscape2.jpg", alt: "Misty Mountains", aspect: "16 / 10" },
-    { src: "/images/arch1.jpg", alt: "Glass & Steel", aspect: "3 / 4" },
-    { src: "/images/street1.jpg", alt: "Night Stories", aspect: "4 / 5" },
+    { src: "/images/hero-bg5.jpg", alt: "Soft Light", aspect: "2 / 3" },
+    { src: "/images/hero-bg3.jpg", alt: "Romantic Frame", aspect: "16 / 10" },
+    { src: "/images/hero-bg2.jpg", alt: "Studio Vision", aspect: "3 / 4" },
   ],
 ];
 

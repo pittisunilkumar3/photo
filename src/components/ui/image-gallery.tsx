@@ -13,6 +13,8 @@ const images = [
   { title: "Capturing Timeless Beauty", url: "/images/hero-bg1.jpg" },
   { title: "Capturing Timeless Beauty", url: "/images/hero-bg2.jpg" },
   { title: "Capturing Timeless Beauty", url: "/images/hero-bg3.jpg" },
+  { title: "Capturing Timeless Beauty", url: "/images/hero-bg4.jpg" },
+  { title: "Capturing Timeless Beauty", url: "/images/hero-bg5.jpg" },
 ];
 
 const W = 1920;
