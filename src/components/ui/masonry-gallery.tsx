@@ -7,27 +7,27 @@ import { useInView } from "framer-motion";
 const columns: { src: string; alt: string; aspect: string }[][] = [
   // Column 1
   [
-    { src: "/images/bride-haldi-candid-photo.jpg", alt: "Bride Haldi Ceremony", aspect: "3 / 4" },
-    { src: "/images/candid-wedding.jpg", alt: "Candid Wedding", aspect: "16 / 10" },
-    { src: "/images/mehandi-candid-photo.jpg", alt: "Mehandi Ceremony", aspect: "4 / 5" },
-    { src: "/images/pellikuthuru-traditional-photo.jpg", alt: "Pellikuthuru", aspect: "3 / 4" },
-    { src: "/images/vratham-traditional-photo.jpg", alt: "Vratham", aspect: "16 / 10" },
+    { src: "/images/bride-haldi-candid-photo.jpg", alt: "Bride Haldi Ceremony", aspect: "800 / 1182" },
+    { src: "/images/candid-wedding.jpg", alt: "Candid Wedding", aspect: "1200 / 788" },
+    { src: "/images/mehandi-candid-photo.jpg", alt: "Mehandi Ceremony", aspect: "800 / 1182" },
+    { src: "/images/pellikuthuru-traditional-photo.jpg", alt: "Pellikuthuru", aspect: "800 / 1107" },
+    { src: "/images/vratham-traditional-photo.jpg", alt: "Vratham", aspect: "1200 / 800" },
   ],
   // Column 2
   [
-    { src: "/images/groom-haldi-candid-photo.jpg", alt: "Groom Haldi", aspect: "16 / 10" },
-    { src: "/images/traditional-wedding.jpg", alt: "Traditional Wedding", aspect: "3 / 4" },
-    { src: "/images/sangeet-candid-photo.jpg", alt: "Sangeet Night", aspect: "4 / 5" },
-    { src: "/images/pellikoduku-traditional-photo.jpg", alt: "Pellikoduku", aspect: "16 / 10" },
-    { src: "/images/prewedding-both.jpg", alt: "Pre-Wedding", aspect: "3 / 4" },
+    { src: "/images/groom-haldi-candid-photo.jpg", alt: "Groom Haldi", aspect: "1200 / 776" },
+    { src: "/images/traditional-wedding.jpg", alt: "Traditional Wedding", aspect: "800 / 1213" },
+    { src: "/images/sangeet-candid-photo.jpg", alt: "Sangeet Night", aspect: "800 / 1101" },
+    { src: "/images/pellikoduku-traditional-photo.jpg", alt: "Pellikoduku", aspect: "1200 / 781" },
+    { src: "/images/prewedding-both.jpg", alt: "Pre-Wedding", aspect: "800 / 1181" },
   ],
   // Column 3
   [
-    { src: "/images/reception-candid-photo.jpg", alt: "Reception", aspect: "2 / 3" },
-    { src: "/images/drone-wedding.jpg", alt: "Drone Shot", aspect: "16 / 10" },
-    { src: "/images/cocktail-candid-photo.jpg", alt: "Cocktail Night", aspect: "4 / 5" },
-    { src: "/images/prewedding-photo.jpg", alt: "Pre-Wedding Portrait", aspect: "3 / 4" },
-    { src: "/images/reception-traditional-photo.jpg", alt: "Reception Traditional", aspect: "16 / 10" },
+    { src: "/images/reception-candid-photo.jpg", alt: "Reception", aspect: "800 / 1200" },
+    { src: "/images/drone-wedding.jpg", alt: "Drone Shot", aspect: "1200 / 800" },
+    { src: "/images/cocktail-candid-photo.jpg", alt: "Cocktail Night", aspect: "800 / 1200" },
+    { src: "/images/prewedding-photo.jpg", alt: "Pre-Wedding Portrait", aspect: "800 / 1213" },
+    { src: "/images/reception-traditional-photo.jpg", alt: "Reception Traditional", aspect: "1200 / 800" },
   ],
 ];
 
