@@ -285,8 +285,8 @@ export default function BuildQuotePage() {
   const renderOptionCard = (option: any, isSelected: boolean, onClick: () => void) => {
     const price = PRICES[option.id];
     return (
-      <div key={option.id} onClick={onClick} style={{
-        width: 280, cursor: "pointer", borderRadius: 16, overflow: "hidden",
+      <div key={option.id} onClick={onClick} className="quote-option-card" style={{
+        width: "100%", maxWidth: 280, flex: "1 1 240px", cursor: "pointer", borderRadius: 16, overflow: "hidden",
         border: isSelected ? "3px solid #c9a55c" : "3px solid rgba(255,255,255,0.1)",
         background: isSelected ? "rgba(201,165,92,0.1)" : "rgba(255,255,255,0.05)",
         transition: "all 0.3s ease", transform: isSelected ? "scale(1.02)" : "scale(1)",
@@ -600,7 +600,7 @@ export default function BuildQuotePage() {
           </h1>
           <p className="quote-hero-subtitle">Select what you love and get instant pricing</p>
           {!started && (
-            <button className="quote-hero-btn" onClick={() => setStarted(true)}>
+            <button className="quote-hero-btn" onClick={() => { setStarted(true); setTimeout(() => { document.getElementById('quote-steps-section')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}>
               Start Now
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -612,14 +612,21 @@ export default function BuildQuotePage() {
 
       {/* Steps Section */}
       {started && (
-        <section style={{ padding: "80px 20px", background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%)", minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <section id="quote-steps-section" style={{ padding: "80px 20px", background: "linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%)", minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <div style={{ maxWidth: 1000, width: "100%", textAlign: "center" }}>
             {/* Step Indicator */}
             <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 40, flexWrap: "wrap" }}>
               {Array.from({ length: 22 }, (_, i) => i + 1).map(step => (
-                <div key={step} style={{ color: currentStep >= step ? "#c9a55c" : "rgba(255,255,255,0.3)" }}>
-                  <div style={{ width: 22, height: 22, borderRadius: "50%", background: currentStep >= step ? "#c9a55c" : "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, color: "#fff" }}>{step}</div>
-                </div>
+                <div key={step} style={{
+                  width: currentStep === step ? 32 : currentStep > step ? 22 : 22,
+                  height: 22,
+                  borderRadius: "50%",
+                  background: currentStep >= step ? "#c9a55c" : "rgba(255,255,255,0.1)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 9, fontWeight: 700, color: "#fff",
+                  transition: "all 0.3s ease",
+                  flexShrink: 0,
+                }}>{currentStep >= step ? step : ""}</div>
               ))}
             </div>
 
@@ -634,7 +641,7 @@ export default function BuildQuotePage() {
             <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", marginBottom: 50 }}>{getStepDescription()}</p>
 
             {/* Options Grid */}
-            <div style={{ display: "flex", gap: 24, justifyContent: "center", flexWrap: "wrap", marginBottom: 40 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 20, marginBottom: 40, width: "100%" }}>
               {getCurrentOptions().map(option => renderOptionCard(option, getSelectedForStep().includes(option.id), () => getToggleForStep()(option.id)))}
             </div>
 

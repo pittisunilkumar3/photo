@@ -1214,6 +1214,15 @@
   .quote-price-value {
     font-size: 2.5rem;
   }
+
+  .quote-option-card {
+    max-width: 100% !important;
+  }
+
+  .quote-hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
 }
 
 @media (max-width: 480px) {
