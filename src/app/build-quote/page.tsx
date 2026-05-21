@@ -130,7 +130,7 @@ export default function BuildQuotePage() {
   const [started, setStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [showCongrats, setShowCongrats] = useState(false);
-  const [showError, setShowError] = useState(false);
+  
   const [formData, setFormData] = useState({ fullName: '', weddingDate: '', venue: '', phone: '', email: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
   
@@ -159,11 +159,11 @@ export default function BuildQuotePage() {
 
   const toggleMulti = (setter: React.Dispatch<React.SetStateAction<string[]>>) => (id: string) => {
     setter(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]);
-    setShowError(false);
+    
   };
   const toggleSingle = (setter: React.Dispatch<React.SetStateAction<string[]>>) => (id: string) => {
     setter(prev => prev.includes(id) ? [] : [id]);
-    setShowError(false);
+    
   };
 
   const toggleStep1 = toggleMulti(setStep1Selected);
@@ -244,29 +244,24 @@ export default function BuildQuotePage() {
   };
 
   const handleNext = () => {
-    const stepSelections: Record<number, string[]> = {
-      1: step1Selected, 2: step2Selected, 3: step3Selected, 4: step4Selected,
-      5: step5Selected, 6: step6Selected, 7: step7Selected, 8: step8Selected,
-      9: step9Selected, 10: step10Selected, 11: step11Selected, 12: step12Selected,
-      13: step13Selected, 14: step14Selected, 15: step15Selected, 16: step16Selected,
-      17: step17Selected, 18: step18Selected, 19: step19Selected, 20: step20Selected,
-      21: step21Selected, 22: step22Selected
-    };
-    if (stepSelections[currentStep]?.length === 0) { setShowError(true); return; }
-    if (currentStep === 10) { setCurrentStep(step10Selected.includes("sangeet-yes") ? 11 : 12); setShowError(false); return; }
-    if (currentStep === 11) { setCurrentStep(12); setShowError(false); return; }
-    if (currentStep === 12) { setCurrentStep(step12Selected.includes("mehandi-yes") ? 13 : 14); setShowError(false); return; }
-    if (currentStep === 13) { setCurrentStep(14); setShowError(false); return; }
-    if (currentStep === 14) { setCurrentStep(step14Selected.includes("cocktail-yes") ? 15 : 16); setShowError(false); return; }
-    if (currentStep === 15) { setCurrentStep(16); setShowError(false); return; }
-    if (currentStep === 16) { setCurrentStep(step16Selected.includes("albums-yes") ? 17 : 19); setShowError(false); return; }
-    if (currentStep === 17) { setCurrentStep(18); setShowError(false); return; }
-    if (currentStep === 18) { setCurrentStep(19); setShowError(false); return; }
-    if (currentStep === 19) { setCurrentStep(20); setShowError(false); return; }
-    if (currentStep === 20) { if (step20Selected.includes("prewedding-yes")) setCurrentStep(21); else setShowCongrats(true); setShowError(false); return; }
-    if (currentStep === 21) { setCurrentStep(22); setShowError(false); return; }
-    if (currentStep === 22) { setShowCongrats(true); setShowError(false); return; }
-    if (currentStep < 9) { setCurrentStep(currentStep + 1); setShowError(false); }
+    
+    // Yes/No branching steps — if nothing selected, treat as "No" (skip)
+    if (currentStep === 10) { setCurrentStep(step10Selected.includes("sangeet-yes") ? 11 : 12); return; }
+    if (currentStep === 12) { setCurrentStep(step12Selected.includes("mehandi-yes") ? 13 : 14); return; }
+    if (currentStep === 14) { setCurrentStep(step14Selected.includes("cocktail-yes") ? 15 : 16); return; }
+    if (currentStep === 16) { setCurrentStep(step16Selected.includes("albums-yes") ? 17 : 19); return; }
+    if (currentStep === 20) { if (step20Selected.includes("prewedding-yes")) setCurrentStep(21); else setShowCongrats(true); return; }
+    // Sub-steps that follow Yes/No — just move forward
+    if (currentStep === 11) { setCurrentStep(12); return; }
+    if (currentStep === 13) { setCurrentStep(14); return; }
+    if (currentStep === 15) { setCurrentStep(16); return; }
+    if (currentStep === 17) { setCurrentStep(18); return; }
+    if (currentStep === 18) { setCurrentStep(19); return; }
+    if (currentStep === 19) { setCurrentStep(20); return; }
+    if (currentStep === 21) { setCurrentStep(22); return; }
+    if (currentStep === 22) { setShowCongrats(true); return; }
+    // Steps 1-9: all optional, just move forward
+    if (currentStep < 9) { setCurrentStep(currentStep + 1); }
   };
 
   const handlePrevious = () => {
@@ -279,7 +274,7 @@ export default function BuildQuotePage() {
     else if (currentStep === 21) setCurrentStep(20);
     else if (currentStep === 22) setCurrentStep(21);
     else if (currentStep > 1) setCurrentStep(currentStep - 1);
-    setShowError(false);
+    
   };
 
   const renderOptionCard = (option: any, isSelected: boolean, onClick: () => void) => {
@@ -645,12 +640,7 @@ export default function BuildQuotePage() {
               {getCurrentOptions().map(option => renderOptionCard(option, getSelectedForStep().includes(option.id), () => getToggleForStep()(option.id)))}
             </div>
 
-            {/* Error Message */}
-            {showError && (
-              <div style={{ padding: "14px 24px", background: "rgba(220, 53, 69, 0.15)", border: "1px solid rgba(220, 53, 69, 0.3)", borderRadius: 12, color: "#ff6b6b", fontSize: 15, fontWeight: 500, marginBottom: 24, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, maxWidth: 400, margin: "0 auto 24px" }}>
-                <span style={{ fontSize: 20 }}>⚠️</span> You need to select at least one item
-              </div>
-            )}
+            {/* Error Message — removed, all steps are optional */}
 
             {/* Navigation Buttons */}
             <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
