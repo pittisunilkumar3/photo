@@ -41,6 +41,7 @@ const services = [
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
     const hasSeenAnimation = sessionStorage.getItem("coupleAura_animationShown");
@@ -119,10 +120,10 @@ export default function Home() {
                 View Portfolio
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17l9.2-9.2M17 17V7H7" /></svg>
               </a>
-              <a href="#about" className="btn-outline">
+              <button className="btn-outline" onClick={() => setShowVideo(true)}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3" /></svg>
                 Watch Showreel
-              </a>
+              </button>
             </div>
             <div className="hero-stats">
               <div className="hero-stat">
@@ -299,6 +300,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ==================== VIDEO SHOWREEL SECTION ==================== */}
+      <section id="showreel" style={{
+        position: "relative",
+        padding: "100px 40px",
+        background: "linear-gradient(180deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%)",
+        textAlign: "center",
+        overflow: "hidden",
+      }}>
+        {/* Decorative glow */}
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,165,92,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+        <div style={{ position: "relative", zIndex: 2 }}>
+          <KineticOnce text="Showreel" tag="div" className="section-label" style={{ color: "#c9a55c" }} />
+          <h2 className="section-title" style={{ color: "#fff", marginBottom: 12 }}>
+            <KineticOnce text="Watch Our Story" tag="span" style={{ color: "#fff", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit" }} />
+          </h2>
+          <KineticOnce text="A glimpse into how we capture love, emotion, and timeless moments" tag="p" style={{ color: "rgba(255,255,255,0.5)", fontSize: 16, marginBottom: 50, fontFamily: "inherit" }} />
+
+          {/* Video Player */}
+          <div style={{
+            maxWidth: 1000,
+            margin: "0 auto",
+            borderRadius: 20,
+            overflow: "hidden",
+            boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(201,165,92,0.1)",
+            border: "1px solid rgba(201,165,92,0.2)",
+            position: "relative",
+          }}>
+            <video
+              controls
+              preload="metadata"
+              poster="/images/hero1.jpg"
+              style={{
+                width: "100%",
+                display: "block",
+                borderRadius: 20,
+              }}
+            >
+              <source src="/videos/couple-aura-reel.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </section>
+
       {/* ==================== EXPANDING GALLERY ==================== */}
       <section className="section">
         <div className="section-header">
@@ -405,6 +451,70 @@ export default function Home() {
           <p>Made with ❤️ by <a href="#">Alex Morgan</a></p>
         </div>
       </footer>
+
+      {/* ==================== VIDEO MODAL ==================== */}
+      {showVideo && (
+        <div
+          onClick={() => setShowVideo(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 10000,
+            background: "rgba(0,0,0,0.92)",
+            backdropFilter: "blur(12px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+          }}
+        >
+          {/* Close button */}
+          <button
+            onClick={() => setShowVideo(false)}
+            style={{
+              position: "absolute",
+              top: 24,
+              right: 24,
+              zIndex: 10001,
+              width: 52,
+              height: 52,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.1)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#fff",
+              fontSize: 24,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "background 0.3s",
+            }}
+          >
+            ✕
+          </button>
+
+          {/* Video */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "90vw",
+              maxWidth: 1000,
+              borderRadius: 16,
+              overflow: "hidden",
+              boxShadow: "0 30px 80px rgba(0,0,0,0.7)",
+            }}
+          >
+            <video
+              controls
+              autoPlay
+              preload="auto"
+              style={{ width: "100%", display: "block" }}
+            >
+              <source src="/videos/couple-aura-reel.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      )}
 
       {/* BACK TO TOP */}
       <button className="back-to-top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
