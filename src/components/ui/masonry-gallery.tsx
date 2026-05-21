@@ -103,21 +103,7 @@ function MasonryImage({ src, alt, aspect }: { src: string; alt: string; aspect: 
             : "opacity 0.8s ease-in-out, transform 0.8s ease-in-out",
         }}
       />
-      <div style={{
-        position: "absolute",
-        inset: 0,
-        background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 40%, transparent 100%)",
-        opacity: hovered ? 1 : 0,
-        transition: "opacity 0.3s ease",
-        pointerEvents: "none",
-        display: "flex",
-        alignItems: "flex-end",
-        padding: "16px 20px",
-      }}>
-        <div style={{ color: "#fff" }}>
-          <p style={{ fontSize: 16, fontWeight: 600, margin: 0 }}>{alt}</p>
-        </div>
-      </div>
+
     </div>
   );
 }
